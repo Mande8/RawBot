@@ -21,6 +21,15 @@ export LoadConfigTBL_rawbot_Ordered
 AREA lit(rom, rel)
 LoadConfigTBL_rawbot_Bank0:
 ;  Instance name LCD, User Module LCD
+;  Instance name ServoPWM, User Module PWM16
+;       Instance name ServoPWM, Block Name PWM16_LSB(DBB10)
+	db		33h, 00h		;ServoPWM_CONTROL_LSB_REG(DBB10CR0)
+	db		31h, 9fh		;ServoPWM_PERIOD_LSB_REG(DBB10DR1)
+	db		32h, 2ch		;ServoPWM_COMPARE_LSB_REG(DBB10DR2)
+;       Instance name ServoPWM, Block Name PWM16_MSB(DBB11)
+	db		37h, 00h		;ServoPWM_CONTROL_MSB_REG(DBB11CR0)
+	db		35h, 0fh		;ServoPWM_PERIOD_MSB_REG(DBB11DR1)
+	db		36h, 01h		;ServoPWM_COMPARE_MSB_REG(DBB11DR2)
 ;  Instance name Timer16UsEcho, User Module Timer16
 ;       Instance name Timer16UsEcho, Block Name TIMER16_LSB(DCB02)
 	db		2bh, 00h		;Timer16UsEcho_CONTROL_LSB_REG(DCB02CR0)
@@ -65,6 +74,15 @@ LoadConfigTBL_rawbot_Bank0:
 	db		ffh
 LoadConfigTBL_rawbot_Bank1:
 ;  Instance name LCD, User Module LCD
+;  Instance name ServoPWM, User Module PWM16
+;       Instance name ServoPWM, Block Name PWM16_LSB(DBB10)
+	db		30h, 01h		;ServoPWM_FUNC_LSB_REG(DBB10FN)
+	db		31h, 16h		;ServoPWM_INPUT_LSB_REG(DBB10IN)
+	db		32h, 40h		;ServoPWM_OUTPUT_LSB_REG(DBB10OU)
+;       Instance name ServoPWM, Block Name PWM16_MSB(DBB11)
+	db		34h, 21h		;ServoPWM_FUNC_MSB_REG(DBB11FN)
+	db		35h, 36h		;ServoPWM_INPUT_MSB_REG(DBB11IN)
+	db		36h, 40h		;ServoPWM_OUTPUT_MSB_REG(DBB11OU)
 ;  Instance name Timer16UsEcho, User Module Timer16
 ;       Instance name Timer16UsEcho, Block Name TIMER16_LSB(DCB02)
 	db		28h, 00h		;Timer16UsEcho_FUNC_LSB_REG(DCB02FN)

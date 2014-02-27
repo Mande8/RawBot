@@ -166,7 +166,7 @@ ENDIF
     reti
 
     org   34h                      ;PSoC Block DBB11 Interrupt Vector
-    // call	void_handler
+    ljmp	_ServoPWM_ISR
     reti
 
     org   38h                      ;PSoC Block DCB12 Interrupt Vector

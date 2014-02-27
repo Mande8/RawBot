@@ -1,193 +1,217 @@
 Project:      output/RawBot
 Build Number: 0
-Date:         Thu Feb 27 11:54:13 2014
+Date:         Thu Feb 27 13:24:21 2014
 Compiler:     ICCM8C
 Version:      7.05.00
 
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                             lit   0150   007E =    126. bytes (rel,con,rom,lit)
+                             lit   0150   0096 =    150. bytes (rel,con,rom,lit)
 
        Addr  Global Symbol
       -----  --------------------------------
        0150  LoadConfigTBL_rawbot_Bank0
-       0193  LoadConfigTBL_rawbot_Bank1
-       01CE  __lit_end
+       019F  LoadConfigTBL_rawbot_Bank1
+       01E6  __lit_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                           idata   01CE   0024 =     36. bytes (rel,con,rom,lit)
+                           idata   01E6   0024 =     36. bytes (rel,con,rom,lit)
 
        Addr  Global Symbol
       -----  --------------------------------
-       01CE  __idata_start
-       01F2  __idata_end
+       01E6  __idata_start
+       020A  __idata_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                     psoc_config   01F2   012C =    300. bytes (rel,con,rom,code)
+                     psoc_config   020A   012C =    300. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       01F2  LoadConfigTBL_rawbot_Ordered
-       02B7  _LoadConfigInit
-       02B7  LoadConfigInit
-       02C7  _LoadConfig_rawbot
-       02C7  LoadConfig_rawbot
-       031E  __psoc_config_end
+       020A  LoadConfigTBL_rawbot_Ordered
+       02CF  _LoadConfigInit
+       02CF  LoadConfigInit
+       02DF  _LoadConfig_rawbot
+       02DF  LoadConfig_rawbot
+       0336  __psoc_config_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                     UserModules   031E   039C =    924. bytes (rel,con,rom,code)
+                     UserModules   0336   03F5 =   1013. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       031E  Timer8UsTrig_EnableInt
-       031E  _Timer8UsTrig_EnableInt
-       0322  Timer8UsTrig_DisableInt
-       0322  _Timer8UsTrig_DisableInt
-       0326  Timer8UsTrig_Start
-       0326  _Timer8UsTrig_Start
-       032A  _Timer8UsTrig_Stop
-       032A  Timer8UsTrig_Stop
-       032E  _Timer8UsTrig_WritePeriod
-       032E  Timer8UsTrig_WritePeriod
-       0331  _Timer8UsTrig_WriteCompareValue
-       0331  Timer8UsTrig_WriteCompareValue
-       0334  _Timer8UsTrig_bReadCompareValue
-       0334  _bTimer8UsTrig_ReadCompareValue
-       0334  Timer8UsTrig_bReadCompareValue
-       0334  bTimer8UsTrig_ReadCompareValue
-       0337  _bTimer8UsTrig_ReadCounter
-       0337  bTimer8UsTrig_ReadTimerSaveCV
-       0337  bTimer8UsTrig_ReadCounter
-       0337  Timer8UsTrig_bReadTimerSaveCV
-       0337  _bTimer8UsTrig_ReadTimerSaveCV
-       0337  _Timer8UsTrig_bReadTimerSaveCV
-       035E  bTimer8UsTrig_ReadTimer
-       035E  Timer8UsTrig_bReadTimer
-       035E  bTimer8UsTrig_CaptureCounter
-       035E  _bTimer8UsTrig_CaptureCounter
-       035E  _bTimer8UsTrig_ReadTimer
-       035E  _Timer8UsTrig_bReadTimer
-       0363  Timer8Main_EnableInt
-       0363  _Timer8Main_EnableInt
-       0367  _Timer8Main_DisableInt
-       0367  Timer8Main_DisableInt
-       036B  Timer8Main_Start
-       036B  _Timer8Main_Start
-       036F  _Timer8Main_Stop
-       036F  Timer8Main_Stop
-       0373  Timer8Main_WritePeriod
-       0373  _Timer8Main_WritePeriod
-       0376  Timer8Main_WriteCompareValue
-       0376  _Timer8Main_WriteCompareValue
-       0379  _Timer8Main_bReadCompareValue
-       0379  bTimer8Main_ReadCompareValue
-       0379  Timer8Main_bReadCompareValue
-       0379  _bTimer8Main_ReadCompareValue
-       037C  _bTimer8Main_ReadCounter
-       037C  bTimer8Main_ReadTimerSaveCV
-       037C  _Timer8Main_bReadTimerSaveCV
-       037C  _bTimer8Main_ReadTimerSaveCV
-       037C  Timer8Main_bReadTimerSaveCV
-       037C  bTimer8Main_ReadCounter
-       03A3  _bTimer8Main_CaptureCounter
-       03A3  _Timer8Main_bReadTimer
-       03A3  Timer8Main_bReadTimer
-       03A3  bTimer8Main_CaptureCounter
-       03A3  _bTimer8Main_ReadTimer
-       03A3  bTimer8Main_ReadTimer
-       03A8  Timer16UsEcho_EnableInt
-       03A8  _Timer16UsEcho_EnableInt
-       03AC  _Timer16UsEcho_DisableInt
-       03AC  Timer16UsEcho_DisableInt
-       03B0  Timer16UsEcho_Start
-       03B0  _Timer16UsEcho_Start
-       03B4  _Timer16UsEcho_Stop
-       03B4  Timer16UsEcho_Stop
-       03B8  Timer16UsEcho_WritePeriod
-       03B8  _Timer16UsEcho_WritePeriod
-       03BE  _Timer16UsEcho_WriteCompareValue
-       03BE  Timer16UsEcho_WriteCompareValue
-       03C4  wTimer16UsEcho_ReadCompareValue
-       03C4  _Timer16UsEcho_wReadCompareValue
-       03C4  _wTimer16UsEcho_ReadCompareValue
-       03C4  Timer16UsEcho_wReadCompareValue
-       03CA  Timer16UsEcho_wReadTimerSaveCV
-       03CA  _wTimer16UsEcho_ReadCounter
-       03CA  wTimer16UsEcho_ReadTimerSaveCV
-       03CA  _wTimer16UsEcho_ReadTimerSaveCV
-       03CA  _Timer16UsEcho_wReadTimerSaveCV
-       03CA  wTimer16UsEcho_ReadCounter
-       03FC  _wTimer16UsEcho_ReadTimer
-       03FC  _wTimer16UsEcho_CaptureCounter
-       03FC  _Timer16UsEcho_wReadTimer
-       03FC  Timer16UsEcho_wReadTimer
-       03FC  wTimer16UsEcho_ReadTimer
-       03FC  wTimer16UsEcho_CaptureCounter
-       0404  LCD_PrCString
-       0404  _LCD_PrCString
-       0416  LCD_HEX_STR
-       0426  LCD_PrHexByte
-       0426  _LCD_PrHexByte
-       0439  _LCD_PrHexInt
-       0439  LCD_PrHexInt
-       0440  _LCD_PrString
-       0440  LCD_PrString
-       044A  LCD_WriteData
-       044A  LCD_Write_Data
-       044A  _LCD_WriteData
-       044A  _LCD_Write_Data
-       045E  _LCD_Control
-       045E  LCD_Control
-       0505  _LCD_Start
-       0505  LCD_Start
-       0505  _LCD_Init
-       0505  LCD_Init
-       0571  LCD_ROW_OFFSET
-       0575  LCD_Position
-       0575  _LCD_Position
-       0581  LCD_Delay50uTimes
-       0581  _LCD_Delay50uTimes
-       0587  LCD_Delay50u_Table
-       058F  _LCD_Delay50u
-       058F  LCD_Delay50u
-       05A3  LCD_DrawBG
-       05C9  _LCD_DrawBG
-       05F2  LCD_DrawVBG
-       061F  _LCD_DrawVBG
-       064F  LCD_InitVBG
-       064F  _LCD_InitVBG
-       067C  LCD_BG_TYPE1
-       0683  LCD_BG_TYPE2
-       068A  LCD_InitBG
-       068A  _LCD_InitBG
-       06BA  __UserModules_end
+       0336  Timer8UsTrig_EnableInt
+       0336  _Timer8UsTrig_EnableInt
+       033A  _Timer8UsTrig_DisableInt
+       033A  Timer8UsTrig_DisableInt
+       033E  _Timer8UsTrig_Start
+       033E  Timer8UsTrig_Start
+       0342  Timer8UsTrig_Stop
+       0342  _Timer8UsTrig_Stop
+       0346  _Timer8UsTrig_WritePeriod
+       0346  Timer8UsTrig_WritePeriod
+       0349  Timer8UsTrig_WriteCompareValue
+       0349  _Timer8UsTrig_WriteCompareValue
+       034C  Timer8UsTrig_bReadCompareValue
+       034C  bTimer8UsTrig_ReadCompareValue
+       034C  _Timer8UsTrig_bReadCompareValue
+       034C  _bTimer8UsTrig_ReadCompareValue
+       034F  _bTimer8UsTrig_ReadCounter
+       034F  bTimer8UsTrig_ReadTimerSaveCV
+       034F  Timer8UsTrig_bReadTimerSaveCV
+       034F  _bTimer8UsTrig_ReadTimerSaveCV
+       034F  _Timer8UsTrig_bReadTimerSaveCV
+       034F  bTimer8UsTrig_ReadCounter
+       0376  Timer8UsTrig_bReadTimer
+       0376  bTimer8UsTrig_ReadTimer
+       0376  _bTimer8UsTrig_CaptureCounter
+       0376  bTimer8UsTrig_CaptureCounter
+       0376  _Timer8UsTrig_bReadTimer
+       0376  _bTimer8UsTrig_ReadTimer
+       037B  _Timer8Main_EnableInt
+       037B  Timer8Main_EnableInt
+       037F  Timer8Main_DisableInt
+       037F  _Timer8Main_DisableInt
+       0383  Timer8Main_Start
+       0383  _Timer8Main_Start
+       0387  Timer8Main_Stop
+       0387  _Timer8Main_Stop
+       038B  _Timer8Main_WritePeriod
+       038B  Timer8Main_WritePeriod
+       038E  _Timer8Main_WriteCompareValue
+       038E  Timer8Main_WriteCompareValue
+       0391  _bTimer8Main_ReadCompareValue
+       0391  _Timer8Main_bReadCompareValue
+       0391  bTimer8Main_ReadCompareValue
+       0391  Timer8Main_bReadCompareValue
+       0394  Timer8Main_bReadTimerSaveCV
+       0394  _bTimer8Main_ReadCounter
+       0394  bTimer8Main_ReadCounter
+       0394  _Timer8Main_bReadTimerSaveCV
+       0394  _bTimer8Main_ReadTimerSaveCV
+       0394  bTimer8Main_ReadTimerSaveCV
+       03BB  _bTimer8Main_ReadTimer
+       03BB  _Timer8Main_bReadTimer
+       03BB  _bTimer8Main_CaptureCounter
+       03BB  bTimer8Main_CaptureCounter
+       03BB  bTimer8Main_ReadTimer
+       03BB  Timer8Main_bReadTimer
+       03C0  _Timer16UsEcho_EnableInt
+       03C0  Timer16UsEcho_EnableInt
+       03C4  _Timer16UsEcho_DisableInt
+       03C4  Timer16UsEcho_DisableInt
+       03C8  Timer16UsEcho_Start
+       03C8  _Timer16UsEcho_Start
+       03CC  _Timer16UsEcho_Stop
+       03CC  Timer16UsEcho_Stop
+       03D0  Timer16UsEcho_WritePeriod
+       03D0  _Timer16UsEcho_WritePeriod
+       03D6  Timer16UsEcho_WriteCompareValue
+       03D6  _Timer16UsEcho_WriteCompareValue
+       03DC  _Timer16UsEcho_wReadCompareValue
+       03DC  Timer16UsEcho_wReadCompareValue
+       03DC  _wTimer16UsEcho_ReadCompareValue
+       03DC  wTimer16UsEcho_ReadCompareValue
+       03E2  wTimer16UsEcho_ReadCounter
+       03E2  _wTimer16UsEcho_ReadTimerSaveCV
+       03E2  wTimer16UsEcho_ReadTimerSaveCV
+       03E2  _wTimer16UsEcho_ReadCounter
+       03E2  Timer16UsEcho_wReadTimerSaveCV
+       03E2  _Timer16UsEcho_wReadTimerSaveCV
+       0414  Timer16UsEcho_wReadTimer
+       0414  _Timer16UsEcho_wReadTimer
+       0414  wTimer16UsEcho_CaptureCounter
+       0414  _wTimer16UsEcho_ReadTimer
+       0414  wTimer16UsEcho_ReadTimer
+       0414  _wTimer16UsEcho_CaptureCounter
+       041C  _ServoPWM_ISR
+       041D  ServoPWM_EnableInt
+       041D  _ServoPWM_EnableInt
+       0421  ServoPWM_DisableInt
+       0421  _ServoPWM_DisableInt
+       0425  ServoPWM_Start
+       0425  _ServoPWM_Start
+       0429  _ServoPWM_Stop
+       0429  ServoPWM_Stop
+       042D  _ServoPWM_WritePeriod
+       042D  ServoPWM_WritePeriod
+       0433  _ServoPWM_WritePulseWidth
+       0433  ServoPWM_WritePulseWidth
+       0439  _wServoPWM_ReadPulseWidth
+       0439  wServoPWM_ReadPulseWidth
+       0439  _ServoPWM_wReadPulseWidth
+       0439  ServoPWM_wReadPulseWidth
+       043F  ServoPWM_wReadCounter
+       043F  _ServoPWM_wReadCounter
+       043F  _wServoPWM_ReadCounter
+       043F  wServoPWM_ReadCounter
+       0475  LCD_PrCString
+       0475  _LCD_PrCString
+       0487  LCD_HEX_STR
+       0497  _LCD_PrHexByte
+       0497  LCD_PrHexByte
+       04AA  _LCD_PrHexInt
+       04AA  LCD_PrHexInt
+       04B1  LCD_PrString
+       04B1  _LCD_PrString
+       04BB  _LCD_Write_Data
+       04BB  _LCD_WriteData
+       04BB  LCD_Write_Data
+       04BB  LCD_WriteData
+       04CF  _LCD_Control
+       04CF  LCD_Control
+       0576  LCD_Start
+       0576  _LCD_Start
+       0576  _LCD_Init
+       0576  LCD_Init
+       05E2  LCD_ROW_OFFSET
+       05E6  LCD_Position
+       05E6  _LCD_Position
+       05F2  LCD_Delay50uTimes
+       05F2  _LCD_Delay50uTimes
+       05F8  LCD_Delay50u_Table
+       0600  _LCD_Delay50u
+       0600  LCD_Delay50u
+       0614  LCD_DrawBG
+       063A  _LCD_DrawBG
+       0663  LCD_DrawVBG
+       0690  _LCD_DrawVBG
+       06C0  LCD_InitVBG
+       06C0  _LCD_InitVBG
+       06ED  LCD_BG_TYPE1
+       06F4  LCD_BG_TYPE2
+       06FB  LCD_InitBG
+       06FB  _LCD_InitBG
+       072B  __UserModules_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   06BA   0A84 =   2692. bytes (rel,con,rom,code)
+                            text   072B   0B2C =   2860. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
-       06BA  _Timer8Main_ISR
-       06BA  __text_start
-       06C8  _Timer8UsTrig_ISR
-       0737  _Timer16UsEcho_ISR
-       0740  _GPIO_ISR
-       07FF  _main
-       0941  _setup
-       098C  _usTrigSend
-       099F  _drive
-       09F8  _pinMode
-       0BE2  _digitalWrite
-       0CDF  _backlight
-       0D18  PSoC_GPIO_ISR
-       0DB8  _itoa
-       0F35  _ltoa
-       113E  __text_end
+       072B  _servo_Start
+       072B  __text_start
+       073D  _servo_Stop
+       0743  _servo_Move
+       0790  _usTrigSend
+       07A3  _drive
+       080E  _backlight
+       0847  _pinMode
+       0A31  _digitalWrite
+       0B2E  _Timer8Main_ISR
+       0B3C  _Timer8UsTrig_ISR
+       0BAC  _Timer16UsEcho_ISR
+       0BB5  _GPIO_ISR
+       0C74  _main
+       0DB7  _setup
+       0E00  PSoC_GPIO_ISR
+       0ED1  _itoa
+       104E  _ltoa
+       1257  __text_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
@@ -261,11 +285,12 @@ Area                               Start  End    Decimal Bytes (Attributes)
 Files Linked      [ module(s) ]
 
 ./obj/boot.o	[ boot.asm ]
+obj/functions.o	[ functions.c ]
 obj/main.o	[ main.c ]
-<library>	[ timer8ustrig.asm, timer8main.asm, timer16usecho.asm, psocgpioint.asm, psocconfigtbl.asm, psocconfig.asm ]
-[ lcd.asm, rZ.asm, rY.asm, rX.asm, r11.asm, r10.asm, r9.asm, r8.asm, r7.asm, r6.asm, r5.asm, r4.asm, r3.asm ]
-[ r2.asm, r1.asm, r0.asm, divmodu_16x16_16_util.asm, divmodu_32x32_32_util.asm, i_div16_block_util.asm ]
-[ i_div32_block_util.asm, itoa.s, ltoa.s ]
+<library>	[ timer8ustrig.asm, timer8main.asm, timer16usecho.asm, servopwmint.asm, servopwm.asm, psocgpioint.asm ]
+[ psocconfigtbl.asm, psocconfig.asm, lcd.asm, rZ.asm, rY.asm, rX.asm, r11.asm, r10.asm, r9.asm, r8.asm ]
+[ r7.asm, r6.asm, r5.asm, r4.asm, r3.asm, r2.asm, r1.asm, r0.asm, divmodu_16x16_16_util.asm, divmodu_32x32_32_util.asm ]
+[ i_div16_block_util.asm, i_div32_block_util.asm, mul16_util.asm, itoa.s, ltoa.s ]
 
 Area Definitions
 

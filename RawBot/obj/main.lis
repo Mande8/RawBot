@@ -9,84 +9,100 @@
  0000 0000              .word 0
                         .area data(ram, con, rel)
  0002                   .dbfile ./main.c
- 0002                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 0002                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  0002                   .dbsym e timer8MainTick _timer8MainTick I
  0002           _timer8MainCount::
  0002                   .blkb 2
                         .area idata(rom,lit)
  0002 0000              .word 0
                         .area data(ram, con, rel)
- 0004                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 0004                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  0004                   .dbsym e timer8MainCount _timer8MainCount i
  0004           _gpioTick::
  0004                   .blkb 2
                         .area idata(rom,lit)
  0004 0000              .word 0
                         .area data(ram, con, rel)
- 0006                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 0006                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  0006                   .dbsym e gpioTick _gpioTick I
  0006           _lcdBuffer::
  0006                   .blkb 1
                         .area idata(rom,lit)
  0006 00                .byte 0
                         .area data(ram, con, rel)
- 0007                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 0007                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  0007                   .blkb 15
                         .area idata(rom,lit)
  0007 00000000000000000000      .word 0,0,0,0,0
  0011 0000000000        .byte 0,0,0,0,0
                         .area data(ram, con, rel)
- 0016                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 0016                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  0016                   .dbsym e lcdBuffer _lcdBuffer A[16:1:16]c
  0016           _usRawTimerValue::
  0016                   .blkb 4
                         .area idata(rom,lit)
  0016 00000000          .word 0,0
                         .area data(ram, con, rel)
- 001A                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 001A                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  001A                   .dbsym e usRawTimerValue _usRawTimerValue l
  001A           _usDistance::
  001A                   .blkb 2
                         .area idata(rom,lit)
  001A 0000              .word 0
                         .area data(ram, con, rel)
- 001C                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 001C                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  001C                   .dbsym e usDistance _usDistance i
  001C           _lcdUpdate::
  001C                   .blkb 2
                         .area idata(rom,lit)
  001C 0000              .word 0
                         .area data(ram, con, rel)
- 001E                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 001E                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  001E                   .dbsym e lcdUpdate _lcdUpdate i
  001E           _start::
  001E                   .blkb 2
                         .area idata(rom,lit)
  001E 0000              .word 0
                         .area data(ram, con, rel)
- 0020                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 0020                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  0020                   .dbsym e start _start I
  0020           _stop::
  0020                   .blkb 2
                         .area idata(rom,lit)
  0020 0000              .word 0
                         .area data(ram, con, rel)
- 0022                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 0022                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  0022                   .dbsym e stop _stop I
  0022           _isrclear::
  0022                   .blkb 2
                         .area idata(rom,lit)
  0022 0000              .word 0
                         .area data(ram, con, rel)
- 0024                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 0024                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  0024                   .dbsym e isrclear _isrclear I
                         .area text(rom, con, rel)
- 0000                   .dbfile C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c
+ 0000                   .dbfile C:\Users\JohnEdwa\Desktop\School\GitHub\RawBot\RawBot\main.c
  0000                   .dbfunc e Timer8Main_ISR _Timer8Main_ISR fV
  0000           _Timer8Main_ISR::
  0000                   .dbline -1
  0000 08                push A
- 0001                   .dbline 44
+ 0001                   .dbline 59
+ 0001           ; /*************
+ 0001           ; *  Notes  *
+ 0001           ; *************/
+ 0001           ; // Connections:
+ 0001           ; // Port 0 - Outputs
+ 0001           ; //    P00 - Hbridge IN1
+ 0001           ; //    P01 - Hbridge IN2
+ 0001           ; //    P02 - Hbridge IN3
+ 0001           ; //    P03 - Hbrdige IN4
+ 0001           ; //    P04 -
+ 0001           ; //    P05 - 
+ 0001           ; //    P06 -
+ 0001           ; //    P07 - Servo PWM
+ 0001           ; 
+ 0001           ; 
+ 0001           ; 
  0001           ; /*************
  0001           ; *  Includes  *
  0001           ; *************/
@@ -100,15 +116,14 @@
  0001           ; #include "Timer8UsTrig.h"
  0001           ; #include "Timer16UsEcho.h"
  0001           ; 
+ 0001           ; #include "Functions.h"
+ 0001           ; 
  0001           ; /************************
  0001           ; * Function declarations *
  0001           ; *************************/
  0001           ; 
  0001           ; void setup(void);
- 0001           ; void usTrigSend(void);
- 0001           ; void drive(BYTE);
- 0001           ; void digitalWrite(BYTE, BYTE, BYTE);
- 0001           ; void pinMode(BYTE, BYTE, BYTE);
+ 0001           ; // See Functions.h for the rest
  0001           ; 
  0001           ; /**************************
  0001           ; *  Variable declarations  *
@@ -131,11 +146,11 @@
  0001           ; 
  0001           ; #pragma interrupt_handler Timer8Main_ISR
  0001           ; void Timer8Main_ISR(void) {
- 0001                   .dbline 45
+ 0001                   .dbline 60
  0001           ;       timer8MainTick = true;
  0001 550101            mov [_timer8MainTick+1],1
  0004 550000            mov [_timer8MainTick],0
- 0007                   .dbline 46
+ 0007                   .dbline 61
  0007           ;       timer8MainCount++;
  0007 7603              inc [_timer8MainCount+1]
  0009 0E0200            adc [_timer8MainCount],0
@@ -179,12 +194,12 @@
  0038 08                push A
  0039 5100              mov A,[__rZ]
  003B 08                push A
- 003C                   .dbline 50
+ 003C                   .dbline 65
  003C           ; }
  003C           ; 
  003C           ; #pragma interrupt_handler Timer8UsTrig_ISR
  003C           ; void Timer8UsTrig_ISR(void) {
- 003C                   .dbline 51
+ 003C                   .dbline 66
  003C           ;       digitalWrite(0, 4, 0); // Stop the trigger signal
  003C 5000              mov A,0
  003E 08                push A
@@ -192,568 +207,566 @@
  0041 08                push A
  0042 5000              mov A,0
  0044 08                push A
- 0045 94E1              xcall _digitalWrite
- 0047 38FD              add SP,-3
- 0049                   .dbline 52
- 0049           ;       Timer8UsTrig_Stop();
- 0049 10                push X
- 004A 7C0000            xcall _Timer8UsTrig_Stop
- 004D 20                pop X
- 004E                   .dbline -2
- 004E           L2:
- 004E 18                pop A
- 004F 5300              mov [__rZ],A
- 0051 18                pop A
- 0052 5300              mov [__rY],A
- 0054 18                pop A
- 0055 5300              mov [__rX],A
- 0057 18                pop A
- 0058 5300              mov [__r11],A
- 005A 18                pop A
- 005B 5300              mov [__r10],A
- 005D 18                pop A
- 005E 5300              mov [__r9],A
- 0060 18                pop A
- 0061 5300              mov [__r8],A
- 0063 18                pop A
- 0064 5300              mov [__r7],A
- 0066 18                pop A
- 0067 5300              mov [__r6],A
- 0069 18                pop A
- 006A 5300              mov [__r5],A
- 006C 18                pop A
- 006D 5300              mov [__r4],A
- 006F 18                pop A
- 0070 5300              mov [__r3],A
- 0072 18                pop A
- 0073 5300              mov [__r2],A
- 0075 18                pop A
- 0076 5300              mov [__r1],A
- 0078 18                pop A
- 0079 5300              mov [__r0],A
- 007B 18                pop A
- 007C                   .dbline 0 ; func end
- 007C 7E                reti
- 007D                   .dbend
- 007D                   .dbfunc e Timer16UsEcho_ISR _Timer16UsEcho_ISR fV
- 007D           _Timer16UsEcho_ISR::
- 007D                   .dbline -1
- 007D 08                push A
- 007E                   .dbline 56
- 007E           ; }
- 007E           ; 
- 007E           ; #pragma interrupt_handler Timer16UsEcho_ISR
- 007E           ; void Timer16UsEcho_ISR(void) {
- 007E                   .dbline 57
- 007E           ;       start = 9999;
- 007E 551F0F            mov [_start+1],15
- 0081 551E27            mov [_start],39
- 0084                   .dbline -2
- 0084           L3:
- 0084 18                pop A
- 0085                   .dbline 0 ; func end
- 0085 7E                reti
- 0086                   .dbend
- 0086                   .dbfunc e GPIO_ISR _GPIO_ISR fV
- 0086           _GPIO_ISR::
- 0086                   .dbline -1
- 0086 08                push A
- 0087 5100              mov A,[__r0]
- 0089 08                push A
- 008A 5100              mov A,[__r1]
- 008C 08                push A
- 008D 5100              mov A,[__r2]
- 008F 08                push A
- 0090 5100              mov A,[__r3]
- 0092 08                push A
- 0093 5100              mov A,[__r4]
- 0095 08                push A
- 0096 5100              mov A,[__r5]
- 0098 08                push A
- 0099 5100              mov A,[__r6]
- 009B 08                push A
- 009C 5100              mov A,[__r7]
- 009E 08                push A
- 009F 5100              mov A,[__r8]
- 00A1 08                push A
- 00A2 5100              mov A,[__r9]
- 00A4 08                push A
- 00A5 5100              mov A,[__r10]
- 00A7 08                push A
- 00A8 5100              mov A,[__r11]
- 00AA 08                push A
- 00AB 5100              mov A,[__rX]
- 00AD 08                push A
- 00AE 5100              mov A,[__rY]
- 00B0 08                push A
- 00B1 5100              mov A,[__rZ]
- 00B3 08                push A
- 00B4                   .dbline 61
- 00B4           ; }
- 00B4           ; 
- 00B4           ; #pragma interrupt_handler GPIO_ISR
- 00B4           ; void GPIO_ISR(void) {
- 00B4                   .dbline 63
- 00B4           ;       //digitalWrite(1,0,1);
- 00B4           ;       if (US_ECHO_Data_ADDR & US_ECHO_MASK)
- 00B4 5D04              mov A,REG[0x4]
- 00B6 5300              mov [__r0],A
- 00B8 470080            tst [__r0],-128
- 00BB A014              jz L5
- 00BD                   .dbline 65
- 00BD           ;       {
- 00BD           ;               Timer16UsEcho_WritePeriod(46400);
- 00BD                   .dbline 65
- 00BD 10                push X
- 00BE 57B5              mov X,-75
- 00C0 5040              mov A,64
- 00C2 7C0000            xcall _Timer16UsEcho_WritePeriod
- 00C5                   .dbline 66
- 00C5           ;               Timer16UsEcho_Start(); // Used to measure time until echo signal is returned 
- 00C5 7C0000            xcall _Timer16UsEcho_Start
- 00C8 20                pop X
- 00C9                   .dbline 67
- 00C9           ;               start++;
- 00C9 761F              inc [_start+1]
- 00CB 0E1E00            adc [_start],0
- 00CE                   .dbline 68
- 00CE           ;       }
- 00CE 803A              xjmp L6
- 00D0           L5:
- 00D0                   .dbline 70
- 00D0           ;       else
- 00D0           ;       {
- 00D0                   .dbline 71
- 00D0           ;               usRawTimerValue = Timer16UsEcho_wReadTimer();
- 00D0 10                push X
- 00D1 7C0000            xcall _Timer16UsEcho_wReadTimer
- 00D4 5A00              mov [__r0],X
- 00D6 20                pop X
- 00D7 5319              mov [_usRawTimerValue+3],A
- 00D9 5F1800            mov [_usRawTimerValue+2],[__r0]
- 00DC 551700            mov [_usRawTimerValue+1],0
- 00DF 551600            mov [_usRawTimerValue],0
- 00E2                   .dbline 72
- 00E2           ;               Timer16UsEcho_Stop();
- 00E2 10                push X
- 00E3 7C0000            xcall _Timer16UsEcho_Stop
- 00E6 20                pop X
- 00E7                   .dbline 73
- 00E7           ;               ltoa(lcdBuffer[0], usRawTimerValue, 10);
- 00E7 5000              mov A,0
- 00E9 08                push A
- 00EA 500A              mov A,10
- 00EC 08                push A
- 00ED 5116              mov A,[_usRawTimerValue]
- 00EF 08                push A
- 00F0 5117              mov A,[_usRawTimerValue+1]
- 00F2 08                push A
- 00F3 5118              mov A,[_usRawTimerValue+2]
- 00F5 08                push A
- 00F6 5119              mov A,[_usRawTimerValue+3]
- 00F8 08                push A
- 00F9 5006              mov A,>_lcdBuffer
- 00FB 08                push A
- 00FC 5006              mov A,<_lcdBuffer
- 00FE 08                push A
- 00FF 7C0000            xcall _ltoa
- 0102 38F8              add SP,-8
- 0104                   .dbline 74
- 0104           ;               stop++;
- 0104 7621              inc [_stop+1]
- 0106 0E2000            adc [_stop],0
- 0109                   .dbline 75
- 0109           ;       }
- 0109           L6:
- 0109                   .dbline 76
- 0109           ;       gpioTick = true;
- 0109 550501            mov [_gpioTick+1],1
- 010C 550400            mov [_gpioTick],0
- 010F                   .dbline 77
- 010F           ;       isrclear = PRT1DR;
- 010F 5D04              mov A,REG[0x4]
- 0111 5323              mov [_isrclear+1],A
- 0113 552200            mov [_isrclear],0
- 0116                   .dbline -2
- 0116           L4:
- 0116 18                pop A
- 0117 5300              mov [__rZ],A
- 0119 18                pop A
- 011A 5300              mov [__rY],A
- 011C 18                pop A
- 011D 5300              mov [__rX],A
- 011F 18                pop A
- 0120 5300              mov [__r11],A
- 0122 18                pop A
- 0123 5300              mov [__r10],A
- 0125 18                pop A
- 0126 5300              mov [__r9],A
- 0128 18                pop A
- 0129 5300              mov [__r8],A
- 012B 18                pop A
- 012C 5300              mov [__r7],A
- 012E 18                pop A
- 012F 5300              mov [__r6],A
- 0131 18                pop A
- 0132 5300              mov [__r5],A
- 0134 18                pop A
- 0135 5300              mov [__r4],A
- 0137 18                pop A
- 0138 5300              mov [__r3],A
- 013A 18                pop A
- 013B 5300              mov [__r2],A
- 013D 18                pop A
- 013E 5300              mov [__r1],A
- 0140 18                pop A
- 0141 5300              mov [__r0],A
- 0143 18                pop A
- 0144                   .dbline 0 ; func end
- 0144 7E                reti
- 0145                   .dbend
- 0145                   .dbfunc e main _main fV
- 0145           _main::
- 0145                   .dbline -1
- 0145                   .dbline 84
- 0145           ; }
- 0145           ; 
- 0145           ; /******************
- 0145           ; *  Main function  *
- 0145           ; ******************/
- 0145           ; 
- 0145           ; void main(void) {
- 0145                   .dbline 85
- 0145           ;       setup();
- 0145 9140              xcall _setup
- 0147 813B              xjmp L9
- 0149           L8:
- 0149                   .dbline 87
- 0149           ; 
- 0149           ;       while(1) {
- 0149                   .dbline 88
- 0149           ;               if(gpioTick) {
- 0149 3C0400            cmp [_gpioTick],0
- 014C B006              jnz X1
- 014E 3C0500            cmp [_gpioTick+1],0
- 0151 A007              jz L11
- 0153           X1:
- 0153                   .dbline 89
- 0153           ;                       gpioTick = false;
- 0153                   .dbline 89
- 0153 550500            mov [_gpioTick+1],0
- 0156 550400            mov [_gpioTick],0
- 0159                   .dbline 90
- 0159           ;               }
- 0159           L11:
- 0159                   .dbline 92
- 0159           ;               
- 0159           ;               if(timer8MainTick) {
- 0159 3C0000            cmp [_timer8MainTick],0
- 015C B006              jnz X2
- 015E 3C0100            cmp [_timer8MainTick+1],0
- 0161 A121              jz L13
- 0163           X2:
- 0163                   .dbline 93
- 0163           ;                       timer8MainTick = false;
- 0163                   .dbline 93
- 0163 550100            mov [_timer8MainTick+1],0
- 0166 550000            mov [_timer8MainTick],0
- 0169                   .dbline 94
- 0169           ;                       lcdUpdate++;
- 0169 761D              inc [_lcdUpdate+1]
- 016B 0E1C00            adc [_lcdUpdate],0
- 016E                   .dbline 96
- 016E           ;                       
- 016E           ;                       if (lcdUpdate >= 499)
- 016E 511D              mov A,[_lcdUpdate+1]
- 0170 11F3              sub A,-13
- 0172 511C              mov A,[_lcdUpdate]
- 0174 1901              sbb A,1
- 0176 C0FA              jc L15
- 0178           X3:
- 0178                   .dbline 98
- 0178           ;                       {
- 0178           ;                               lcdUpdate = 0;          
- 0178                   .dbline 98
- 0178 551D00            mov [_lcdUpdate+1],0
- 017B 551C00            mov [_lcdUpdate],0
- 017E                   .dbline 99
- 017E           ;                               LCD_Control(0x01);
- 017E 10                push X
- 017F 5001              mov A,1
- 0181 7C0000            xcall _LCD_Control
- 0184                   .dbline 100
- 0184           ;                               LCD_PrString(lcdBuffer[0]);
- 0184 5006              mov A,>_lcdBuffer
- 0186 08                push A
- 0187 5006              mov A,<_lcdBuffer
- 0189 5C                mov X,A
- 018A 18                pop A
- 018B 7C0000            xcall _LCD_PrString
- 018E 20                pop X
- 018F                   .dbline 102
- 018F           ;                               
- 018F           ;                               usDistance = (((46400-usRawTimerValue)/2) / 58);
- 018F 5040              mov A,64
- 0191 1219              sub A,[_usRawTimerValue+3]
- 0193 5300              mov [__r3],A
- 0195 50B5              mov A,-75
- 0197 1A18              sbb A,[_usRawTimerValue+2]
- 0199 5300              mov [__r2],A
- 019B 5000              mov A,0
- 019D 1A17              sbb A,[_usRawTimerValue+1]
- 019F 5300              mov [__r1],A
- 01A1 5000              mov A,0
- 01A3 1A16              sbb A,[_usRawTimerValue]
- 01A5 5300              mov [__r0],A
- 01A7 70FB              and F,-5
- 01A9 6E00              rrc [__r0]
- 01AB 6E00              rrc [__r1]
- 01AD 6E00              rrc [__r2]
- 01AF 6E00              rrc [__r3]
- 01B1 5000              mov A,0
- 01B3 08                push A
+ 0045 7C0000            xcall _digitalWrite
+ 0048 38FD              add SP,-3
+ 004A                   .dbline 67
+ 004A           ;       Timer8UsTrig_Stop();
+ 004A 10                push X
+ 004B 7C0000            xcall _Timer8UsTrig_Stop
+ 004E 20                pop X
+ 004F                   .dbline -2
+ 004F           L2:
+ 004F 18                pop A
+ 0050 5300              mov [__rZ],A
+ 0052 18                pop A
+ 0053 5300              mov [__rY],A
+ 0055 18                pop A
+ 0056 5300              mov [__rX],A
+ 0058 18                pop A
+ 0059 5300              mov [__r11],A
+ 005B 18                pop A
+ 005C 5300              mov [__r10],A
+ 005E 18                pop A
+ 005F 5300              mov [__r9],A
+ 0061 18                pop A
+ 0062 5300              mov [__r8],A
+ 0064 18                pop A
+ 0065 5300              mov [__r7],A
+ 0067 18                pop A
+ 0068 5300              mov [__r6],A
+ 006A 18                pop A
+ 006B 5300              mov [__r5],A
+ 006D 18                pop A
+ 006E 5300              mov [__r4],A
+ 0070 18                pop A
+ 0071 5300              mov [__r3],A
+ 0073 18                pop A
+ 0074 5300              mov [__r2],A
+ 0076 18                pop A
+ 0077 5300              mov [__r1],A
+ 0079 18                pop A
+ 007A 5300              mov [__r0],A
+ 007C 18                pop A
+ 007D                   .dbline 0 ; func end
+ 007D 7E                reti
+ 007E                   .dbend
+ 007E                   .dbfunc e Timer16UsEcho_ISR _Timer16UsEcho_ISR fV
+ 007E           _Timer16UsEcho_ISR::
+ 007E                   .dbline -1
+ 007E 08                push A
+ 007F                   .dbline 71
+ 007F           ; }
+ 007F           ; 
+ 007F           ; #pragma interrupt_handler Timer16UsEcho_ISR
+ 007F           ; void Timer16UsEcho_ISR(void) {
+ 007F                   .dbline 72
+ 007F           ;       start = 9999;
+ 007F 551F0F            mov [_start+1],15
+ 0082 551E27            mov [_start],39
+ 0085                   .dbline -2
+ 0085           L3:
+ 0085 18                pop A
+ 0086                   .dbline 0 ; func end
+ 0086 7E                reti
+ 0087                   .dbend
+ 0087                   .dbfunc e GPIO_ISR _GPIO_ISR fV
+ 0087           _GPIO_ISR::
+ 0087                   .dbline -1
+ 0087 08                push A
+ 0088 5100              mov A,[__r0]
+ 008A 08                push A
+ 008B 5100              mov A,[__r1]
+ 008D 08                push A
+ 008E 5100              mov A,[__r2]
+ 0090 08                push A
+ 0091 5100              mov A,[__r3]
+ 0093 08                push A
+ 0094 5100              mov A,[__r4]
+ 0096 08                push A
+ 0097 5100              mov A,[__r5]
+ 0099 08                push A
+ 009A 5100              mov A,[__r6]
+ 009C 08                push A
+ 009D 5100              mov A,[__r7]
+ 009F 08                push A
+ 00A0 5100              mov A,[__r8]
+ 00A2 08                push A
+ 00A3 5100              mov A,[__r9]
+ 00A5 08                push A
+ 00A6 5100              mov A,[__r10]
+ 00A8 08                push A
+ 00A9 5100              mov A,[__r11]
+ 00AB 08                push A
+ 00AC 5100              mov A,[__rX]
+ 00AE 08                push A
+ 00AF 5100              mov A,[__rY]
+ 00B1 08                push A
+ 00B2 5100              mov A,[__rZ]
+ 00B4 08                push A
+ 00B5                   .dbline 76
+ 00B5           ; }
+ 00B5           ; 
+ 00B5           ; #pragma interrupt_handler GPIO_ISR
+ 00B5           ; void GPIO_ISR(void) {
+ 00B5                   .dbline 78
+ 00B5           ;       //digitalWrite(1,0,1);
+ 00B5           ;       if (US_ECHO_Data_ADDR & US_ECHO_MASK)
+ 00B5 5D04              mov A,REG[0x4]
+ 00B7 5300              mov [__r0],A
+ 00B9 470080            tst [__r0],-128
+ 00BC A014              jz L5
+ 00BE                   .dbline 80
+ 00BE           ;       {
+ 00BE           ;               Timer16UsEcho_WritePeriod(46400);
+ 00BE                   .dbline 80
+ 00BE 10                push X
+ 00BF 57B5              mov X,-75
+ 00C1 5040              mov A,64
+ 00C3 7C0000            xcall _Timer16UsEcho_WritePeriod
+ 00C6                   .dbline 81
+ 00C6           ;               Timer16UsEcho_Start(); // Used to measure time until echo signal is returned 
+ 00C6 7C0000            xcall _Timer16UsEcho_Start
+ 00C9 20                pop X
+ 00CA                   .dbline 82
+ 00CA           ;               start++;
+ 00CA 761F              inc [_start+1]
+ 00CC 0E1E00            adc [_start],0
+ 00CF                   .dbline 83
+ 00CF           ;       }
+ 00CF 803A              xjmp L6
+ 00D1           L5:
+ 00D1                   .dbline 85
+ 00D1           ;       else
+ 00D1           ;       {
+ 00D1                   .dbline 86
+ 00D1           ;               usRawTimerValue = Timer16UsEcho_wReadTimer();
+ 00D1 10                push X
+ 00D2 7C0000            xcall _Timer16UsEcho_wReadTimer
+ 00D5 5A00              mov [__r0],X
+ 00D7 20                pop X
+ 00D8 5319              mov [_usRawTimerValue+3],A
+ 00DA 5F1800            mov [_usRawTimerValue+2],[__r0]
+ 00DD 551700            mov [_usRawTimerValue+1],0
+ 00E0 551600            mov [_usRawTimerValue],0
+ 00E3                   .dbline 87
+ 00E3           ;               Timer16UsEcho_Stop();
+ 00E3 10                push X
+ 00E4 7C0000            xcall _Timer16UsEcho_Stop
+ 00E7 20                pop X
+ 00E8                   .dbline 88
+ 00E8           ;               ltoa(lcdBuffer[0], usRawTimerValue, 10);
+ 00E8 5000              mov A,0
+ 00EA 08                push A
+ 00EB 500A              mov A,10
+ 00ED 08                push A
+ 00EE 5116              mov A,[_usRawTimerValue]
+ 00F0 08                push A
+ 00F1 5117              mov A,[_usRawTimerValue+1]
+ 00F3 08                push A
+ 00F4 5118              mov A,[_usRawTimerValue+2]
+ 00F6 08                push A
+ 00F7 5119              mov A,[_usRawTimerValue+3]
+ 00F9 08                push A
+ 00FA 5006              mov A,>_lcdBuffer
+ 00FC 08                push A
+ 00FD 5006              mov A,<_lcdBuffer
+ 00FF 08                push A
+ 0100 7C0000            xcall _ltoa
+ 0103 38F8              add SP,-8
+ 0105                   .dbline 89
+ 0105           ;               stop++;
+ 0105 7621              inc [_stop+1]
+ 0107 0E2000            adc [_stop],0
+ 010A                   .dbline 90
+ 010A           ;       }
+ 010A           L6:
+ 010A                   .dbline 91
+ 010A           ;       gpioTick = true;
+ 010A 550501            mov [_gpioTick+1],1
+ 010D 550400            mov [_gpioTick],0
+ 0110                   .dbline 92
+ 0110           ;       isrclear = PRT1DR;
+ 0110 5D04              mov A,REG[0x4]
+ 0112 5323              mov [_isrclear+1],A
+ 0114 552200            mov [_isrclear],0
+ 0117                   .dbline -2
+ 0117           L4:
+ 0117 18                pop A
+ 0118 5300              mov [__rZ],A
+ 011A 18                pop A
+ 011B 5300              mov [__rY],A
+ 011D 18                pop A
+ 011E 5300              mov [__rX],A
+ 0120 18                pop A
+ 0121 5300              mov [__r11],A
+ 0123 18                pop A
+ 0124 5300              mov [__r10],A
+ 0126 18                pop A
+ 0127 5300              mov [__r9],A
+ 0129 18                pop A
+ 012A 5300              mov [__r8],A
+ 012C 18                pop A
+ 012D 5300              mov [__r7],A
+ 012F 18                pop A
+ 0130 5300              mov [__r6],A
+ 0132 18                pop A
+ 0133 5300              mov [__r5],A
+ 0135 18                pop A
+ 0136 5300              mov [__r4],A
+ 0138 18                pop A
+ 0139 5300              mov [__r3],A
+ 013B 18                pop A
+ 013C 5300              mov [__r2],A
+ 013E 18                pop A
+ 013F 5300              mov [__r1],A
+ 0141 18                pop A
+ 0142 5300              mov [__r0],A
+ 0144 18                pop A
+ 0145                   .dbline 0 ; func end
+ 0145 7E                reti
+ 0146                   .dbend
+ 0146                   .dbfunc e main _main fV
+ 0146           _main::
+ 0146                   .dbline -1
+ 0146                   .dbline 99
+ 0146           ; }
+ 0146           ; 
+ 0146           ; /******************
+ 0146           ; *  Main function  *
+ 0146           ; ******************/
+ 0146           ; 
+ 0146           ; void main(void) {
+ 0146                   .dbline 100
+ 0146           ;       setup();
+ 0146 9141              xcall _setup
+ 0148 813C              xjmp L9
+ 014A           L8:
+ 014A                   .dbline 102
+ 014A           ; 
+ 014A           ;       while(1) {
+ 014A                   .dbline 103
+ 014A           ;               if(gpioTick) {
+ 014A 3C0400            cmp [_gpioTick],0
+ 014D B006              jnz X1
+ 014F 3C0500            cmp [_gpioTick+1],0
+ 0152 A007              jz L11
+ 0154           X1:
+ 0154                   .dbline 104
+ 0154           ;                       gpioTick = false;
+ 0154                   .dbline 104
+ 0154 550500            mov [_gpioTick+1],0
+ 0157 550400            mov [_gpioTick],0
+ 015A                   .dbline 105
+ 015A           ;               }
+ 015A           L11:
+ 015A                   .dbline 107
+ 015A           ;               
+ 015A           ;               if(timer8MainTick) {
+ 015A 3C0000            cmp [_timer8MainTick],0
+ 015D B006              jnz X2
+ 015F 3C0100            cmp [_timer8MainTick+1],0
+ 0162 A122              jz L13
+ 0164           X2:
+ 0164                   .dbline 108
+ 0164           ;                       timer8MainTick = false;
+ 0164                   .dbline 108
+ 0164 550100            mov [_timer8MainTick+1],0
+ 0167 550000            mov [_timer8MainTick],0
+ 016A                   .dbline 109
+ 016A           ;                       lcdUpdate++;
+ 016A 761D              inc [_lcdUpdate+1]
+ 016C 0E1C00            adc [_lcdUpdate],0
+ 016F                   .dbline 111
+ 016F           ;                       
+ 016F           ;                       if (lcdUpdate >= 499)
+ 016F 511D              mov A,[_lcdUpdate+1]
+ 0171 11F3              sub A,-13
+ 0173 511C              mov A,[_lcdUpdate]
+ 0175 1901              sbb A,1
+ 0177 C0FA              jc L15
+ 0179           X3:
+ 0179                   .dbline 113
+ 0179           ;                       {
+ 0179           ;                               lcdUpdate = 0;          
+ 0179                   .dbline 113
+ 0179 551D00            mov [_lcdUpdate+1],0
+ 017C 551C00            mov [_lcdUpdate],0
+ 017F                   .dbline 114
+ 017F           ;                               LCD_Control(0x01);
+ 017F 10                push X
+ 0180 5001              mov A,1
+ 0182 7C0000            xcall _LCD_Control
+ 0185                   .dbline 115
+ 0185           ;                               LCD_PrString(lcdBuffer[0]);
+ 0185 5006              mov A,>_lcdBuffer
+ 0187 08                push A
+ 0188 5006              mov A,<_lcdBuffer
+ 018A 5C                mov X,A
+ 018B 18                pop A
+ 018C 7C0000            xcall _LCD_PrString
+ 018F 20                pop X
+ 0190                   .dbline 117
+ 0190           ;                               
+ 0190           ;                               usDistance = (((46400-usRawTimerValue)/2) / 58);
+ 0190 5040              mov A,64
+ 0192 1219              sub A,[_usRawTimerValue+3]
+ 0194 5300              mov [__r3],A
+ 0196 50B5              mov A,-75
+ 0198 1A18              sbb A,[_usRawTimerValue+2]
+ 019A 5300              mov [__r2],A
+ 019C 5000              mov A,0
+ 019E 1A17              sbb A,[_usRawTimerValue+1]
+ 01A0 5300              mov [__r1],A
+ 01A2 5000              mov A,0
+ 01A4 1A16              sbb A,[_usRawTimerValue]
+ 01A6 5300              mov [__r0],A
+ 01A8 70FB              and F,-5
+ 01AA 6E00              rrc [__r0]
+ 01AC 6E00              rrc [__r1]
+ 01AE 6E00              rrc [__r2]
+ 01B0 6E00              rrc [__r3]
+ 01B2 5000              mov A,0
  01B4 08                push A
  01B5 08                push A
- 01B6 503A              mov A,58
- 01B8 08                push A
- 01B9 5100              mov A,[__r0]
- 01BB 08                push A
- 01BC 5100              mov A,[__r1]
- 01BE 08                push A
- 01BF 5100              mov A,[__r2]
- 01C1 08                push A
- 01C2 5100              mov A,[__r3]
- 01C4 08                push A
- 01C5 7C0000            xcall __divmodu_32X32_32
- 01C8 18                pop A
- 01C9 5300              mov [__r3],A
- 01CB 18                pop A
- 01CC 5300              mov [__r2],A
- 01CE 18                pop A
+ 01B6 08                push A
+ 01B7 503A              mov A,58
+ 01B9 08                push A
+ 01BA 5100              mov A,[__r0]
+ 01BC 08                push A
+ 01BD 5100              mov A,[__r1]
+ 01BF 08                push A
+ 01C0 5100              mov A,[__r2]
+ 01C2 08                push A
+ 01C3 5100              mov A,[__r3]
+ 01C5 08                push A
+ 01C6 7C0000            xcall __divmodu_32X32_32
+ 01C9 18                pop A
+ 01CA 5300              mov [__r3],A
+ 01CC 18                pop A
+ 01CD 5300              mov [__r2],A
  01CF 18                pop A
- 01D0 38FC              add SP,-4
- 01D2 5F0000            mov [__r1],[__r3]
- 01D5 5F0000            mov [__r0],[__r2]
- 01D8 5F1B00            mov [_usDistance+1],[__r1]
- 01DB 5F1A00            mov [_usDistance],[__r0]
- 01DE                   .dbline 103
- 01DE           ;                               itoa(lcdBuffer[1], usDistance,10);
- 01DE 5000              mov A,0
- 01E0 08                push A
- 01E1 500A              mov A,10
- 01E3 08                push A
- 01E4 511A              mov A,[_usDistance]
- 01E6 08                push A
- 01E7 511B              mov A,[_usDistance+1]
- 01E9 08                push A
- 01EA 5016              mov A,>_lcdBuffer+16
- 01EC 08                push A
- 01ED 5016              mov A,<_lcdBuffer+16
- 01EF 08                push A
- 01F0 7C0000            xcall _itoa
- 01F3                   .dbline 105
- 01F3           ;                               
- 01F3           ;                               itoa(lcdBuffer[1], start, 10);
- 01F3 5000              mov A,0
- 01F5 08                push A
- 01F6 500A              mov A,10
- 01F8 08                push A
- 01F9 511E              mov A,[_start]
- 01FB 08                push A
- 01FC 511F              mov A,[_start+1]
- 01FE 08                push A
- 01FF 5016              mov A,>_lcdBuffer+16
- 0201 08                push A
- 0202 5016              mov A,<_lcdBuffer+16
- 0204 08                push A
- 0205 7C0000            xcall _itoa
- 0208 38F4              add SP,-12
- 020A                   .dbline 106
- 020A           ;                               LCD_Position(0,10);
- 020A 10                push X
- 020B 570A              mov X,10
- 020D 5000              mov A,0
- 020F 7C0000            xcall _LCD_Position
- 0212                   .dbline 107
- 0212           ;                               LCD_PrString(lcdBuffer[1]);
- 0212 5016              mov A,>_lcdBuffer+16
- 0214 08                push A
- 0215 5016              mov A,<_lcdBuffer+16
- 0217 5C                mov X,A
- 0218 18                pop A
- 0219 7C0000            xcall _LCD_PrString
- 021C 20                pop X
- 021D                   .dbline 109
- 021D           ;                               
- 021D           ;                               itoa(lcdBuffer[1], stop, 10);
- 021D 5000              mov A,0
- 021F 08                push A
- 0220 500A              mov A,10
- 0222 08                push A
- 0223 5120              mov A,[_stop]
- 0225 08                push A
- 0226 5121              mov A,[_stop+1]
- 0228 08                push A
- 0229 5016              mov A,>_lcdBuffer+16
- 022B 08                push A
- 022C 5016              mov A,<_lcdBuffer+16
- 022E 08                push A
- 022F 7C0000            xcall _itoa
- 0232 38FA              add SP,-6
- 0234                   .dbline 110
- 0234           ;                               LCD_Position(1,10);
- 0234 10                push X
- 0235 570A              mov X,10
- 0237 5001              mov A,1
- 0239 7C0000            xcall _LCD_Position
- 023C                   .dbline 111
- 023C           ;                               LCD_PrString(lcdBuffer[1]);
- 023C 5016              mov A,>_lcdBuffer+16
- 023E 08                push A
- 023F 5016              mov A,<_lcdBuffer+16
- 0241 5C                mov X,A
- 0242 18                pop A
- 0243 7C0000            xcall _LCD_PrString
- 0246 20                pop X
- 0247                   .dbline 113
- 0247           ;                               
- 0247           ;                               itoa(lcdBuffer[1], usDistance, 10);
- 0247 5000              mov A,0
- 0249 08                push A
- 024A 500A              mov A,10
- 024C 08                push A
- 024D 511A              mov A,[_usDistance]
- 024F 08                push A
- 0250 511B              mov A,[_usDistance+1]
- 0252 08                push A
- 0253 5016              mov A,>_lcdBuffer+16
- 0255 08                push A
- 0256 5016              mov A,<_lcdBuffer+16
- 0258 08                push A
- 0259 7C0000            xcall _itoa
- 025C 38FA              add SP,-6
- 025E                   .dbline 114
- 025E           ;                               LCD_Position(1,0);
- 025E 10                push X
- 025F 5700              mov X,0
- 0261 5001              mov A,1
- 0263 7C0000            xcall _LCD_Position
- 0266                   .dbline 115
- 0266           ;                               LCD_PrString(lcdBuffer[1]);
- 0266 5016              mov A,>_lcdBuffer+16
- 0268 08                push A
- 0269 5016              mov A,<_lcdBuffer+16
- 026B 5C                mov X,A
- 026C 18                pop A
- 026D 7C0000            xcall _LCD_PrString
- 0270 20                pop X
- 0271                   .dbline 117
- 0271           ;                               
- 0271           ;                       }
- 0271           L15:
- 0271                   .dbline 119
- 0271           ;                       
- 0271           ;                       if(timer8MainCount >= 99) {
- 0271 5103              mov A,[_timer8MainCount+1]
- 0273 1163              sub A,99
- 0275 5102              mov A,[_timer8MainCount]
- 0277 1900              sbb A,0
- 0279 C009              jc L24
- 027B           X4:
- 027B                   .dbline 120
- 027B           ;                               timer8MainCount = 0;
- 027B                   .dbline 120
- 027B 550300            mov [_timer8MainCount+1],0
- 027E 550200            mov [_timer8MainCount],0
- 0281                   .dbline 121
- 0281           ;                               usTrigSend();
- 0281 904F              xcall _usTrigSend
- 0283                   .dbline 122
- 0283           ;                       }
- 0283           L24:
- 0283                   .dbline 123
- 0283           ;               }
- 0283           L13:
- 0283                   .dbline 124
- 0283           ;       }
- 0283           L9:
- 0283                   .dbline 87
- 0283 8EC5              xjmp L8
- 0285           X0:
- 0285                   .dbline -2
- 0285           L7:
- 0285                   .dbline 0 ; func end
- 0285 8FFF              jmp .
- 0287                   .dbend
- 0287                   .dbfunc e setup _setup fV
- 0287           ;            moi -> X+0
- 0287           _setup::
- 0287                   .dbline -1
- 0287 10                push X
- 0288 4F                mov X,SP
- 0289 3802              add SP,2
- 028B                   .dbline 131
- 028B           ; }
- 028B           ; 
- 028B           ; /**************
- 028B           ; *  Functions  *
- 028B           ; **************/
- 028B           ; 
- 028B           ; void setup(void) {
- 028B                   .dbline 132
- 028B           ;       int moi = 0;
- 028B 560100            mov [X+1],0
- 028E 560000            mov [X+0],0
- 0291                   .dbline 133
- 0291           ;       M8C_EnableGInt;
- 0291 7101                      or  F, 01h
- 0293           
- 0293                   .dbline 134
- 0293           ;       M8C_EnableIntMask(INT_MSK0, INT_MSK0_GPIO);
- 0293 43E020            or REG[0xe0],32
- 0296                   .dbline 135
- 0296           ;       LCD_Init();
- 0296 10                push X
- 0297 7C0000            xcall _LCD_Init
- 029A                   .dbline 136
- 029A           ;       LCD_Start();
- 029A 7C0000            xcall _LCD_Start
- 029D                   .dbline 137
- 029D           ;       Timer8UsTrig_EnableInt();
- 029D 7C0000            xcall _Timer8UsTrig_EnableInt
- 02A0                   .dbline 138
- 02A0           ;       Timer8UsTrig_Start();
- 02A0 7C0000            xcall _Timer8UsTrig_Start
- 02A3                   .dbline 139
- 02A3           ;       Timer8Main_EnableInt();
- 02A3 7C0000            xcall _Timer8Main_EnableInt
- 02A6                   .dbline 140
- 02A6           ;       Timer8Main_Start();
- 02A6 7C0000            xcall _Timer8Main_Start
- 02A9                   .dbline 142
- 02A9           ;       
- 02A9           ;       Timer16UsEcho_EnableInt();
- 02A9 7C0000            xcall _Timer16UsEcho_EnableInt
- 02AC 20                pop X
- 02AD                   .dbline 143
- 02AD           ;       backlight(1);
- 02AD 5000              mov A,0
- 02AF 08                push A
- 02B0 5001              mov A,1
- 02B2 08                push A
- 02B3 9370              xcall _backlight
- 02B5 38FE              add SP,-2
- 02B7                   .dbline 144
+ 01D0 18                pop A
+ 01D1 38FC              add SP,-4
+ 01D3 5F0000            mov [__r1],[__r3]
+ 01D6 5F0000            mov [__r0],[__r2]
+ 01D9 5F1B00            mov [_usDistance+1],[__r1]
+ 01DC 5F1A00            mov [_usDistance],[__r0]
+ 01DF                   .dbline 118
+ 01DF           ;                               itoa(lcdBuffer[1], usDistance,10);
+ 01DF 5000              mov A,0
+ 01E1 08                push A
+ 01E2 500A              mov A,10
+ 01E4 08                push A
+ 01E5 511A              mov A,[_usDistance]
+ 01E7 08                push A
+ 01E8 511B              mov A,[_usDistance+1]
+ 01EA 08                push A
+ 01EB 5016              mov A,>_lcdBuffer+16
+ 01ED 08                push A
+ 01EE 5016              mov A,<_lcdBuffer+16
+ 01F0 08                push A
+ 01F1 7C0000            xcall _itoa
+ 01F4                   .dbline 120
+ 01F4           ;                               
+ 01F4           ;                               itoa(lcdBuffer[1], start, 10);
+ 01F4 5000              mov A,0
+ 01F6 08                push A
+ 01F7 500A              mov A,10
+ 01F9 08                push A
+ 01FA 511E              mov A,[_start]
+ 01FC 08                push A
+ 01FD 511F              mov A,[_start+1]
+ 01FF 08                push A
+ 0200 5016              mov A,>_lcdBuffer+16
+ 0202 08                push A
+ 0203 5016              mov A,<_lcdBuffer+16
+ 0205 08                push A
+ 0206 7C0000            xcall _itoa
+ 0209 38F4              add SP,-12
+ 020B                   .dbline 121
+ 020B           ;                               LCD_Position(0,10);
+ 020B 10                push X
+ 020C 570A              mov X,10
+ 020E 5000              mov A,0
+ 0210 7C0000            xcall _LCD_Position
+ 0213                   .dbline 122
+ 0213           ;                               LCD_PrString(lcdBuffer[1]);
+ 0213 5016              mov A,>_lcdBuffer+16
+ 0215 08                push A
+ 0216 5016              mov A,<_lcdBuffer+16
+ 0218 5C                mov X,A
+ 0219 18                pop A
+ 021A 7C0000            xcall _LCD_PrString
+ 021D 20                pop X
+ 021E                   .dbline 124
+ 021E           ;                               
+ 021E           ;                               itoa(lcdBuffer[1], stop, 10);
+ 021E 5000              mov A,0
+ 0220 08                push A
+ 0221 500A              mov A,10
+ 0223 08                push A
+ 0224 5120              mov A,[_stop]
+ 0226 08                push A
+ 0227 5121              mov A,[_stop+1]
+ 0229 08                push A
+ 022A 5016              mov A,>_lcdBuffer+16
+ 022C 08                push A
+ 022D 5016              mov A,<_lcdBuffer+16
+ 022F 08                push A
+ 0230 7C0000            xcall _itoa
+ 0233 38FA              add SP,-6
+ 0235                   .dbline 125
+ 0235           ;                               LCD_Position(1,10);
+ 0235 10                push X
+ 0236 570A              mov X,10
+ 0238 5001              mov A,1
+ 023A 7C0000            xcall _LCD_Position
+ 023D                   .dbline 126
+ 023D           ;                               LCD_PrString(lcdBuffer[1]);
+ 023D 5016              mov A,>_lcdBuffer+16
+ 023F 08                push A
+ 0240 5016              mov A,<_lcdBuffer+16
+ 0242 5C                mov X,A
+ 0243 18                pop A
+ 0244 7C0000            xcall _LCD_PrString
+ 0247 20                pop X
+ 0248                   .dbline 128
+ 0248           ;                               
+ 0248           ;                               itoa(lcdBuffer[1], usDistance, 10);
+ 0248 5000              mov A,0
+ 024A 08                push A
+ 024B 500A              mov A,10
+ 024D 08                push A
+ 024E 511A              mov A,[_usDistance]
+ 0250 08                push A
+ 0251 511B              mov A,[_usDistance+1]
+ 0253 08                push A
+ 0254 5016              mov A,>_lcdBuffer+16
+ 0256 08                push A
+ 0257 5016              mov A,<_lcdBuffer+16
+ 0259 08                push A
+ 025A 7C0000            xcall _itoa
+ 025D 38FA              add SP,-6
+ 025F                   .dbline 129
+ 025F           ;                               LCD_Position(1,0);
+ 025F 10                push X
+ 0260 5700              mov X,0
+ 0262 5001              mov A,1
+ 0264 7C0000            xcall _LCD_Position
+ 0267                   .dbline 130
+ 0267           ;                               LCD_PrString(lcdBuffer[1]);
+ 0267 5016              mov A,>_lcdBuffer+16
+ 0269 08                push A
+ 026A 5016              mov A,<_lcdBuffer+16
+ 026C 5C                mov X,A
+ 026D 18                pop A
+ 026E 7C0000            xcall _LCD_PrString
+ 0271 20                pop X
+ 0272                   .dbline 132
+ 0272           ;                               
+ 0272           ;                       }
+ 0272           L15:
+ 0272                   .dbline 134
+ 0272           ;                       
+ 0272           ;                       if(timer8MainCount >= 99) {
+ 0272 5103              mov A,[_timer8MainCount+1]
+ 0274 1163              sub A,99
+ 0276 5102              mov A,[_timer8MainCount]
+ 0278 1900              sbb A,0
+ 027A C00A              jc L24
+ 027C           X4:
+ 027C                   .dbline 135
+ 027C           ;                               timer8MainCount = 0;
+ 027C                   .dbline 135
+ 027C 550300            mov [_timer8MainCount+1],0
+ 027F 550200            mov [_timer8MainCount],0
+ 0282                   .dbline 136
+ 0282           ;                               usTrigSend();
+ 0282 7C0000            xcall _usTrigSend
+ 0285                   .dbline 137
+ 0285           ;                       }
+ 0285           L24:
+ 0285                   .dbline 138
+ 0285           ;               }
+ 0285           L13:
+ 0285                   .dbline 139
+ 0285           ;       }
+ 0285           L9:
+ 0285                   .dbline 102
+ 0285 8EC4              xjmp L8
+ 0287           X0:
+ 0287                   .dbline -2
+ 0287           L7:
+ 0287                   .dbline 0 ; func end
+ 0287 8FFF              jmp .
+ 0289                   .dbend
+ 0289                   .dbfunc e setup _setup fV
+ 0289           ;            moi -> X+0
+ 0289           _setup::
+ 0289                   .dbline -1
+ 0289 10                push X
+ 028A 4F                mov X,SP
+ 028B 3802              add SP,2
+ 028D                   .dbline 146
+ 028D           ; }
+ 028D           ; 
+ 028D           ; /**************
+ 028D           ; *  Functions  *
+ 028D           ; **************/
+ 028D           ; 
+ 028D           ; void setup(void) {
+ 028D                   .dbline 147
+ 028D           ;       int moi = 0;
+ 028D 560100            mov [X+1],0
+ 0290 560000            mov [X+0],0
+ 0293                   .dbline 148
+ 0293           ;       M8C_EnableGInt;
+ 0293 7101                      or  F, 01h
+ 0295           
+ 0295                   .dbline 149
+ 0295           ;       M8C_EnableIntMask(INT_MSK0, INT_MSK0_GPIO);
+ 0295 43E020            or REG[0xe0],32
+ 0298                   .dbline 150
+ 0298           ;       LCD_Init();
+ 0298 10                push X
+ 0299 7C0000            xcall _LCD_Init
+ 029C                   .dbline 151
+ 029C           ;       LCD_Start();
+ 029C 7C0000            xcall _LCD_Start
+ 029F                   .dbline 152
+ 029F           ;       Timer8UsTrig_EnableInt();
+ 029F 7C0000            xcall _Timer8UsTrig_EnableInt
+ 02A2                   .dbline 153
+ 02A2           ;       Timer8UsTrig_Start();
+ 02A2 7C0000            xcall _Timer8UsTrig_Start
+ 02A5                   .dbline 154
+ 02A5           ;       Timer8Main_EnableInt();
+ 02A5 7C0000            xcall _Timer8Main_EnableInt
+ 02A8                   .dbline 155
+ 02A8           ;       Timer8Main_Start();
+ 02A8 7C0000            xcall _Timer8Main_Start
+ 02AB                   .dbline 157
+ 02AB           ;       
+ 02AB           ;       Timer16UsEcho_EnableInt();
+ 02AB 7C0000            xcall _Timer16UsEcho_EnableInt
+ 02AE 20                pop X
+ 02AF                   .dbline 158
+ 02AF           ;       backlight(1);
+ 02AF 5001              mov A,1
+ 02B1 08                push A
+ 02B2 7C0000            xcall _backlight
+ 02B5 38FF              add SP,-1
+ 02B7                   .dbline 159
  02B7           ;       for (moi = 0; moi < 9999; moi++);
  02B7 560100            mov [X+1],0
  02BA 560000            mov [X+0],0
  02BD           L27:
- 02BD                   .dbline 144
+ 02BD                   .dbline 159
  02BD           L28:
- 02BD                   .dbline 144
+ 02BD                   .dbline 159
  02BD 7701              inc [X+1]
  02BF 0F0000            adc [X+0],0
- 02C2                   .dbline 144
+ 02C2                   .dbline 159
  02C2 5201              mov A,[X+1]
  02C4 110F              sub A,15
  02C6 5200              mov A,[X+0]
@@ -769,786 +782,3 @@
  02D1 7F                ret
  02D2                   .dbsym l moi 0 I
  02D2                   .dbend
- 02D2                   .dbfunc e usTrigSend _usTrigSend fV
- 02D2           _usTrigSend::
- 02D2                   .dbline -1
- 02D2                   .dbline 148
- 02D2           ; }
- 02D2           ; 
- 02D2           ; // Sends ultrasound trigger signal
- 02D2           ; void usTrigSend(void) {
- 02D2                   .dbline 149
- 02D2           ;       digitalWrite(0, 4, 1); // Start the trigger signal
- 02D2 5001              mov A,1
- 02D4 08                push A
- 02D5 5004              mov A,4
- 02D7 08                push A
- 02D8 5000              mov A,0
- 02DA 08                push A
- 02DB 924B              xcall _digitalWrite
- 02DD 38FD              add SP,-3
- 02DF                   .dbline 150
- 02DF           ;       Timer8UsTrig_Start(); // Used to measure 10us trigger pulse
- 02DF 10                push X
- 02E0 7C0000            xcall _Timer8UsTrig_Start
- 02E3 20                pop X
- 02E4                   .dbline -2
- 02E4           L31:
- 02E4                   .dbline 0 ; func end
- 02E4 7F                ret
- 02E5                   .dbend
- 02E5                   .dbfunc e drive _drive fV
- 02E5           ;            dir -> X-4
- 02E5           _drive::
- 02E5                   .dbline -1
- 02E5 10                push X
- 02E6 4F                mov X,SP
- 02E7 3802              add SP,2
- 02E9                   .dbline 161
- 02E9           ; }
- 02E9           ; 
- 02E9           ; // Used to drive the H-Bridge; think of a numpad for controls
- 02E9           ; // 5 = 00 00 = 8 = stop
- 02E9           ; // 8 = 10 10 = xx = forward (L&R forward)
- 02E9           ; // 2 = 01 01 = xx = backward  (L&R backwards)
- 02E9           ; // 4 = 01 10 = xx = left    (L back   R forward)
- 02E9           ; // 6 = 10 01 = xx = right (L forward  R backwards)
- 02E9           ; // 7 = 00 10 = xx = left move(L coast R forward)
- 02E9           ; // 9 = 10 00 = xx = right mov(L forward L coast)
- 02E9           ; void drive(BYTE dir) {
- 02E9                   .dbline 162
- 02E9           ;       switch (dir){
- 02E9 52FC              mov A,[X-4]
- 02EB 5401              mov [X+1],A
- 02ED 560000            mov [X+0],0
- 02F0 3D0000            cmp [X+0],0
- 02F3 B006              jnz X6
- 02F5 3D0102            cmp [X+1],2
- 02F8 A02E              jz L38
- 02FA           X6:
- 02FA 3D0000            cmp [X+0],0
- 02FD B006              jnz X7
- 02FF 3D0104            cmp [X+1],4
- 0302 A02C              jz L39
- 0304           X7:
- 0304 3D0000            cmp [X+0],0
- 0307 B006              jnz X8
- 0309 3D0105            cmp [X+1],5
- 030C A00D              jz L36
- 030E           X8:
- 030E 3D0000            cmp [X+0],0
- 0311 B006              jnz X9
- 0313 3D0108            cmp [X+1],8
- 0316 A008              jz L37
- 0318           X9:
- 0318 801E              xjmp L33
- 031A           L36:
- 031A                   .dbline 164
- 031A           ;               case 5: // Stop
- 031A           ;               PRT0DR &= ~0xFF; // All pins low
- 031A 410000            and REG[0],0
- 031D                   .dbline 165
- 031D           ;               break;
- 031D 801C              xjmp L34
- 031F           L37:
- 031F                   .dbline 167
- 031F           ;       case 8: // Forward (1010)
- 031F           ;               PRT0DR &= ~0x5;
- 031F 4100FA            and REG[0],-6
- 0322                   .dbline 168
- 0322           ;               PRT0DR |= 0xA;
- 0322 43000A            or REG[0],10
- 0325                   .dbline 169
- 0325           ;               break;
- 0325 8014              xjmp L34
- 0327           L38:
- 0327                   .dbline 171
- 0327           ;       case 2: // Back (0101)
- 0327           ;               PRT0DR &= ~0xA;
- 0327 4100F5            and REG[0],-11
- 032A                   .dbline 172
- 032A           ;               PRT0DR |= 0x5;
- 032A 430005            or REG[0],5
- 032D                   .dbline 173
- 032D           ;               break;
- 032D 800C              xjmp L34
- 032F           L39:
- 032F                   .dbline 175
- 032F           ;       case 4: // Left (01 10)
- 032F           ;               PRT0DR &= ~0x9;
- 032F 4100F6            and REG[0],-10
- 0332                   .dbline 176
- 0332           ;               PRT0DR |= 0x6;
- 0332 430006            or REG[0],6
- 0335                   .dbline 177
- 0335           ;               break;
- 0335 8004              xjmp L34
- 0337           L33:
- 0337                   .dbline 179
- 0337           ;       default:
- 0337           ;               PRT0DR &= ~0x15; // All pins low
- 0337 4100EA            and REG[0],-22
- 033A                   .dbline 180
- 033A           ;               break;
- 033A           L34:
- 033A                   .dbline -2
- 033A           L32:
- 033A 38FE              add SP,-2
- 033C 20                pop X
- 033D                   .dbline 0 ; func end
- 033D 7F                ret
- 033E                   .dbsym l dir -4 c
- 033E                   .dbend
- 033E                   .dbfunc e pinMode _pinMode fV
- 033E           ;        bitMask -> X+2
- 033E           ;              i -> X+0
- 033E           ;          state -> X-6
- 033E           ;            pin -> X-5
- 033E           ;           port -> X-4
- 033E           _pinMode::
- 033E                   .dbline -1
- 033E 10                push X
- 033F 4F                mov X,SP
- 0340 3805              add SP,5
- 0342                   .dbline 185
- 0342           ;       } 
- 0342           ; }
- 0342           ; 
- 0342           ; // Sets the pin mode
- 0342           ; void pinMode(BYTE port, BYTE pin, BYTE state) {
- 0342                   .dbline 187
- 0342           ;       int i;
- 0342           ;       BYTE bitMask = 1;
- 0342 560201            mov [X+2],1
- 0345                   .dbline 188
- 0345           ;       for(i = 0; i < pin; i++) { bitMask *= 2; }
- 0345 560100            mov [X+1],0
- 0348 560000            mov [X+0],0
- 034B 8008              xjmp L44
- 034D           L41:
- 034D                   .dbline 188
- 034D                   .dbline 188
- 034D 6602              asl [X+2]
- 034F                   .dbline 188
- 034F           L42:
- 034F                   .dbline 188
- 034F 7701              inc [X+1]
- 0351 0F0000            adc [X+0],0
- 0354           L44:
- 0354                   .dbline 188
- 0354 52FB              mov A,[X-5]
- 0356 5300              mov [__r1],A
- 0358 5201              mov A,[X+1]
- 035A 1200              sub A,[__r1]
- 035C 5000              mov A,0
- 035E 3180              xor A,-128
- 0360 5300              mov [__rX],A
- 0362 5200              mov A,[X+0]
- 0364 3180              xor A,-128
- 0366 1A00              sbb A,[__rX]
- 0368 CFE4              jc L41
- 036A           X10:
- 036A                   .dbline 190
- 036A           ; 
- 036A           ;       switch (state){
- 036A 52FA              mov A,[X-6]
- 036C 5404              mov [X+4],A
- 036E 560300            mov [X+3],0
- 0371 3D0300            cmp [X+3],0
- 0374 B006              jnz X11
- 0376 3D0400            cmp [X+4],0
- 0379 A017              jz L48
- 037B           X11:
- 037B 3D0300            cmp [X+3],0
- 037E B006              jnz X12
- 0380 3D0401            cmp [X+4],1
- 0383 A091              jz L55
- 0385           X12:
- 0385 3D0300            cmp [X+3],0
- 0388 B006              jnz X13
- 038A 3D0403            cmp [X+4],3
- 038D A10E              jz L62
- 038F           X13:
- 038F 8194              xjmp L46
- 0391           L48:
- 0391                   .dbline 192
- 0391           ;               case 0: // Resistive Pulldown
- 0391           ;                       if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 &= ~bitMask; PRT0DM0 &= ~bitMask; }
- 0391 3DFC00            cmp [X-4],0
- 0394 B028              jnz L49
- 0396                   .dbline 192
- 0396                   .dbline 192
- 0396 5202              mov A,[X+2]
- 0398 73                cpl A
- 0399 5300              mov [__r0],A
- 039B 5D03              mov A,REG[0x3]
- 039D 2200              and A,[__r0]
- 039F 6003              mov REG[0x3],A
- 03A1                   .dbline 192
- 03A1 5202              mov A,[X+2]
- 03A3 73                cpl A
- 03A4 5300              mov [__r0],A
- 03A6 7110              or F,0x10  ; iopage = 1
- 03A8 5D01              mov A,REG[0x1]
- 03AA 2200              and A,[__r0]
- 03AC 6001              mov REG[0x1],A
- 03AE                   .dbline 192
- 03AE 5202              mov A,[X+2]
- 03B0 73                cpl A
- 03B1 5300              mov [__r0],A
- 03B3 5D00              mov A,REG[0]
- 03B5 2200              and A,[__r0]
- 03B7 6000              mov REG[0],A
- 03B9                   .dbline 192
- 03B9 70CF              and F,0xCF      ; iopage = 0
- 03BB 8168              xjmp L46
- 03BD           L49:
- 03BD                   .dbline 193
- 03BD           ;                       else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 &= ~bitMask; PRT1DM0 &= ~bitMask; }
- 03BD 3DFC01            cmp [X-4],1
- 03C0 B028              jnz L51
- 03C2                   .dbline 193
- 03C2                   .dbline 193
- 03C2 5202              mov A,[X+2]
- 03C4 73                cpl A
- 03C5 5300              mov [__r0],A
- 03C7 5D07              mov A,REG[0x7]
- 03C9 2200              and A,[__r0]
- 03CB 6007              mov REG[0x7],A
- 03CD                   .dbline 193
- 03CD 5202              mov A,[X+2]
- 03CF 73                cpl A
- 03D0 5300              mov [__r0],A
- 03D2 7110              or F,0x10  ; iopage = 1
- 03D4 5D05              mov A,REG[0x5]
- 03D6 2200              and A,[__r0]
- 03D8 6005              mov REG[0x5],A
- 03DA                   .dbline 193
- 03DA 5202              mov A,[X+2]
- 03DC 73                cpl A
- 03DD 5300              mov [__r0],A
- 03DF 5D04              mov A,REG[0x4]
- 03E1 2200              and A,[__r0]
- 03E3 6004              mov REG[0x4],A
- 03E5                   .dbline 193
- 03E5 70CF              and F,0xCF      ; iopage = 0
- 03E7 813C              xjmp L46
- 03E9           L51:
- 03E9                   .dbline 194
- 03E9           ;                       else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 &= ~bitMask; PRT2DM0 &= ~bitMask; }
- 03E9 3DFC02            cmp [X-4],2
- 03EC B137              jnz L46
- 03EE                   .dbline 194
- 03EE                   .dbline 194
- 03EE 5202              mov A,[X+2]
- 03F0 73                cpl A
- 03F1 5300              mov [__r0],A
- 03F3 5D0B              mov A,REG[0xb]
- 03F5 2200              and A,[__r0]
- 03F7 600B              mov REG[0xb],A
- 03F9                   .dbline 194
- 03F9 5202              mov A,[X+2]
- 03FB 73                cpl A
- 03FC 5300              mov [__r0],A
- 03FE 7110              or F,0x10  ; iopage = 1
- 0400 5D09              mov A,REG[0x9]
- 0402 2200              and A,[__r0]
- 0404 6009              mov REG[0x9],A
- 0406                   .dbline 194
- 0406 5202              mov A,[X+2]
- 0408 73                cpl A
- 0409 5300              mov [__r0],A
- 040B 5D08              mov A,REG[0x8]
- 040D 2200              and A,[__r0]
- 040F 6008              mov REG[0x8],A
- 0411                   .dbline 194
- 0411                   .dbline 195
- 0411           ;                       break;
- 0411 70CF              and F,0xCF      ; iopage = 0
- 0413 8110              xjmp L46
- 0415           L55:
- 0415                   .dbline 197
- 0415           ;               case 1: // Strong
- 0415           ;                       if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 &= ~bitMask; PRT0DM0 |= bitMask; }
- 0415 3DFC00            cmp [X-4],0
- 0418 B029              jnz L56
- 041A                   .dbline 197
- 041A                   .dbline 197
- 041A 5202              mov A,[X+2]
- 041C 73                cpl A
- 041D 5300              mov [__r0],A
- 041F 5D03              mov A,REG[0x3]
- 0421 2200              and A,[__r0]
- 0423 6003              mov REG[0x3],A
- 0425                   .dbline 197
- 0425 5202              mov A,[X+2]
- 0427 73                cpl A
- 0428 5300              mov [__r0],A
- 042A 7110              or F,0x10  ; iopage = 1
- 042C 5D01              mov A,REG[0x1]
- 042E 2200              and A,[__r0]
- 0430 6001              mov REG[0x1],A
- 0432                   .dbline 197
- 0432 5D00              mov A,REG[0]
- 0434 5300              mov [__r0],A
- 0436 5202              mov A,[X+2]
- 0438 2C00              or [__r0],A
- 043A 5100              mov A,[__r0]
- 043C 6000              mov REG[0],A
- 043E                   .dbline 197
- 043E 70CF              and F,0xCF      ; iopage = 0
- 0440 80E3              xjmp L46
- 0442           L56:
- 0442                   .dbline 198
- 0442           ;                       else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 &= ~bitMask; PRT1DM0 |= bitMask; }
- 0442 3DFC01            cmp [X-4],1
- 0445 B029              jnz L58
- 0447                   .dbline 198
- 0447                   .dbline 198
- 0447 5202              mov A,[X+2]
- 0449 73                cpl A
- 044A 5300              mov [__r0],A
- 044C 5D07              mov A,REG[0x7]
- 044E 2200              and A,[__r0]
- 0450 6007              mov REG[0x7],A
- 0452                   .dbline 198
- 0452 5202              mov A,[X+2]
- 0454 73                cpl A
- 0455 5300              mov [__r0],A
- 0457 7110              or F,0x10  ; iopage = 1
- 0459 5D05              mov A,REG[0x5]
- 045B 2200              and A,[__r0]
- 045D 6005              mov REG[0x5],A
- 045F                   .dbline 198
- 045F 5D04              mov A,REG[0x4]
- 0461 5300              mov [__r0],A
- 0463 5202              mov A,[X+2]
- 0465 2C00              or [__r0],A
- 0467 5100              mov A,[__r0]
- 0469 6004              mov REG[0x4],A
- 046B                   .dbline 198
- 046B 70CF              and F,0xCF      ; iopage = 0
- 046D 80B6              xjmp L46
- 046F           L58:
- 046F                   .dbline 199
- 046F           ;                       else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 &= ~bitMask; PRT2DM0 |= bitMask; }
- 046F 3DFC02            cmp [X-4],2
- 0472 B0B1              jnz L46
- 0474                   .dbline 199
- 0474                   .dbline 199
- 0474 5202              mov A,[X+2]
- 0476 73                cpl A
- 0477 5300              mov [__r0],A
- 0479 5D0B              mov A,REG[0xb]
- 047B 2200              and A,[__r0]
- 047D 600B              mov REG[0xb],A
- 047F                   .dbline 199
- 047F 5202              mov A,[X+2]
- 0481 73                cpl A
- 0482 5300              mov [__r0],A
- 0484 7110              or F,0x10  ; iopage = 1
- 0486 5D09              mov A,REG[0x9]
- 0488 2200              and A,[__r0]
- 048A 6009              mov REG[0x9],A
- 048C                   .dbline 199
- 048C 5D08              mov A,REG[0x8]
- 048E 5300              mov [__r0],A
- 0490 5202              mov A,[X+2]
- 0492 2C00              or [__r0],A
- 0494 5100              mov A,[__r0]
- 0496 6008              mov REG[0x8],A
- 0498                   .dbline 199
- 0498                   .dbline 200
- 0498           ;                       break;
- 0498 70CF              and F,0xCF      ; iopage = 0
- 049A 8089              xjmp L46
- 049C           L62:
- 049C                   .dbline 202
- 049C           ;               case 3: // Pull up
- 049C           ;                       if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 |= bitMask; PRT0DM0 |= bitMask; }
- 049C 3DFC00            cmp [X-4],0
- 049F B02A              jnz L63
- 04A1                   .dbline 202
- 04A1                   .dbline 202
- 04A1 5202              mov A,[X+2]
- 04A3 73                cpl A
- 04A4 5300              mov [__r0],A
- 04A6 5D03              mov A,REG[0x3]
- 04A8 2200              and A,[__r0]
- 04AA 6003              mov REG[0x3],A
- 04AC                   .dbline 202
- 04AC 7110              or F,0x10  ; iopage = 1
- 04AE 5D01              mov A,REG[0x1]
- 04B0 5300              mov [__r0],A
- 04B2 5202              mov A,[X+2]
- 04B4 2C00              or [__r0],A
- 04B6 5100              mov A,[__r0]
- 04B8 6001              mov REG[0x1],A
- 04BA                   .dbline 202
- 04BA 5D00              mov A,REG[0]
- 04BC 5300              mov [__r0],A
- 04BE 5202              mov A,[X+2]
- 04C0 2C00              or [__r0],A
- 04C2 5100              mov A,[__r0]
- 04C4 6000              mov REG[0],A
- 04C6                   .dbline 202
- 04C6 70CF              and F,0xCF      ; iopage = 0
- 04C8 805B              xjmp L46
- 04CA           L63:
- 04CA                   .dbline 203
- 04CA           ;                       else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 |= bitMask; PRT1DM0 |= bitMask; }
- 04CA 3DFC01            cmp [X-4],1
- 04CD B02A              jnz L65
- 04CF                   .dbline 203
- 04CF                   .dbline 203
- 04CF 5202              mov A,[X+2]
- 04D1 73                cpl A
- 04D2 5300              mov [__r0],A
- 04D4 5D07              mov A,REG[0x7]
- 04D6 2200              and A,[__r0]
- 04D8 6007              mov REG[0x7],A
- 04DA                   .dbline 203
- 04DA 7110              or F,0x10  ; iopage = 1
- 04DC 5D05              mov A,REG[0x5]
- 04DE 5300              mov [__r0],A
- 04E0 5202              mov A,[X+2]
- 04E2 2C00              or [__r0],A
- 04E4 5100              mov A,[__r0]
- 04E6 6005              mov REG[0x5],A
- 04E8                   .dbline 203
- 04E8 5D04              mov A,REG[0x4]
- 04EA 5300              mov [__r0],A
- 04EC 5202              mov A,[X+2]
- 04EE 2C00              or [__r0],A
- 04F0 5100              mov A,[__r0]
- 04F2 6004              mov REG[0x4],A
- 04F4                   .dbline 203
- 04F4 70CF              and F,0xCF      ; iopage = 0
- 04F6 802D              xjmp L46
- 04F8           L65:
- 04F8                   .dbline 204
- 04F8           ;                       else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 |= bitMask; PRT2DM0 |= bitMask; }
- 04F8 3DFC02            cmp [X-4],2
- 04FB B028              jnz L46
- 04FD                   .dbline 204
- 04FD                   .dbline 204
- 04FD 5202              mov A,[X+2]
- 04FF 73                cpl A
- 0500 5300              mov [__r0],A
- 0502 5D0B              mov A,REG[0xb]
- 0504 2200              and A,[__r0]
- 0506 600B              mov REG[0xb],A
- 0508                   .dbline 204
- 0508 7110              or F,0x10  ; iopage = 1
- 050A 5D09              mov A,REG[0x9]
- 050C 5300              mov [__r0],A
- 050E 5202              mov A,[X+2]
- 0510 2C00              or [__r0],A
- 0512 5100              mov A,[__r0]
- 0514 6009              mov REG[0x9],A
- 0516                   .dbline 204
- 0516 5D08              mov A,REG[0x8]
- 0518 5300              mov [__r0],A
- 051A 5202              mov A,[X+2]
- 051C 2C00              or [__r0],A
- 051E 5100              mov A,[__r0]
- 0520 6008              mov REG[0x8],A
- 0522                   .dbline 204
- 0522                   .dbline 205
- 0522           ;                       break;
- 0522                   .dbline 207
- 0522           ;               default:
- 0522           ;                       break;
- 0522 70CF              and F,0xCF      ; iopage = 0
- 0524           L46:
- 0524                   .dbline -2
- 0524           L40:
- 0524 38FB              add SP,-5
- 0526 20                pop X
- 0527                   .dbline 0 ; func end
- 0527 7F                ret
- 0528                   .dbsym l bitMask 2 c
- 0528                   .dbsym l i 0 I
- 0528                   .dbsym l state -6 c
- 0528                   .dbsym l pin -5 c
- 0528                   .dbsym l port -4 c
- 0528                   .dbend
- 0528                   .dbfunc e digitalWrite _digitalWrite fV
- 0528           ;        bitMask -> X+2
- 0528           ;              i -> X+0
- 0528           ;          state -> X-6
- 0528           ;            pin -> X-5
- 0528           ;           port -> X-4
- 0528           _digitalWrite::
- 0528                   .dbline -1
- 0528 10                push X
- 0529 4F                mov X,SP
- 052A 3805              add SP,5
- 052C                   .dbline 213
- 052C           ;       } 
- 052C           ; }
- 052C           ; 
- 052C           ; // Function for setting pins
- 052C           ; // 0 = low, 1 = high, 2 = toggle
- 052C           ; void digitalWrite(BYTE port, BYTE pin, BYTE state) {
- 052C                   .dbline 215
- 052C           ;       int i ;
- 052C           ;       BYTE bitMask = 1; 
- 052C 560201            mov [X+2],1
- 052F                   .dbline 216
- 052F           ;       for(i = 0; i < pin; i++) { bitMask *= 2; }
- 052F 560100            mov [X+1],0
- 0532 560000            mov [X+0],0
- 0535 8008              xjmp L73
- 0537           L70:
- 0537                   .dbline 216
- 0537                   .dbline 216
- 0537 6602              asl [X+2]
- 0539                   .dbline 216
- 0539           L71:
- 0539                   .dbline 216
- 0539 7701              inc [X+1]
- 053B 0F0000            adc [X+0],0
- 053E           L73:
- 053E                   .dbline 216
- 053E 52FB              mov A,[X-5]
- 0540 5300              mov [__r1],A
- 0542 5201              mov A,[X+1]
- 0544 1200              sub A,[__r1]
- 0546 5000              mov A,0
- 0548 3180              xor A,-128
- 054A 5300              mov [__rX],A
- 054C 5200              mov A,[X+0]
- 054E 3180              xor A,-128
- 0550 1A00              sbb A,[__rX]
- 0552 CFE4              jc L70
- 0554           X14:
- 0554                   .dbline 218
- 0554           ; 
- 0554           ;       switch (state){
- 0554 52FA              mov A,[X-6]
- 0556 5404              mov [X+4],A
- 0558 560300            mov [X+3],0
- 055B 3D0300            cmp [X+3],0
- 055E B006              jnz X15
- 0560 3D0400            cmp [X+4],0
- 0563 A017              jz L77
- 0565           X15:
- 0565 3D0300            cmp [X+3],0
- 0568 B006              jnz X16
- 056A 3D0401            cmp [X+4],1
- 056D A043              jz L84
- 056F           X16:
- 056F 3D0300            cmp [X+3],0
- 0572 B006              jnz X17
- 0574 3D0402            cmp [X+4],2
- 0577 A072              jz L91
- 0579           X17:
- 0579 80A7              xjmp L75
- 057B           L77:
- 057B                   .dbline 220
- 057B           ;               case 0:
- 057B           ;                       if(port == 0) PRT0DR &= ~bitMask;
- 057B 3DFC00            cmp [X-4],0
- 057E B00E              jnz L78
- 0580                   .dbline 220
- 0580 5202              mov A,[X+2]
- 0582 73                cpl A
- 0583 5300              mov [__r0],A
- 0585 5D00              mov A,REG[0]
- 0587 2200              and A,[__r0]
- 0589 6000              mov REG[0],A
- 058B 8095              xjmp L75
- 058D           L78:
- 058D                   .dbline 221
- 058D           ;                       else if(port == 1) PRT1DR &= ~bitMask;
- 058D 3DFC01            cmp [X-4],1
- 0590 B00E              jnz L80
- 0592                   .dbline 221
- 0592 5202              mov A,[X+2]
- 0594 73                cpl A
- 0595 5300              mov [__r0],A
- 0597 5D04              mov A,REG[0x4]
- 0599 2200              and A,[__r0]
- 059B 6004              mov REG[0x4],A
- 059D 8083              xjmp L75
- 059F           L80:
- 059F                   .dbline 222
- 059F           ;                       else if(port == 2) PRT2DR &= ~bitMask;
- 059F 3DFC02            cmp [X-4],2
- 05A2 B07E              jnz L75
- 05A4                   .dbline 222
- 05A4 5202              mov A,[X+2]
- 05A6 73                cpl A
- 05A7 5300              mov [__r0],A
- 05A9 5D08              mov A,REG[0x8]
- 05AB 2200              and A,[__r0]
- 05AD 6008              mov REG[0x8],A
- 05AF                   .dbline 223
- 05AF           ;                       break;
- 05AF 8071              xjmp L75
- 05B1           L84:
- 05B1                   .dbline 225
- 05B1           ;               case 1:
- 05B1           ;                       if(port == 0) PRT0DR |= bitMask;
- 05B1 3DFC00            cmp [X-4],0
- 05B4 B00F              jnz L85
- 05B6                   .dbline 225
- 05B6 5D00              mov A,REG[0]
- 05B8 5300              mov [__r0],A
- 05BA 5202              mov A,[X+2]
- 05BC 2C00              or [__r0],A
- 05BE 5100              mov A,[__r0]
- 05C0 6000              mov REG[0],A
- 05C2 805E              xjmp L75
- 05C4           L85:
- 05C4                   .dbline 226
- 05C4           ;                       else if(port == 1) PRT1DR |= bitMask;
- 05C4 3DFC01            cmp [X-4],1
- 05C7 B00F              jnz L87
- 05C9                   .dbline 226
- 05C9 5D04              mov A,REG[0x4]
- 05CB 5300              mov [__r0],A
- 05CD 5202              mov A,[X+2]
- 05CF 2C00              or [__r0],A
- 05D1 5100              mov A,[__r0]
- 05D3 6004              mov REG[0x4],A
- 05D5 804B              xjmp L75
- 05D7           L87:
- 05D7                   .dbline 227
- 05D7           ;                       else if(port == 2) PRT2DR |= bitMask;
- 05D7 3DFC02            cmp [X-4],2
- 05DA B046              jnz L75
- 05DC                   .dbline 227
- 05DC 5D08              mov A,REG[0x8]
- 05DE 5300              mov [__r0],A
- 05E0 5202              mov A,[X+2]
- 05E2 2C00              or [__r0],A
- 05E4 5100              mov A,[__r0]
- 05E6 6008              mov REG[0x8],A
- 05E8                   .dbline 228
- 05E8           ;                       break;    
- 05E8 8038              xjmp L75
- 05EA           L91:
- 05EA                   .dbline 230
- 05EA           ;               case 2:
- 05EA           ;                       if(port == 0) PRT0DR ^= bitMask;
- 05EA 3DFC00            cmp [X-4],0
- 05ED B00F              jnz L92
- 05EF                   .dbline 230
- 05EF 5D00              mov A,REG[0]
- 05F1 5300              mov [__r0],A
- 05F3 5202              mov A,[X+2]
- 05F5 3400              xor [__r0],A
- 05F7 5100              mov A,[__r0]
- 05F9 6000              mov REG[0],A
- 05FB 8025              xjmp L75
- 05FD           L92:
- 05FD                   .dbline 231
- 05FD           ;                       else if(port == 1) PRT1DR ^= bitMask;
- 05FD 3DFC01            cmp [X-4],1
- 0600 B00F              jnz L94
- 0602                   .dbline 231
- 0602 5D04              mov A,REG[0x4]
- 0604 5300              mov [__r0],A
- 0606 5202              mov A,[X+2]
- 0608 3400              xor [__r0],A
- 060A 5100              mov A,[__r0]
- 060C 6004              mov REG[0x4],A
- 060E 8012              xjmp L75
- 0610           L94:
- 0610                   .dbline 232
- 0610           ;                       else if(port == 2) PRT2DR ^= bitMask;
- 0610 3DFC02            cmp [X-4],2
- 0613 B00D              jnz L75
- 0615                   .dbline 232
- 0615 5D08              mov A,REG[0x8]
- 0617 5300              mov [__r0],A
- 0619 5202              mov A,[X+2]
- 061B 3400              xor [__r0],A
- 061D 5100              mov A,[__r0]
- 061F 6008              mov REG[0x8],A
- 0621                   .dbline 233
- 0621           ;                       break;
- 0621                   .dbline 235
- 0621           ;               default:
- 0621           ;                       break;
- 0621           L75:
- 0621                   .dbline -2
- 0621           L69:
- 0621 38FB              add SP,-5
- 0623 20                pop X
- 0624                   .dbline 0 ; func end
- 0624 7F                ret
- 0625                   .dbsym l bitMask 2 c
- 0625                   .dbsym l i 0 I
- 0625                   .dbsym l state -6 c
- 0625                   .dbsym l pin -5 c
- 0625                   .dbsym l port -4 c
- 0625                   .dbend
- 0625                   .dbfunc e backlight _backlight fV
- 0625           ;         toggle -> X-4
- 0625           _backlight::
- 0625                   .dbline -1
- 0625 10                push X
- 0626 4F                mov X,SP
- 0627                   .dbline 240
- 0627           ;       }
- 0627           ; }
- 0627           ; 
- 0627           ; void backlight(BYTE toggle)
- 0627           ; {
- 0627                   .dbline 241
- 0627           ;       pinMode(2,7,1); // set the pin to strong
- 0627 5001              mov A,1
- 0629 08                push A
- 062A 5007              mov A,7
- 062C 08                push A
- 062D 5002              mov A,2
- 062F 08                push A
- 0630 9D0C              xcall _pinMode
- 0632 38FD              add SP,-3
- 0634                   .dbline 242
- 0634           ;       if (toggle == 0) { BL_Data_ADDR=(BL_DataShadow&=~BL_MASK); }
- 0634 3DFC00            cmp [X-4],0
- 0637 B00A              jnz L99
- 0639                   .dbline 242
- 0639                   .dbline 242
- 0639 26007F            and [_Port_2_Data_SHADE],127
- 063C 5100              mov A,[_Port_2_Data_SHADE]
- 063E 6008              mov REG[0x8],A
- 0640                   .dbline 242
- 0640 801B              xjmp L100
- 0642           L99:
- 0642                   .dbline 243
- 0642           ;       else if (toggle == 1) { BL_Data_ADDR=(BL_DataShadow|=BL_MASK); }
- 0642 3DFC01            cmp [X-4],1
- 0645 B00A              jnz L101
- 0647                   .dbline 243
- 0647                   .dbline 243
- 0647 2E0080            or [_Port_2_Data_SHADE],-128
- 064A 5100              mov A,[_Port_2_Data_SHADE]
- 064C 6008              mov REG[0x8],A
- 064E                   .dbline 243
- 064E 800D              xjmp L102
- 0650           L101:
- 0650                   .dbline 244
- 0650           ;       else if (toggle == 2) { BL_Data_ADDR=(BL_DataShadow^=BL_MASK); }
- 0650 3DFC02            cmp [X-4],2
- 0653 B008              jnz L103
- 0655                   .dbline 244
- 0655                   .dbline 244
- 0655 360080            xor [_Port_2_Data_SHADE],-128
- 0658 5100              mov A,[_Port_2_Data_SHADE]
- 065A 6008              mov REG[0x8],A
- 065C                   .dbline 244
- 065C           L103:
- 065C           L102:
- 065C           L100:
- 065C                   .dbline -2
- 065C           L98:
- 065C 20                pop X
- 065D                   .dbline 0 ; func end
- 065D 7F                ret
- 065E                   .dbsym l toggle -4 c
- 065E                   .dbend

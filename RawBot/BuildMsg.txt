@@ -9,6 +9,10 @@ lib/psocconfigtbl.asm
 
 lib/psocgpioint.asm
 
+lib/servopwm.asm
+
+lib/servopwmint.asm
+
 lib/timer16usecho.asm
 
 lib/timer16usechoint.asm
@@ -21,26 +25,16 @@ lib/timer8ustrig.asm
 
 lib/timer8ustrigint.asm
 
-!W C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c(143):[warning] [MISRA 2200]calling an undeclared function may cause unexpected behavior if the function 
-
-takes or returns values other than int
-
-!W C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c(143):[warning] [MISRA 2714]calling a function without prototype may cause unexpected behavior if the function 
-
-takes or returns values other than int
-
-!W C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c(240):[warning] declaration of `backlight' does not match previous declaration at C:\Users\JohnEdwa\Desktop\RawBot\RawBot\main.c(143)
-
 ./boot.asm
 
 Linking..
 
-  ROM 25% full. 4078 out of 16384 bytes used (does not include absolute areas).
+  ROM 27% full. 4359 out of 16384 bytes used (does not include absolute areas).
 
   RAM 22% full. 54 bytes used (does not include stack usage).
 
 Built with ICCM8C STD V7.05.00
 
  
-RawBot - 0 error(s) 3 warning(s) 11:54:13
+RawBot - 0 error(s) 0 warning(s) 13:24:22
 

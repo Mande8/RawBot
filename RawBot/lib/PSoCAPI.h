@@ -19,6 +19,7 @@
 
 #include "PSoCGPIOINT.h"
 #include "LCD.h"
+#include "ServoPWM.h"
 #include "Timer16UsEcho.h"
 #include "Timer8Main.h"
 #include "Timer8UsTrig.h"
