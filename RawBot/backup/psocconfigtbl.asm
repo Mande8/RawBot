@@ -70,7 +70,7 @@ LoadConfigTBL_rawbot_Bank0:
 	db		bbh, 33h		; Row_1_LogicSelect_0 register (RDI1LT0)
 	db		bch, 33h		; Row_1_LogicSelect_1 register (RDI1LT1)
 	db		bdh, 00h		; Row_1_OutputDrive_0 register (RDI1SRO0)
-	db		beh, 00h		; Row_1_OutputDrive_1 register (RDI1SRO1)
+	db		beh, 20h		; Row_1_OutputDrive_1 register (RDI1SRO1)
 	db		ffh
 LoadConfigTBL_rawbot_Bank1:
 ;  Instance name LCD, User Module LCD
@@ -82,7 +82,7 @@ LoadConfigTBL_rawbot_Bank1:
 ;       Instance name ServoPWM, Block Name PWM16_MSB(DBB11)
 	db		34h, 21h		;ServoPWM_FUNC_MSB_REG(DBB11FN)
 	db		35h, 36h		;ServoPWM_INPUT_MSB_REG(DBB11IN)
-	db		36h, 40h		;ServoPWM_OUTPUT_MSB_REG(DBB11OU)
+	db		36h, 47h		;ServoPWM_OUTPUT_MSB_REG(DBB11OU)
 ;  Instance name Timer16UsEcho, User Module Timer16
 ;       Instance name Timer16UsEcho, Block Name TIMER16_LSB(DCB02)
 	db		28h, 00h		;Timer16UsEcho_FUNC_LSB_REG(DCB02FN)
@@ -131,7 +131,7 @@ LoadConfigTBL_rawbot_Ordered:
 	mov	reg[01h], 00h		; Port_0_DriveMode_1 register (PRT0DM1)
 	M8C_SetBank0
 	mov	reg[03h], 00h		; Port_0_DriveMode_2 register (PRT0DM2)
-	mov	reg[02h], 00h		; Port_0_GlobalSelect register (PRT0GS)
+	mov	reg[02h], 80h		; Port_0_GlobalSelect register (PRT0GS)
 	M8C_SetBank1
 	mov	reg[02h], 00h		; Port_0_IntCtrl_0 register (PRT0IC0)
 	mov	reg[03h], 00h		; Port_0_IntCtrl_1 register (PRT0IC1)

@@ -4685,8 +4685,8 @@ _digitalWrite:
 (0009) //	P03 - Hbrdige IN4
 (0010) //	P04 -
 (0011) //	P05 - 
-(0012) //	P06 -
-(0013) //	P07 - Servo PWM
+(0012) //	P06 - Ultrasound Echo Trigger
+(0013) //	P07 - Servo ( ServoPWM connected here )
 (0014) 
 (0015) 
 (0016) 

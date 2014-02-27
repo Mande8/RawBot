@@ -98,8 +98,8 @@
  0001           ; //    P03 - Hbrdige IN4
  0001           ; //    P04 -
  0001           ; //    P05 - 
- 0001           ; //    P06 -
- 0001           ; //    P07 - Servo PWM
+ 0001           ; //    P06 - Ultrasound Echo Trigger
+ 0001           ; //    P07 - Servo ( ServoPWM connected here )
  0001           ; 
  0001           ; 
  0001           ; 
