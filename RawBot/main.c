@@ -1,6 +1,7 @@
-/*************
+/**********
 *  Notes  *
-*************/
+**********/
+
 // Connections:
 // Port 0 - Outputs
 //	P00 - Hbridge IN1
@@ -10,9 +11,7 @@
 //	P04 -
 //	P05 - 
 //	P06 - Ultrasound Echo Trigger
-//	P07 - Servo ( ServoPWM connected here )
-
-
+//	P07 - Servo (ServoPWM connected here)
 
 /*************
 *  Includes  *
@@ -26,15 +25,7 @@
 #include "Timer8Main.h"
 #include "Timer8UsTrig.h"
 #include "Timer16UsEcho.h"
-
 #include "Functions.h"
-
-/************************
-* Function declarations *
-*************************/
-
-void setup(void);
-// See Functions.h for the rest
 
 /**************************
 *  Variable declarations  *
@@ -51,6 +42,7 @@ unsigned int lcdUpdate = 0;
 int start = 0;
 int stop = 0;
 int isrclear = 0;
+
 /***********************
 *  Interrupt handlers  *
 ***********************/
@@ -75,19 +67,17 @@ void Timer16UsEcho_ISR(void) {
 #pragma interrupt_handler GPIO_ISR
 void GPIO_ISR(void) {
 	//digitalWrite(1,0,1);
-	if (US_ECHO_Data_ADDR & US_ECHO_MASK)
-	{
+	if (US_ECHO_Data_ADDR & US_ECHO_MASK) {
 		Timer16UsEcho_WritePeriod(46400);
 		Timer16UsEcho_Start(); // Used to measure time until echo signal is returned 
 		start++;
-	}
-	else
-	{
+	} else {
 		usRawTimerValue = Timer16UsEcho_wReadTimer();
 		Timer16UsEcho_Stop();
 		ltoa(lcdBuffer[0], usRawTimerValue, 10);
 		stop++;
 	}
+	
 	gpioTick = true;
 	isrclear = PRT1DR;
 }
@@ -97,7 +87,17 @@ void GPIO_ISR(void) {
 ******************/
 
 void main(void) {
-	setup();
+	M8C_EnableGInt;
+	M8C_EnableIntMask(INT_MSK0, INT_MSK0_GPIO);
+	LCD_Init();
+	LCD_Start();
+	Timer8UsTrig_EnableInt();
+	Timer8UsTrig_Start();
+	Timer8Main_EnableInt();
+	Timer8Main_Start();
+	
+	Timer16UsEcho_EnableInt();
+	// backlight(1);
 
 	while(1) {
 		if(gpioTick) {
@@ -108,8 +108,7 @@ void main(void) {
 			timer8MainTick = false;
 			lcdUpdate++;
 			
-			if (lcdUpdate >= 499)
-			{
+			if (lcdUpdate >= 499) {
 				lcdUpdate = 0;		
 				LCD_Control(0x01);
 				LCD_PrString(lcdBuffer[0]);
@@ -128,7 +127,6 @@ void main(void) {
 				itoa(lcdBuffer[1], usDistance, 10);
 				LCD_Position(1,0);
 				LCD_PrString(lcdBuffer[1]);
-				
 			}
 			
 			if(timer8MainCount >= 99) {
@@ -137,24 +135,4 @@ void main(void) {
 			}
 		}
 	}
-}
-
-/**************
-*  Functions  *
-**************/
-
-void setup(void) {
-	int moi = 0;
-	M8C_EnableGInt;
-	M8C_EnableIntMask(INT_MSK0, INT_MSK0_GPIO);
-	LCD_Init();
-	LCD_Start();
-	Timer8UsTrig_EnableInt();
-	Timer8UsTrig_Start();
-	Timer8Main_EnableInt();
-	Timer8Main_Start();
-	
-	Timer16UsEcho_EnableInt();
-	backlight(1);
-	for (moi = 0; moi < 9999; moi++);
 }

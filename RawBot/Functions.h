@@ -1,12 +1,11 @@
-
-
-// function definations
+/**************************
+*  Function declarations  *
+**************************/
 
 void drive(unsigned char );
-
-void servo_Start(unsigned int );
-void servo_Stop(void);
-void servo_Move(int, unsigned int , unsigned int);
+void servoStart(unsigned int );
+void servoStop(void);
+void servoMove(int, unsigned int , unsigned int);
 
 void usTrigSend(void);
 
