@@ -25,16 +25,24 @@ lib/timer8ustrig.asm
 
 lib/timer8ustrigint.asm
 
+!W C:\Projects\RawBot\RawBot\functions.c(163):[warning] [MISRA 2200]calling an undeclared function may cause unexpected behavior if the function 
+
+takes or returns values other than int
+
+!W C:\Projects\RawBot\RawBot\functions.c(163):[warning] [MISRA 2714]calling a function without prototype may cause unexpected behavior if the function 
+
+takes or returns values other than int
+
 ./boot.asm
 
 Linking..
 
-  ROM 27% full. 4359 out of 16384 bytes used (does not include absolute areas).
+  ROM 25% full. 3959 out of 16384 bytes used (does not include absolute areas).
 
-  RAM 22% full. 54 bytes used (does not include stack usage).
+  RAM 26% full. 66 bytes used (does not include stack usage).
 
 Built with ICCM8C STD V7.05.00
 
  
-RawBot - 0 error(s) 0 warning(s) 13:41:48
+RawBot - 0 error(s) 2 warning(s) 20:46:31
 

@@ -1,7 +1,7 @@
 PROJNAME=RawBot
 DEVICE=CY8C27443B
 BASEDEVICE=CY8C27000B
-PROJPATH=C:/Users/JohnEdwa/Desktop/School/GitHub/RawBot/RawBot
+PROJPATH=C:/Projects/RawBot/RawBot
 PSOCDIR=C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CY110F~1
 INCLUDE_PATH=C:/PROGRA~2/Cypress/PSOCDE~1/5.4/Common/CY110F~1/tools/include/CY8C27~1
 CSRCS= functions.c main.c

@@ -10,7 +10,7 @@
 //	P03 - Hbrdige IN4
 //	P04 -
 //	P05 - 
-//	P06 - Ultrasound Echo Trigger
+//	P06 - Ultrasound Trigger
 //	P07 - Servo (ServoPWM connected here)
 
 /*************
@@ -34,14 +34,10 @@
 bool timer8MainTick = false;
 unsigned int timer8MainCount = 0;
 bool gpioTick = false;
-char lcdBuffer[1][16] = { 0 };
-unsigned long usRawTimerValue = 0;
+unsigned long usRawTime = 0;
 unsigned int usDistance = 0;
 unsigned int lcdUpdate = 0;
-
-int start = 0;
-int stop = 0;
-int isrclear = 0;
+int isrClear = 0;
 
 /***********************
 *  Interrupt handlers  *
@@ -55,31 +51,27 @@ void Timer8Main_ISR(void) {
 
 #pragma interrupt_handler Timer8UsTrig_ISR
 void Timer8UsTrig_ISR(void) {
-	digitalWrite(0, 4, 0); // Stop the trigger signal
+	digitalWrite(0, 6, 0); // Stop the trigger signal
 	Timer8UsTrig_Stop();
 }
 
+// usDistance > 400 cm --> no objects in sight
 #pragma interrupt_handler Timer16UsEcho_ISR
-void Timer16UsEcho_ISR(void) {
-	start = 9999;
-}
+void Timer16UsEcho_ISR(void) { }
 
 #pragma interrupt_handler GPIO_ISR
-void GPIO_ISR(void) {
-	//digitalWrite(1,0,1);
-	if (US_ECHO_Data_ADDR & US_ECHO_MASK) {
-		Timer16UsEcho_WritePeriod(46400);
-		Timer16UsEcho_Start(); // Used to measure time until echo signal is returned 
-		start++;
-	} else {
-		usRawTimerValue = Timer16UsEcho_wReadTimer();
+void GPIO_ISR(void) {	
+	if (US_ECHO_Data_ADDR & US_ECHO_MASK) { // Rising edge
+		Timer16UsEcho_Start(); // Used to measure time until echo signal is returned
+	} else { // Falling edge
+		usDistance = usCalculateDistance(Timer16UsEcho_wReadTimer());
+		lcdAssign(usDistance, 0);
+		
 		Timer16UsEcho_Stop();
-		ltoa(lcdBuffer[0], usRawTimerValue, 10);
-		stop++;
 	}
 	
 	gpioTick = true;
-	isrclear = PRT1DR;
+	isrClear = PRT1DR;
 }
 
 /******************
@@ -95,41 +87,27 @@ void main(void) {
 	Timer8UsTrig_Start();
 	Timer8Main_EnableInt();
 	Timer8Main_Start();
-	
 	Timer16UsEcho_EnableInt();
-	// backlight(1);
 
-	while(1) {
-		if(gpioTick) {
+	while (1) {		
+		if (gpioTick) {
 			gpioTick = false;
 		}
 		
-		if(timer8MainTick) {
+		if (timer8MainTick) {
 			timer8MainTick = false;
 			lcdUpdate++;
 			
 			if (lcdUpdate >= 499) {
-				lcdUpdate = 0;		
-				LCD_Control(0x01);
-				LCD_PrString(lcdBuffer[0]);
+				lcdUpdate = 0;
 				
-				usDistance = (((46400-usRawTimerValue)/2) / 58);
-				itoa(lcdBuffer[1], usDistance,10);
+				lcdAssign(usCalculateDistance(34422), 3);
 				
-				itoa(lcdBuffer[1], start, 10);
-				LCD_Position(0,10);
-				LCD_PrString(lcdBuffer[1]);
-				
-				itoa(lcdBuffer[1], stop, 10);
-				LCD_Position(1,10);
-				LCD_PrString(lcdBuffer[1]);
-				
-				itoa(lcdBuffer[1], usDistance, 10);
-				LCD_Position(1,0);
-				LCD_PrString(lcdBuffer[1]);
+				lcdPrint();
 			}
 			
-			if(timer8MainCount >= 99) {
+			// 1 s
+			if (timer8MainCount >= 99) {
 				timer8MainCount = 0;
 				usTrigSend();
 			}

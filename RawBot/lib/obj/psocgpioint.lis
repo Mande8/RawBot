@@ -683,16 +683,6 @@
  0103           MOTOR_4_IntCtrl_1_ADDR:	equ	103h
  0001           MOTOR_4_IntEn_ADDR:	equ	1h
  0008           MOTOR_4_MASK:	equ	8h
- 0000           ; US_TRIG address and mask equates
- 0000           US_TRIG_Data_ADDR:	equ	0h
- 0100           US_TRIG_DriveMode_0_ADDR:	equ	100h
- 0101           US_TRIG_DriveMode_1_ADDR:	equ	101h
- 0003           US_TRIG_DriveMode_2_ADDR:	equ	3h
- 0002           US_TRIG_GlobalSelect_ADDR:	equ	2h
- 0102           US_TRIG_IntCtrl_0_ADDR:	equ	102h
- 0103           US_TRIG_IntCtrl_1_ADDR:	equ	103h
- 0001           US_TRIG_IntEn_ADDR:	equ	1h
- 0010           US_TRIG_MASK:	equ	10h
  0000           ; LCDD4 address and mask equates
  0008           LCDD4_Data_ADDR:	equ	8h
  0108           LCDD4_DriveMode_0_ADDR:	equ	108h
