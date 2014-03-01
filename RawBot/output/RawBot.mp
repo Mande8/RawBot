@@ -1,6 +1,6 @@
 Project:      output/RawBot
 Build Number: 0
-Date:         Sat Mar 01 20:46:31 2014
+Date:         Sat Mar 01 21:24:13 2014
 Compiler:     ICCM8C
 Version:      7.05.00
 
@@ -189,7 +189,7 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------
-                            text   0737   0990 =   2448. bytes (rel,con,rom,code)
+                            text   0737   0951 =   2385. bytes (rel,con,rom,code)
 
        Addr  Global Symbol
       -----  --------------------------------
@@ -210,9 +210,9 @@ Area                               Addr   Size   Decimal Bytes (Attributes)
        0C8C  _Timer16UsEcho_ISR
        0C8F  _GPIO_ISR
        0D41  _main
-       0DED  PSoC_GPIO_ISR
-       0EBE  _ltoa
-       10C7  __text_end
+       0DAE  PSoC_GPIO_ISR
+       0E7F  _ltoa
+       1088  __text_end
 
 Area                               Addr   Size   Decimal Bytes (Attributes)
 --------------------------------   ----   ----   ------- ----- ------------

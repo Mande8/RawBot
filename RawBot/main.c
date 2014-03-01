@@ -4,14 +4,24 @@
 
 // Connections:
 // Port 0 - Outputs
-//	P00 - Hbridge IN1
-//	P01 - Hbridge IN2
-//	P02 - Hbridge IN3
-//	P03 - Hbrdige IN4
+//	P00 - HBRIDGE_IN1
+//	P01 - HBRIDGE_IN2
+//	P02 - HBRIDGE_IN3
+//	P03 - HBRIDGE_IN4
 //	P04 -
 //	P05 - 
-//	P06 - Ultrasound Trigger
-//	P07 - Servo (ServoPWM connected here)
+//	P06 - US_TRIG
+//	P07 - SERVO (ServoPWM connected here)
+//
+// Port 1 - Inputs
+//	P10 - Not usable
+//	P11 - 
+//	P12 - 
+//	P13 - 
+//	P14 -
+//	P15 - 
+//	P16 - 
+//	P17 - US_ECHO
 
 /*************
 *  Includes  *
@@ -60,18 +70,22 @@ void Timer8UsTrig_ISR(void) {
 void Timer16UsEcho_ISR(void) { }
 
 #pragma interrupt_handler GPIO_ISR
-void GPIO_ISR(void) {	
-	if (US_ECHO_Data_ADDR & US_ECHO_MASK) { // Rising edge
+void GPIO_ISR(void) {
+	gpioTick = true;
+	
+	// Echo signal rising edge
+	if (US_ECHO_Data_ADDR & US_ECHO_MASK) {
 		Timer16UsEcho_Start(); // Used to measure time until echo signal is returned
-	} else { // Falling edge
+	
+	// Echo signal falling edge
+	} else {
 		usDistance = usCalculateDistance(Timer16UsEcho_wReadTimer());
 		lcdAssign(usDistance, 0);
 		
 		Timer16UsEcho_Stop();
 	}
 	
-	gpioTick = true;
-	isrClear = PRT1DR;
+	isrClear = PRT1DR; // Needed for ChangeFromReam interrupt type
 }
 
 /******************
@@ -92,6 +106,7 @@ void main(void) {
 	while (1) {		
 		if (gpioTick) {
 			gpioTick = false;
+			
 		}
 		
 		if (timer8MainTick) {
@@ -100,9 +115,6 @@ void main(void) {
 			
 			if (lcdUpdate >= 499) {
 				lcdUpdate = 0;
-				
-				lcdAssign(usCalculateDistance(34422), 3);
-				
 				lcdPrint();
 			}
 			

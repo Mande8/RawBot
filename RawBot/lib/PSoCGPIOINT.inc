@@ -23,46 +23,56 @@ US_ECHO_IntCtrl_0_ADDR:	equ	106h
 US_ECHO_IntCtrl_1_ADDR:	equ	107h
 US_ECHO_IntEn_ADDR:	equ	5h
 US_ECHO_MASK:	equ	80h
-; MOTOR_1 address and mask equates
-MOTOR_1_Data_ADDR:	equ	0h
-MOTOR_1_DriveMode_0_ADDR:	equ	100h
-MOTOR_1_DriveMode_1_ADDR:	equ	101h
-MOTOR_1_DriveMode_2_ADDR:	equ	3h
-MOTOR_1_GlobalSelect_ADDR:	equ	2h
-MOTOR_1_IntCtrl_0_ADDR:	equ	102h
-MOTOR_1_IntCtrl_1_ADDR:	equ	103h
-MOTOR_1_IntEn_ADDR:	equ	1h
-MOTOR_1_MASK:	equ	1h
-; MOTOR_2 address and mask equates
-MOTOR_2_Data_ADDR:	equ	0h
-MOTOR_2_DriveMode_0_ADDR:	equ	100h
-MOTOR_2_DriveMode_1_ADDR:	equ	101h
-MOTOR_2_DriveMode_2_ADDR:	equ	3h
-MOTOR_2_GlobalSelect_ADDR:	equ	2h
-MOTOR_2_IntCtrl_0_ADDR:	equ	102h
-MOTOR_2_IntCtrl_1_ADDR:	equ	103h
-MOTOR_2_IntEn_ADDR:	equ	1h
-MOTOR_2_MASK:	equ	2h
-; MOTOR_3 address and mask equates
-MOTOR_3_Data_ADDR:	equ	0h
-MOTOR_3_DriveMode_0_ADDR:	equ	100h
-MOTOR_3_DriveMode_1_ADDR:	equ	101h
-MOTOR_3_DriveMode_2_ADDR:	equ	3h
-MOTOR_3_GlobalSelect_ADDR:	equ	2h
-MOTOR_3_IntCtrl_0_ADDR:	equ	102h
-MOTOR_3_IntCtrl_1_ADDR:	equ	103h
-MOTOR_3_IntEn_ADDR:	equ	1h
-MOTOR_3_MASK:	equ	4h
-; MOTOR_4 address and mask equates
-MOTOR_4_Data_ADDR:	equ	0h
-MOTOR_4_DriveMode_0_ADDR:	equ	100h
-MOTOR_4_DriveMode_1_ADDR:	equ	101h
-MOTOR_4_DriveMode_2_ADDR:	equ	3h
-MOTOR_4_GlobalSelect_ADDR:	equ	2h
-MOTOR_4_IntCtrl_0_ADDR:	equ	102h
-MOTOR_4_IntCtrl_1_ADDR:	equ	103h
-MOTOR_4_IntEn_ADDR:	equ	1h
-MOTOR_4_MASK:	equ	8h
+; HBRIDGE_IN1 address and mask equates
+HBRIDGE_IN1_Data_ADDR:	equ	0h
+HBRIDGE_IN1_DriveMode_0_ADDR:	equ	100h
+HBRIDGE_IN1_DriveMode_1_ADDR:	equ	101h
+HBRIDGE_IN1_DriveMode_2_ADDR:	equ	3h
+HBRIDGE_IN1_GlobalSelect_ADDR:	equ	2h
+HBRIDGE_IN1_IntCtrl_0_ADDR:	equ	102h
+HBRIDGE_IN1_IntCtrl_1_ADDR:	equ	103h
+HBRIDGE_IN1_IntEn_ADDR:	equ	1h
+HBRIDGE_IN1_MASK:	equ	1h
+; HBRIDGE_IN2 address and mask equates
+HBRIDGE_IN2_Data_ADDR:	equ	0h
+HBRIDGE_IN2_DriveMode_0_ADDR:	equ	100h
+HBRIDGE_IN2_DriveMode_1_ADDR:	equ	101h
+HBRIDGE_IN2_DriveMode_2_ADDR:	equ	3h
+HBRIDGE_IN2_GlobalSelect_ADDR:	equ	2h
+HBRIDGE_IN2_IntCtrl_0_ADDR:	equ	102h
+HBRIDGE_IN2_IntCtrl_1_ADDR:	equ	103h
+HBRIDGE_IN2_IntEn_ADDR:	equ	1h
+HBRIDGE_IN2_MASK:	equ	2h
+; HBRIDGE_IN3 address and mask equates
+HBRIDGE_IN3_Data_ADDR:	equ	0h
+HBRIDGE_IN3_DriveMode_0_ADDR:	equ	100h
+HBRIDGE_IN3_DriveMode_1_ADDR:	equ	101h
+HBRIDGE_IN3_DriveMode_2_ADDR:	equ	3h
+HBRIDGE_IN3_GlobalSelect_ADDR:	equ	2h
+HBRIDGE_IN3_IntCtrl_0_ADDR:	equ	102h
+HBRIDGE_IN3_IntCtrl_1_ADDR:	equ	103h
+HBRIDGE_IN3_IntEn_ADDR:	equ	1h
+HBRIDGE_IN3_MASK:	equ	4h
+; HBRIDGE_IN4 address and mask equates
+HBRIDGE_IN4_Data_ADDR:	equ	0h
+HBRIDGE_IN4_DriveMode_0_ADDR:	equ	100h
+HBRIDGE_IN4_DriveMode_1_ADDR:	equ	101h
+HBRIDGE_IN4_DriveMode_2_ADDR:	equ	3h
+HBRIDGE_IN4_GlobalSelect_ADDR:	equ	2h
+HBRIDGE_IN4_IntCtrl_0_ADDR:	equ	102h
+HBRIDGE_IN4_IntCtrl_1_ADDR:	equ	103h
+HBRIDGE_IN4_IntEn_ADDR:	equ	1h
+HBRIDGE_IN4_MASK:	equ	8h
+; SERVO address and mask equates
+SERVO_Data_ADDR:	equ	0h
+SERVO_DriveMode_0_ADDR:	equ	100h
+SERVO_DriveMode_1_ADDR:	equ	101h
+SERVO_DriveMode_2_ADDR:	equ	3h
+SERVO_GlobalSelect_ADDR:	equ	2h
+SERVO_IntCtrl_0_ADDR:	equ	102h
+SERVO_IntCtrl_1_ADDR:	equ	103h
+SERVO_IntEn_ADDR:	equ	1h
+SERVO_MASK:	equ	80h
 ; LCDD4 address and mask equates
 LCDD4_Data_ADDR:	equ	8h
 LCDD4_DriveMode_0_ADDR:	equ	108h

@@ -643,46 +643,56 @@
  0107           US_ECHO_IntCtrl_1_ADDR:	equ	107h
  0005           US_ECHO_IntEn_ADDR:	equ	5h
  0080           US_ECHO_MASK:	equ	80h
- 0000           ; MOTOR_1 address and mask equates
- 0000           MOTOR_1_Data_ADDR:	equ	0h
- 0100           MOTOR_1_DriveMode_0_ADDR:	equ	100h
- 0101           MOTOR_1_DriveMode_1_ADDR:	equ	101h
- 0003           MOTOR_1_DriveMode_2_ADDR:	equ	3h
- 0002           MOTOR_1_GlobalSelect_ADDR:	equ	2h
- 0102           MOTOR_1_IntCtrl_0_ADDR:	equ	102h
- 0103           MOTOR_1_IntCtrl_1_ADDR:	equ	103h
- 0001           MOTOR_1_IntEn_ADDR:	equ	1h
- 0001           MOTOR_1_MASK:	equ	1h
- 0000           ; MOTOR_2 address and mask equates
- 0000           MOTOR_2_Data_ADDR:	equ	0h
- 0100           MOTOR_2_DriveMode_0_ADDR:	equ	100h
- 0101           MOTOR_2_DriveMode_1_ADDR:	equ	101h
- 0003           MOTOR_2_DriveMode_2_ADDR:	equ	3h
- 0002           MOTOR_2_GlobalSelect_ADDR:	equ	2h
- 0102           MOTOR_2_IntCtrl_0_ADDR:	equ	102h
- 0103           MOTOR_2_IntCtrl_1_ADDR:	equ	103h
- 0001           MOTOR_2_IntEn_ADDR:	equ	1h
- 0002           MOTOR_2_MASK:	equ	2h
- 0000           ; MOTOR_3 address and mask equates
- 0000           MOTOR_3_Data_ADDR:	equ	0h
- 0100           MOTOR_3_DriveMode_0_ADDR:	equ	100h
- 0101           MOTOR_3_DriveMode_1_ADDR:	equ	101h
- 0003           MOTOR_3_DriveMode_2_ADDR:	equ	3h
- 0002           MOTOR_3_GlobalSelect_ADDR:	equ	2h
- 0102           MOTOR_3_IntCtrl_0_ADDR:	equ	102h
- 0103           MOTOR_3_IntCtrl_1_ADDR:	equ	103h
- 0001           MOTOR_3_IntEn_ADDR:	equ	1h
- 0004           MOTOR_3_MASK:	equ	4h
- 0000           ; MOTOR_4 address and mask equates
- 0000           MOTOR_4_Data_ADDR:	equ	0h
- 0100           MOTOR_4_DriveMode_0_ADDR:	equ	100h
- 0101           MOTOR_4_DriveMode_1_ADDR:	equ	101h
- 0003           MOTOR_4_DriveMode_2_ADDR:	equ	3h
- 0002           MOTOR_4_GlobalSelect_ADDR:	equ	2h
- 0102           MOTOR_4_IntCtrl_0_ADDR:	equ	102h
- 0103           MOTOR_4_IntCtrl_1_ADDR:	equ	103h
- 0001           MOTOR_4_IntEn_ADDR:	equ	1h
- 0008           MOTOR_4_MASK:	equ	8h
+ 0000           ; HBRIDGE_IN1 address and mask equates
+ 0000           HBRIDGE_IN1_Data_ADDR:	equ	0h
+ 0100           HBRIDGE_IN1_DriveMode_0_ADDR:	equ	100h
+ 0101           HBRIDGE_IN1_DriveMode_1_ADDR:	equ	101h
+ 0003           HBRIDGE_IN1_DriveMode_2_ADDR:	equ	3h
+ 0002           HBRIDGE_IN1_GlobalSelect_ADDR:	equ	2h
+ 0102           HBRIDGE_IN1_IntCtrl_0_ADDR:	equ	102h
+ 0103           HBRIDGE_IN1_IntCtrl_1_ADDR:	equ	103h
+ 0001           HBRIDGE_IN1_IntEn_ADDR:	equ	1h
+ 0001           HBRIDGE_IN1_MASK:	equ	1h
+ 0000           ; HBRIDGE_IN2 address and mask equates
+ 0000           HBRIDGE_IN2_Data_ADDR:	equ	0h
+ 0100           HBRIDGE_IN2_DriveMode_0_ADDR:	equ	100h
+ 0101           HBRIDGE_IN2_DriveMode_1_ADDR:	equ	101h
+ 0003           HBRIDGE_IN2_DriveMode_2_ADDR:	equ	3h
+ 0002           HBRIDGE_IN2_GlobalSelect_ADDR:	equ	2h
+ 0102           HBRIDGE_IN2_IntCtrl_0_ADDR:	equ	102h
+ 0103           HBRIDGE_IN2_IntCtrl_1_ADDR:	equ	103h
+ 0001           HBRIDGE_IN2_IntEn_ADDR:	equ	1h
+ 0002           HBRIDGE_IN2_MASK:	equ	2h
+ 0000           ; HBRIDGE_IN3 address and mask equates
+ 0000           HBRIDGE_IN3_Data_ADDR:	equ	0h
+ 0100           HBRIDGE_IN3_DriveMode_0_ADDR:	equ	100h
+ 0101           HBRIDGE_IN3_DriveMode_1_ADDR:	equ	101h
+ 0003           HBRIDGE_IN3_DriveMode_2_ADDR:	equ	3h
+ 0002           HBRIDGE_IN3_GlobalSelect_ADDR:	equ	2h
+ 0102           HBRIDGE_IN3_IntCtrl_0_ADDR:	equ	102h
+ 0103           HBRIDGE_IN3_IntCtrl_1_ADDR:	equ	103h
+ 0001           HBRIDGE_IN3_IntEn_ADDR:	equ	1h
+ 0004           HBRIDGE_IN3_MASK:	equ	4h
+ 0000           ; HBRIDGE_IN4 address and mask equates
+ 0000           HBRIDGE_IN4_Data_ADDR:	equ	0h
+ 0100           HBRIDGE_IN4_DriveMode_0_ADDR:	equ	100h
+ 0101           HBRIDGE_IN4_DriveMode_1_ADDR:	equ	101h
+ 0003           HBRIDGE_IN4_DriveMode_2_ADDR:	equ	3h
+ 0002           HBRIDGE_IN4_GlobalSelect_ADDR:	equ	2h
+ 0102           HBRIDGE_IN4_IntCtrl_0_ADDR:	equ	102h
+ 0103           HBRIDGE_IN4_IntCtrl_1_ADDR:	equ	103h
+ 0001           HBRIDGE_IN4_IntEn_ADDR:	equ	1h
+ 0008           HBRIDGE_IN4_MASK:	equ	8h
+ 0000           ; SERVO address and mask equates
+ 0000           SERVO_Data_ADDR:	equ	0h
+ 0100           SERVO_DriveMode_0_ADDR:	equ	100h
+ 0101           SERVO_DriveMode_1_ADDR:	equ	101h
+ 0003           SERVO_DriveMode_2_ADDR:	equ	3h
+ 0002           SERVO_GlobalSelect_ADDR:	equ	2h
+ 0102           SERVO_IntCtrl_0_ADDR:	equ	102h
+ 0103           SERVO_IntCtrl_1_ADDR:	equ	103h
+ 0001           SERVO_IntEn_ADDR:	equ	1h
+ 0080           SERVO_MASK:	equ	80h
  0000           ; LCDD4 address and mask equates
  0008           LCDD4_Data_ADDR:	equ	8h
  0108           LCDD4_DriveMode_0_ADDR:	equ	108h
