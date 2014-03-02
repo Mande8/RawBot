@@ -63,6 +63,16 @@ HBRIDGE_IN4_IntCtrl_0_ADDR:	equ	102h
 HBRIDGE_IN4_IntCtrl_1_ADDR:	equ	103h
 HBRIDGE_IN4_IntEn_ADDR:	equ	1h
 HBRIDGE_IN4_MASK:	equ	8h
+; US_TRIG address and mask equates
+US_TRIG_Data_ADDR:	equ	0h
+US_TRIG_DriveMode_0_ADDR:	equ	100h
+US_TRIG_DriveMode_1_ADDR:	equ	101h
+US_TRIG_DriveMode_2_ADDR:	equ	3h
+US_TRIG_GlobalSelect_ADDR:	equ	2h
+US_TRIG_IntCtrl_0_ADDR:	equ	102h
+US_TRIG_IntCtrl_1_ADDR:	equ	103h
+US_TRIG_IntEn_ADDR:	equ	1h
+US_TRIG_MASK:	equ	40h
 ; SERVO address and mask equates
 SERVO_Data_ADDR:	equ	0h
 SERVO_DriveMode_0_ADDR:	equ	100h

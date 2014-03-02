@@ -8,17 +8,16 @@
 //	P01 - HBRIDGE_IN2
 //	P02 - HBRIDGE_IN3
 //	P03 - HBRIDGE_IN4
-//	P04 -
+//	P04 - 
 //	P05 - 
 //	P06 - US_TRIG
-//	P07 - SERVO (ServoPWM connected here)
-//
+//	P07 - SERVO
 // Port 1 - Inputs
 //	P10 - Not usable
 //	P11 - 
 //	P12 - 
 //	P13 - 
-//	P14 -
+//	P14 - 
 //	P15 - 
 //	P16 - 
 //	P17 - US_ECHO
@@ -28,7 +27,6 @@
 *************/
 
 #include <m8c.h>
-#include <stdlib.h>
 #include <stdbool.h>
 #include "PSoCAPI.h"
 #include "LCD.h"
@@ -46,8 +44,9 @@ unsigned int timer8MainCount = 0;
 bool gpioTick = false;
 unsigned long usRawTime = 0;
 unsigned int usDistance = 0;
-unsigned int lcdUpdate = 0;
 int isrClear = 0;
+int usEchoRisingEdge = 0;
+int usEchoFallingEdge = 0;
 
 /***********************
 *  Interrupt handlers  *
@@ -67,7 +66,12 @@ void Timer8UsTrig_ISR(void) {
 
 // usDistance > 400 cm --> no objects in sight
 #pragma interrupt_handler Timer16UsEcho_ISR
-void Timer16UsEcho_ISR(void) { }
+void Timer16UsEcho_ISR(void) {
+	int timer16Overflow = 1;
+	
+	timer16Overflow++;
+	// lcdPrint(timer16Overflow, LCD_TOP);
+}
 
 #pragma interrupt_handler GPIO_ISR
 void GPIO_ISR(void) {
@@ -76,16 +80,21 @@ void GPIO_ISR(void) {
 	// Echo signal rising edge
 	if (US_ECHO_Data_ADDR & US_ECHO_MASK) {
 		Timer16UsEcho_Start(); // Used to measure time until echo signal is returned
-	
+		usEchoRisingEdge++;
+		// lcdAssign(usEchoRisingEdge, LCD_TOP);
+		
 	// Echo signal falling edge
 	} else {
 		usDistance = usCalculateDistance(Timer16UsEcho_wReadTimer());
-		lcdAssign(usDistance, 0);
+		lcdAssign(usDistance, LCD_TOP);
+		
+		usEchoFallingEdge++;
+		// lcdAssign(usEchoFallingEdge, LCD_BOTTOM);
 		
 		Timer16UsEcho_Stop();
 	}
 	
-	isrClear = PRT1DR; // Needed for ChangeFromReam interrupt type
+	isrClear = PRT1DR; // Needed for ChangeFromRead interrupt type
 }
 
 /******************
@@ -103,25 +112,16 @@ void main(void) {
 	Timer8Main_Start();
 	Timer16UsEcho_EnableInt();
 
-	while (1) {		
-		if (gpioTick) {
-			gpioTick = false;
-			
-		}
+	while (1) {
+		if (gpioTick) {	gpioTick = false; }
 		
 		if (timer8MainTick) {
 			timer8MainTick = false;
-			lcdUpdate++;
-			
-			if (lcdUpdate >= 499) {
-				lcdUpdate = 0;
-				lcdPrint();
-			}
-			
-			// 1 s
+
 			if (timer8MainCount >= 99) {
 				timer8MainCount = 0;
 				usTrigSend();
+				lcdPrint();
 			}
 		}
 	}

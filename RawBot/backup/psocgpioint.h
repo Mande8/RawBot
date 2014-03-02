@@ -32,78 +32,114 @@ BYTE			US_ECHO_IntCtrl_1_ADDR;
 #pragma	ioport	US_ECHO_IntEn_ADDR:	0x5
 BYTE			US_ECHO_IntEn_ADDR;
 #define US_ECHO_MASK 0x80
-// MOTOR_1 address and mask defines
-#pragma	ioport	MOTOR_1_Data_ADDR:	0x0
-BYTE			MOTOR_1_Data_ADDR;
-#pragma	ioport	MOTOR_1_DriveMode_0_ADDR:	0x100
-BYTE			MOTOR_1_DriveMode_0_ADDR;
-#pragma	ioport	MOTOR_1_DriveMode_1_ADDR:	0x101
-BYTE			MOTOR_1_DriveMode_1_ADDR;
-#pragma	ioport	MOTOR_1_DriveMode_2_ADDR:	0x3
-BYTE			MOTOR_1_DriveMode_2_ADDR;
-#pragma	ioport	MOTOR_1_GlobalSelect_ADDR:	0x2
-BYTE			MOTOR_1_GlobalSelect_ADDR;
-#pragma	ioport	MOTOR_1_IntCtrl_0_ADDR:	0x102
-BYTE			MOTOR_1_IntCtrl_0_ADDR;
-#pragma	ioport	MOTOR_1_IntCtrl_1_ADDR:	0x103
-BYTE			MOTOR_1_IntCtrl_1_ADDR;
-#pragma	ioport	MOTOR_1_IntEn_ADDR:	0x1
-BYTE			MOTOR_1_IntEn_ADDR;
-#define MOTOR_1_MASK 0x1
-// MOTOR_2 address and mask defines
-#pragma	ioport	MOTOR_2_Data_ADDR:	0x0
-BYTE			MOTOR_2_Data_ADDR;
-#pragma	ioport	MOTOR_2_DriveMode_0_ADDR:	0x100
-BYTE			MOTOR_2_DriveMode_0_ADDR;
-#pragma	ioport	MOTOR_2_DriveMode_1_ADDR:	0x101
-BYTE			MOTOR_2_DriveMode_1_ADDR;
-#pragma	ioport	MOTOR_2_DriveMode_2_ADDR:	0x3
-BYTE			MOTOR_2_DriveMode_2_ADDR;
-#pragma	ioport	MOTOR_2_GlobalSelect_ADDR:	0x2
-BYTE			MOTOR_2_GlobalSelect_ADDR;
-#pragma	ioport	MOTOR_2_IntCtrl_0_ADDR:	0x102
-BYTE			MOTOR_2_IntCtrl_0_ADDR;
-#pragma	ioport	MOTOR_2_IntCtrl_1_ADDR:	0x103
-BYTE			MOTOR_2_IntCtrl_1_ADDR;
-#pragma	ioport	MOTOR_2_IntEn_ADDR:	0x1
-BYTE			MOTOR_2_IntEn_ADDR;
-#define MOTOR_2_MASK 0x2
-// MOTOR_3 address and mask defines
-#pragma	ioport	MOTOR_3_Data_ADDR:	0x0
-BYTE			MOTOR_3_Data_ADDR;
-#pragma	ioport	MOTOR_3_DriveMode_0_ADDR:	0x100
-BYTE			MOTOR_3_DriveMode_0_ADDR;
-#pragma	ioport	MOTOR_3_DriveMode_1_ADDR:	0x101
-BYTE			MOTOR_3_DriveMode_1_ADDR;
-#pragma	ioport	MOTOR_3_DriveMode_2_ADDR:	0x3
-BYTE			MOTOR_3_DriveMode_2_ADDR;
-#pragma	ioport	MOTOR_3_GlobalSelect_ADDR:	0x2
-BYTE			MOTOR_3_GlobalSelect_ADDR;
-#pragma	ioport	MOTOR_3_IntCtrl_0_ADDR:	0x102
-BYTE			MOTOR_3_IntCtrl_0_ADDR;
-#pragma	ioport	MOTOR_3_IntCtrl_1_ADDR:	0x103
-BYTE			MOTOR_3_IntCtrl_1_ADDR;
-#pragma	ioport	MOTOR_3_IntEn_ADDR:	0x1
-BYTE			MOTOR_3_IntEn_ADDR;
-#define MOTOR_3_MASK 0x4
-// MOTOR_4 address and mask defines
-#pragma	ioport	MOTOR_4_Data_ADDR:	0x0
-BYTE			MOTOR_4_Data_ADDR;
-#pragma	ioport	MOTOR_4_DriveMode_0_ADDR:	0x100
-BYTE			MOTOR_4_DriveMode_0_ADDR;
-#pragma	ioport	MOTOR_4_DriveMode_1_ADDR:	0x101
-BYTE			MOTOR_4_DriveMode_1_ADDR;
-#pragma	ioport	MOTOR_4_DriveMode_2_ADDR:	0x3
-BYTE			MOTOR_4_DriveMode_2_ADDR;
-#pragma	ioport	MOTOR_4_GlobalSelect_ADDR:	0x2
-BYTE			MOTOR_4_GlobalSelect_ADDR;
-#pragma	ioport	MOTOR_4_IntCtrl_0_ADDR:	0x102
-BYTE			MOTOR_4_IntCtrl_0_ADDR;
-#pragma	ioport	MOTOR_4_IntCtrl_1_ADDR:	0x103
-BYTE			MOTOR_4_IntCtrl_1_ADDR;
-#pragma	ioport	MOTOR_4_IntEn_ADDR:	0x1
-BYTE			MOTOR_4_IntEn_ADDR;
-#define MOTOR_4_MASK 0x8
+// HBRIDGE_IN1 address and mask defines
+#pragma	ioport	HBRIDGE_IN1_Data_ADDR:	0x0
+BYTE			HBRIDGE_IN1_Data_ADDR;
+#pragma	ioport	HBRIDGE_IN1_DriveMode_0_ADDR:	0x100
+BYTE			HBRIDGE_IN1_DriveMode_0_ADDR;
+#pragma	ioport	HBRIDGE_IN1_DriveMode_1_ADDR:	0x101
+BYTE			HBRIDGE_IN1_DriveMode_1_ADDR;
+#pragma	ioport	HBRIDGE_IN1_DriveMode_2_ADDR:	0x3
+BYTE			HBRIDGE_IN1_DriveMode_2_ADDR;
+#pragma	ioport	HBRIDGE_IN1_GlobalSelect_ADDR:	0x2
+BYTE			HBRIDGE_IN1_GlobalSelect_ADDR;
+#pragma	ioport	HBRIDGE_IN1_IntCtrl_0_ADDR:	0x102
+BYTE			HBRIDGE_IN1_IntCtrl_0_ADDR;
+#pragma	ioport	HBRIDGE_IN1_IntCtrl_1_ADDR:	0x103
+BYTE			HBRIDGE_IN1_IntCtrl_1_ADDR;
+#pragma	ioport	HBRIDGE_IN1_IntEn_ADDR:	0x1
+BYTE			HBRIDGE_IN1_IntEn_ADDR;
+#define HBRIDGE_IN1_MASK 0x1
+// HBRIDGE_IN2 address and mask defines
+#pragma	ioport	HBRIDGE_IN2_Data_ADDR:	0x0
+BYTE			HBRIDGE_IN2_Data_ADDR;
+#pragma	ioport	HBRIDGE_IN2_DriveMode_0_ADDR:	0x100
+BYTE			HBRIDGE_IN2_DriveMode_0_ADDR;
+#pragma	ioport	HBRIDGE_IN2_DriveMode_1_ADDR:	0x101
+BYTE			HBRIDGE_IN2_DriveMode_1_ADDR;
+#pragma	ioport	HBRIDGE_IN2_DriveMode_2_ADDR:	0x3
+BYTE			HBRIDGE_IN2_DriveMode_2_ADDR;
+#pragma	ioport	HBRIDGE_IN2_GlobalSelect_ADDR:	0x2
+BYTE			HBRIDGE_IN2_GlobalSelect_ADDR;
+#pragma	ioport	HBRIDGE_IN2_IntCtrl_0_ADDR:	0x102
+BYTE			HBRIDGE_IN2_IntCtrl_0_ADDR;
+#pragma	ioport	HBRIDGE_IN2_IntCtrl_1_ADDR:	0x103
+BYTE			HBRIDGE_IN2_IntCtrl_1_ADDR;
+#pragma	ioport	HBRIDGE_IN2_IntEn_ADDR:	0x1
+BYTE			HBRIDGE_IN2_IntEn_ADDR;
+#define HBRIDGE_IN2_MASK 0x2
+// HBRIDGE_IN3 address and mask defines
+#pragma	ioport	HBRIDGE_IN3_Data_ADDR:	0x0
+BYTE			HBRIDGE_IN3_Data_ADDR;
+#pragma	ioport	HBRIDGE_IN3_DriveMode_0_ADDR:	0x100
+BYTE			HBRIDGE_IN3_DriveMode_0_ADDR;
+#pragma	ioport	HBRIDGE_IN3_DriveMode_1_ADDR:	0x101
+BYTE			HBRIDGE_IN3_DriveMode_1_ADDR;
+#pragma	ioport	HBRIDGE_IN3_DriveMode_2_ADDR:	0x3
+BYTE			HBRIDGE_IN3_DriveMode_2_ADDR;
+#pragma	ioport	HBRIDGE_IN3_GlobalSelect_ADDR:	0x2
+BYTE			HBRIDGE_IN3_GlobalSelect_ADDR;
+#pragma	ioport	HBRIDGE_IN3_IntCtrl_0_ADDR:	0x102
+BYTE			HBRIDGE_IN3_IntCtrl_0_ADDR;
+#pragma	ioport	HBRIDGE_IN3_IntCtrl_1_ADDR:	0x103
+BYTE			HBRIDGE_IN3_IntCtrl_1_ADDR;
+#pragma	ioport	HBRIDGE_IN3_IntEn_ADDR:	0x1
+BYTE			HBRIDGE_IN3_IntEn_ADDR;
+#define HBRIDGE_IN3_MASK 0x4
+// HBRIDGE_IN4 address and mask defines
+#pragma	ioport	HBRIDGE_IN4_Data_ADDR:	0x0
+BYTE			HBRIDGE_IN4_Data_ADDR;
+#pragma	ioport	HBRIDGE_IN4_DriveMode_0_ADDR:	0x100
+BYTE			HBRIDGE_IN4_DriveMode_0_ADDR;
+#pragma	ioport	HBRIDGE_IN4_DriveMode_1_ADDR:	0x101
+BYTE			HBRIDGE_IN4_DriveMode_1_ADDR;
+#pragma	ioport	HBRIDGE_IN4_DriveMode_2_ADDR:	0x3
+BYTE			HBRIDGE_IN4_DriveMode_2_ADDR;
+#pragma	ioport	HBRIDGE_IN4_GlobalSelect_ADDR:	0x2
+BYTE			HBRIDGE_IN4_GlobalSelect_ADDR;
+#pragma	ioport	HBRIDGE_IN4_IntCtrl_0_ADDR:	0x102
+BYTE			HBRIDGE_IN4_IntCtrl_0_ADDR;
+#pragma	ioport	HBRIDGE_IN4_IntCtrl_1_ADDR:	0x103
+BYTE			HBRIDGE_IN4_IntCtrl_1_ADDR;
+#pragma	ioport	HBRIDGE_IN4_IntEn_ADDR:	0x1
+BYTE			HBRIDGE_IN4_IntEn_ADDR;
+#define HBRIDGE_IN4_MASK 0x8
+// US_TRIG address and mask defines
+#pragma	ioport	US_TRIG_Data_ADDR:	0x0
+BYTE			US_TRIG_Data_ADDR;
+#pragma	ioport	US_TRIG_DriveMode_0_ADDR:	0x100
+BYTE			US_TRIG_DriveMode_0_ADDR;
+#pragma	ioport	US_TRIG_DriveMode_1_ADDR:	0x101
+BYTE			US_TRIG_DriveMode_1_ADDR;
+#pragma	ioport	US_TRIG_DriveMode_2_ADDR:	0x3
+BYTE			US_TRIG_DriveMode_2_ADDR;
+#pragma	ioport	US_TRIG_GlobalSelect_ADDR:	0x2
+BYTE			US_TRIG_GlobalSelect_ADDR;
+#pragma	ioport	US_TRIG_IntCtrl_0_ADDR:	0x102
+BYTE			US_TRIG_IntCtrl_0_ADDR;
+#pragma	ioport	US_TRIG_IntCtrl_1_ADDR:	0x103
+BYTE			US_TRIG_IntCtrl_1_ADDR;
+#pragma	ioport	US_TRIG_IntEn_ADDR:	0x1
+BYTE			US_TRIG_IntEn_ADDR;
+#define US_TRIG_MASK 0x40
+// SERVO address and mask defines
+#pragma	ioport	SERVO_Data_ADDR:	0x0
+BYTE			SERVO_Data_ADDR;
+#pragma	ioport	SERVO_DriveMode_0_ADDR:	0x100
+BYTE			SERVO_DriveMode_0_ADDR;
+#pragma	ioport	SERVO_DriveMode_1_ADDR:	0x101
+BYTE			SERVO_DriveMode_1_ADDR;
+#pragma	ioport	SERVO_DriveMode_2_ADDR:	0x3
+BYTE			SERVO_DriveMode_2_ADDR;
+#pragma	ioport	SERVO_GlobalSelect_ADDR:	0x2
+BYTE			SERVO_GlobalSelect_ADDR;
+#pragma	ioport	SERVO_IntCtrl_0_ADDR:	0x102
+BYTE			SERVO_IntCtrl_0_ADDR;
+#pragma	ioport	SERVO_IntCtrl_1_ADDR:	0x103
+BYTE			SERVO_IntCtrl_1_ADDR;
+#pragma	ioport	SERVO_IntEn_ADDR:	0x1
+BYTE			SERVO_IntEn_ADDR;
+#define SERVO_MASK 0x80
 // LCDD4 address and mask defines
 #pragma	ioport	LCDD4_Data_ADDR:	0x8
 BYTE			LCDD4_Data_ADDR;

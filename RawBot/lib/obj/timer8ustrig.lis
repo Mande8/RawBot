@@ -1523,7 +1523,7 @@
  0000           ; Constants for Timer8UsTrig user defined values
  0000           ;--------------------------------------------------
  0000           
- 0005           Timer8UsTrig_PERIOD:                       equ 0x05
+ 000A           Timer8UsTrig_PERIOD:                       equ 0x0a
  0000           Timer8UsTrig_COMPARE_VALUE:                equ 0x00
  0000           
  0000           

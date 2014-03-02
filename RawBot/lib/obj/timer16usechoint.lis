@@ -1609,17 +1609,141 @@
  0000              ; and un-comment the lines between these banners
  0000              ;---------------------------------------------------
  0000              
- 0000              ;PRESERVE_CPU_CONTEXT
- 0000              ;lcall _My_C_Function
- 0000              ;RESTORE_CPU_CONTEXT
- 0000              
- 0000              ;---------------------------------------------------
- 0000              ; Insert a lcall to a C function above this banner
- 0000              ; and un-comment the lines between these banners
- 0000              ;---------------------------------------------------
- 0000              ;@PSoC_UserCode_END@ (Do not change this line.)
- 0000           
- 0000 7E           reti
- 0001           
- 0001           
- 0001           ; end of file Timer16UsEchoINT.asm
+                IF ( TOOLCHAIN & IMAGECRAFT )
+ 0000 08          PUSH A
+                  IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                   IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                   mov   A, reg[ CUR_PP ]
+                   push  A
+                   mov   A, reg[ IDX_PP ]
+                   push  A
+                   mov   A, reg[ MVR_PP ]
+                   push  A
+                   mov   A, reg[ MVW_PP ]
+                   push  A
+                   ENDIF
+                   IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                   IF ( SYSTEM_IDXPG_TRACKS_STK_PP )
+                   IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                      and   F, ~FLAG_PGMODE_MASK        ; NOTE: transition thru 00b state
+                      or    F,  FLAG_PGMODE_MASK & FLAG_PGMODE_11b
+                   ENDIF
+                   ENDIF ;  PGMODE LOCKED
+                   IF ( SYSTEM_IDXPG_TRACKS_IDX_PP )
+                   IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                      and   F, ~FLAG_PGMODE_MASK        ; NOTE: transition thru 00b state
+                      or    F,  FLAG_PGMODE_MASK & FLAG_PGMODE_10b
+                   ENDIF
+                   ENDIF ; PGMODE FREE
+                   ENDIF ; SYSTEM_LARGE_MEMORY_MODEL
+                    MOV reg[CUR_PP], >__r0 ;Set CUR_PP to same page as virtual registers
+                  ENDIF
+ 0001 5100        MOV A, [__r0]
+ 0003 08          PUSH A
+ 0004 5100        MOV A, [__r1]
+ 0006 08          PUSH A
+ 0007 5100        MOV A, [__r2]
+ 0009 08          PUSH A
+ 000A 5100        MOV A, [__r3]
+ 000C 08          PUSH A
+ 000D 5100        MOV A, [__r4]
+ 000F 08          PUSH A
+ 0010 5100        MOV A, [__r5]
+ 0012 08          PUSH A
+ 0013 5100        MOV A, [__r6]
+ 0015 08          PUSH A
+ 0016 5100        MOV A, [__r7]
+ 0018 08          PUSH A
+ 0019 5100        MOV A, [__r8]
+ 001B 08          PUSH A
+ 001C 5100        MOV A, [__r9]
+ 001E 08          PUSH A
+ 001F 5100        MOV A, [__r10]
+ 0021 08          PUSH A
+ 0022 5100        MOV A, [__r11]
+ 0024 08          PUSH A
+ 0025 5100        MOV A, [__rX]
+ 0027 08          PUSH A
+ 0028 5100        MOV A, [__rY]
+ 002A 08          PUSH A
+ 002B 5100        MOV A, [__rZ]
+ 002D 08          PUSH A
+                  IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                    MOV REG[CUR_PP], 0
+                  ENDIF
+                ENDIF
+ 002E 7C0000       lcall _Timer16UsEcho_ISR
+                IF ( TOOLCHAIN & IMAGECRAFT )
+                  IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                   IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                   IF ( SYSTEM_IDXPG_TRACKS_STK_PP )
+                   IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                      and   F, ~FLAG_PGMODE_MASK        ; NOTE: transition thru 00b state
+                      or    F,  FLAG_PGMODE_MASK & FLAG_PGMODE_11b
+                   ENDIF
+                   ENDIF ;  PGMODE LOCKED
+                   IF ( SYSTEM_IDXPG_TRACKS_IDX_PP )
+                   IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                      and   F, ~FLAG_PGMODE_MASK        ; NOTE: transition thru 00b state
+                      or    F,  FLAG_PGMODE_MASK & FLAG_PGMODE_10b
+                   ENDIF
+                   ENDIF ; PGMODE FREE
+                   ENDIF ; SYSTEM_LARGE_MEMORY_MODEL
+                    MOV reg[CUR_PP], >__r0 ;Set CUR_PP to same page as virtual registers
+                  ENDIF
+ 0031 18          POP A
+ 0032 5300        MOV [__rZ], A
+ 0034 18          POP A
+ 0035 5300        MOV [__rY], A
+ 0037 18          POP A
+ 0038 5300        MOV [__rX], A
+ 003A 18          POP A
+ 003B 5300        MOV [__r11], A
+ 003D 18          POP A
+ 003E 5300        MOV [__r10], A
+ 0040 18          POP A
+ 0041 5300        MOV [__r9], A
+ 0043 18          POP A
+ 0044 5300        MOV [__r8], A
+ 0046 18          POP A
+ 0047 5300        MOV [__r7], A
+ 0049 18          POP A
+ 004A 5300        MOV [__r6], A
+ 004C 18          POP A
+ 004D 5300        MOV [__r5], A
+ 004F 18          POP A
+ 0050 5300        MOV [__r4], A
+ 0052 18          POP A
+ 0053 5300        MOV [__r3], A
+ 0055 18          POP A
+ 0056 5300        MOV [__r2], A
+ 0058 18          POP A
+ 0059 5300        MOV [__r1], A
+ 005B 18          POP A
+ 005C 5300        MOV [__r0], A
+                  IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                   IF ( SYSTEM_LARGE_MEMORY_MODEL )
+                   pop   A
+                   mov   reg[ MVW_PP ], A
+                   pop   A
+                   mov   reg[ MVR_PP ], A
+                   pop   A
+                   mov   reg[ IDX_PP ], A
+                   pop   A
+                   mov   reg[ CUR_PP ], A
+                   ENDIF
+                    AND F, FLAG_PGMODE_0
+                  ENDIF
+ 005E 18          POP A
+                ENDIF
+                   
+                   ;---------------------------------------------------
+                   ; Insert a lcall to a C function above this banner
+                   ; and un-comment the lines between these banners
+                   ;---------------------------------------------------
+                   ;@PSoC_UserCode_END@ (Do not change this line.)
+                
+ 005F 7E           reti
+ 0060           
+ 0060           
+ 0060           ; end of file Timer16UsEchoINT.asm

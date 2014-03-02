@@ -26,7 +26,7 @@ Timer8UsTrig_INT_MASK:                     equ 0x02
 ; Constants for Timer8UsTrig user defined values
 ;--------------------------------------------------
 
-Timer8UsTrig_PERIOD:                       equ 0x05
+Timer8UsTrig_PERIOD:                       equ 0x0a
 Timer8UsTrig_COMPARE_VALUE:                equ 0x00
 
 

@@ -71,7 +71,7 @@ extern BYTE bTimer8UsTrig_CaptureCounter(void);         // Obsolete
 // Constants for Timer8UsTrig user defined values
 //--------------------------------------------------
 
-#define Timer8UsTrig_PERIOD                    ( 0x05 )
+#define Timer8UsTrig_PERIOD                    ( 0x0a )
 #define Timer8UsTrig_COMPARE_VALUE             ( 0x00 )
 
 

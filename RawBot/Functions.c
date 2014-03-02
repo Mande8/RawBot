@@ -4,9 +4,10 @@
 
 #include "Functions.h"
 #include <m8c.h>
+#include <stdlib.h>
 #include "PSoCAPI.h"
 
-char lcdBuffer[4][8] = {0};
+char lcdBuffer[2][16] = { 0 };
 
 /**********
 *  Servo  *
@@ -52,26 +53,21 @@ void drive(unsigned char dir) {
 			PRT0DR &= ~0x0A;
 			PRT0DR |= 0x05;
 			break;
-			
 		case 4: // Left (0110)
 			PRT0DR &= ~0x09;
 			PRT0DR |= 0x06;
-			break;	
-			
+			break;
 		case 5: // Stop
 			PRT0DR &= ~0x0F; // All pins low;
 			break;
-			
 		case 6: // Right (1001)
 			PRT0DR &= ~0x06;
 			PRT0DR |= 0x09;
 			break;
-		
 		case 8: // Forward (1010)
 			PRT0DR &= ~0x05;
 			PRT0DR |= 0x0A;
 			break;
-			
 		default:
 			PRT0DR &= ~0x0F; // All pins low;
 			break;
@@ -91,6 +87,19 @@ void backlight(unsigned char toggle) {
 	else if (toggle == 2) { BL_Data_ADDR=(BL_DataShadow^=BL_MASK); }
 }
 
+void lcdAssign(long lcdNumbers, unsigned int lcdPosition) {
+	ltoa(lcdBuffer[lcdPosition], lcdNumbers, 10);
+}
+
+void lcdPrint(void) {
+	// LCD_Control(0x01);
+	
+	LCD_Position(0, 0);
+	LCD_PrString(lcdBuffer[0]);
+	LCD_Position(1, 0);
+	LCD_PrString(lcdBuffer[1]);
+}
+
 // Sets the pin mode
 void pinMode(unsigned char port, unsigned char pin, unsigned char state) {
 	int i;
@@ -103,19 +112,16 @@ void pinMode(unsigned char port, unsigned char pin, unsigned char state) {
 			else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 &= ~bitMask; PRT1DM0 &= ~bitMask; }
 			else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 &= ~bitMask; PRT2DM0 &= ~bitMask; }
 			break;
-			
 		case 1: // Strong
 			if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 &= ~bitMask; PRT0DM0 |= bitMask; }
 			else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 &= ~bitMask; PRT1DM0 |= bitMask; }
 			else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 &= ~bitMask; PRT2DM0 |= bitMask; }
 			break;
-			
 		case 3: // Pull up
 			if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 |= bitMask; PRT0DM0 |= bitMask; }
 			else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 |= bitMask; PRT1DM0 |= bitMask; }
 			else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 |= bitMask; PRT2DM0 |= bitMask; }
 			break;
-			
 		default:
 			break;
 	} 
@@ -135,43 +141,17 @@ void digitalWrite(unsigned char port, unsigned char pin, unsigned char state) {
 			else if(port == 1) PRT1DR &= ~bitMask;
 			else if(port == 2) PRT2DR &= ~bitMask;
 			break;
-			
 		case 1:
 			if(port == 0) PRT0DR |= bitMask;
 			else if(port == 1) PRT1DR |= bitMask;
 			else if(port == 2) PRT2DR |= bitMask;
-			break;   
-			
+			break; 
 		case 2:
 			if(port == 0) PRT0DR ^= bitMask;
 			else if(port == 1) PRT1DR ^= bitMask;
 			else if(port == 2) PRT2DR ^= bitMask;
 			break;
-			
 		default:
 			break;
 	}
-}
-
-// Prints integers on the LCD
-// lcdPosition values:
-// 0 = top left
-// 1 = top right
-// 2 = bottom left
-// 3 = bottom right
-void lcdAssign(long lcdNumbers, unsigned int lcdPosition) {
-	ltoa(lcdBuffer[lcdPosition], lcdNumbers, 10);
-}
-
-void lcdPrint(void) {
-	LCD_Control(0x01);
-	
-	LCD_Position(0, 0);
-	LCD_PrString(lcdBuffer[0]);
-	LCD_Position(0, 8);
-	LCD_PrString(lcdBuffer[1]);
-	LCD_Position(1, 0);
-	LCD_PrString(lcdBuffer[2]);
-	LCD_Position(1, 8);
-	LCD_PrString(lcdBuffer[3]);
 }

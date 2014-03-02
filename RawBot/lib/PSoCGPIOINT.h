@@ -104,6 +104,24 @@ BYTE			HBRIDGE_IN4_IntCtrl_1_ADDR;
 #pragma	ioport	HBRIDGE_IN4_IntEn_ADDR:	0x1
 BYTE			HBRIDGE_IN4_IntEn_ADDR;
 #define HBRIDGE_IN4_MASK 0x8
+// US_TRIG address and mask defines
+#pragma	ioport	US_TRIG_Data_ADDR:	0x0
+BYTE			US_TRIG_Data_ADDR;
+#pragma	ioport	US_TRIG_DriveMode_0_ADDR:	0x100
+BYTE			US_TRIG_DriveMode_0_ADDR;
+#pragma	ioport	US_TRIG_DriveMode_1_ADDR:	0x101
+BYTE			US_TRIG_DriveMode_1_ADDR;
+#pragma	ioport	US_TRIG_DriveMode_2_ADDR:	0x3
+BYTE			US_TRIG_DriveMode_2_ADDR;
+#pragma	ioport	US_TRIG_GlobalSelect_ADDR:	0x2
+BYTE			US_TRIG_GlobalSelect_ADDR;
+#pragma	ioport	US_TRIG_IntCtrl_0_ADDR:	0x102
+BYTE			US_TRIG_IntCtrl_0_ADDR;
+#pragma	ioport	US_TRIG_IntCtrl_1_ADDR:	0x103
+BYTE			US_TRIG_IntCtrl_1_ADDR;
+#pragma	ioport	US_TRIG_IntEn_ADDR:	0x1
+BYTE			US_TRIG_IntEn_ADDR;
+#define US_TRIG_MASK 0x40
 // SERVO address and mask defines
 #pragma	ioport	SERVO_Data_ADDR:	0x0
 BYTE			SERVO_Data_ADDR;

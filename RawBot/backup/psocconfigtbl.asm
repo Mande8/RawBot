@@ -47,7 +47,7 @@ LoadConfigTBL_rawbot_Bank0:
 ;  Instance name Timer8UsTrig, User Module Timer8
 ;       Instance name Timer8UsTrig, Block Name TIMER8(DBB01)
 	db		27h, 04h		;Timer8UsTrig_CONTROL_REG(DBB01CR0)
-	db		25h, 05h		;Timer8UsTrig_PERIOD_REG(DBB01DR1)
+	db		25h, 0ah		;Timer8UsTrig_PERIOD_REG(DBB01DR1)
 	db		26h, 00h		;Timer8UsTrig_COMPARE_REG(DBB01DR2)
 ;  Global Register values Bank 0
 	db		60h, 28h		; AnalogColumnInputSelect register (AMX_IN)
@@ -127,10 +127,10 @@ LoadConfigTBL_rawbot_Ordered:
 	M8C_SetBank0
 	mov	reg[00h], 00h		; Port_0_Data register (PRT0DR)
 	M8C_SetBank1
-	mov	reg[00h], bfh		; Port_0_DriveMode_0 register (PRT0DM0)
-	mov	reg[01h], 40h		; Port_0_DriveMode_1 register (PRT0DM1)
+	mov	reg[00h], ffh		; Port_0_DriveMode_0 register (PRT0DM0)
+	mov	reg[01h], 00h		; Port_0_DriveMode_1 register (PRT0DM1)
 	M8C_SetBank0
-	mov	reg[03h], 40h		; Port_0_DriveMode_2 register (PRT0DM2)
+	mov	reg[03h], 00h		; Port_0_DriveMode_2 register (PRT0DM2)
 	mov	reg[02h], 80h		; Port_0_GlobalSelect register (PRT0GS)
 	M8C_SetBank1
 	mov	reg[02h], 00h		; Port_0_IntCtrl_0 register (PRT0IC0)

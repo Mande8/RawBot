@@ -77,9 +77,9 @@ _Timer16UsEcho_ISR:
    ; and un-comment the lines between these banners
    ;---------------------------------------------------
    
-   ;PRESERVE_CPU_CONTEXT
-   ;lcall _My_C_Function
-   ;RESTORE_CPU_CONTEXT
+   PRESERVE_CPU_CONTEXT
+   lcall _Timer16UsEcho_ISR
+   RESTORE_CPU_CONTEXT
    
    ;---------------------------------------------------
    ; Insert a lcall to a C function above this banner
