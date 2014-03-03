@@ -759,7 +759,7 @@
  001F 620100            mov     reg[01h], 00h           ; Port_0_IntEn register (PRT0IE)
  0022 620400            mov     reg[04h], 00h           ; Port_1_Data register (PRT1DR)
  0025 7110          or    F, FLAG_XIO_MASK
- 0027 620401            mov     reg[04h], 01h           ; Port_1_DriveMode_0 register (PRT1DM0)
+ 0027 620400            mov     reg[04h], 00h           ; Port_1_DriveMode_0 register (PRT1DM0)
  002A 620500            mov     reg[05h], 00h           ; Port_1_DriveMode_1 register (PRT1DM1)
  002D 70EF          and   F, ~FLAG_XIO_MASK
  002F 620700            mov     reg[07h], 00h           ; Port_1_DriveMode_2 register (PRT1DM2)

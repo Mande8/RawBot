@@ -8,7 +8,7 @@ void servoStop(void);
 void servoMove(int, unsigned int , unsigned int);
 
 void usTrigSend(void);
-int usCalculateDistance(unsigned long);
+unsigned long usCalculateDistance(unsigned long);
 
 void lcdAssign(long, unsigned int);
 void lcdPrint(void);

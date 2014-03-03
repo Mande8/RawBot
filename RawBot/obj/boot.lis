@@ -102,7 +102,7 @@
  0000           PORT_0_INTCTRL_0:		equ 0h	;Port 0 interrupt control 0 register (PRT0IC0)
  0000           PORT_0_INTCTRL_1:		equ 0h	;Port 0 interrupt control 1 register (PRT0IC1)
  0000           PORT_1_GLOBAL_SELECT:	equ 0h	;Port 1 global select register (PRT1GS)
- 0001           PORT_1_DRIVE_0:			equ 1h	;Port 1 drive mode 0 register (PRT1DM0)
+ 0000           PORT_1_DRIVE_0:			equ 0h	;Port 1 drive mode 0 register (PRT1DM0)
  0000           PORT_1_DRIVE_1:			equ 0h	;Port 1 drive mode 1 register (PRT1DM1)
  0000           PORT_1_DRIVE_2:			equ 0h	;Port 1 drive mode 2 register (PRT1DM2)
  0080           PORT_1_INTENABLE:		equ 80h	;Port 1 interrupt enable register (PRT1IE)

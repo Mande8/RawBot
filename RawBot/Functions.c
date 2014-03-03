@@ -4,10 +4,7 @@
 
 #include "Functions.h"
 #include <m8c.h>
-#include <stdlib.h>
 #include "PSoCAPI.h"
-
-char lcdBuffer[2][16] = { 0 };
 
 /**********
 *  Servo  *
@@ -36,7 +33,7 @@ void usTrigSend(void) {
 	Timer8UsTrig_Start(); // Used to measure 10us trigger pulse
 }
 
-int usCalculateDistance(unsigned long usRawTime) {
+unsigned long usCalculateDistance(unsigned long usRawTime) {
 	return (((46400 - usRawTime) / 2) / 58);
 }
 
@@ -85,19 +82,6 @@ void backlight(unsigned char toggle) {
 	if (toggle == 0) { BL_Data_ADDR=(BL_DataShadow&=~BL_MASK); }
 	else if (toggle == 1) { BL_Data_ADDR=(BL_DataShadow|=BL_MASK); }
 	else if (toggle == 2) { BL_Data_ADDR=(BL_DataShadow^=BL_MASK); }
-}
-
-void lcdAssign(long lcdNumbers, unsigned int lcdPosition) {
-	ltoa(lcdBuffer[lcdPosition], lcdNumbers, 10);
-}
-
-void lcdPrint(void) {
-	// LCD_Control(0x01);
-	
-	LCD_Position(0, 0);
-	LCD_PrString(lcdBuffer[0]);
-	LCD_Position(1, 0);
-	LCD_PrString(lcdBuffer[1]);
 }
 
 // Sets the pin mode

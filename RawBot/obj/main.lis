@@ -33,40 +33,60 @@
  000A                   .dbfile C:\Projects\RawBot\RawBot\main.c
  000A                   .dbsym e usRawTime _usRawTime l
  000A           _usDistance::
- 000A                   .blkb 2
+ 000A                   .blkb 4
                         .area idata(rom,lit)
- 000A 0000              .word 0
-                        .area data(ram, con, rel)
- 000C                   .dbfile C:\Projects\RawBot\RawBot\main.c
- 000C                   .dbsym e usDistance _usDistance i
- 000C           _isrClear::
- 000C                   .blkb 2
-                        .area idata(rom,lit)
- 000C 0000              .word 0
+ 000A 00000000          .word 0,0
                         .area data(ram, con, rel)
  000E                   .dbfile C:\Projects\RawBot\RawBot\main.c
- 000E                   .dbsym e isrClear _isrClear I
- 000E           _usEchoRisingEdge::
+ 000E                   .dbsym e usDistance _usDistance l
+ 000E           _isrClear::
  000E                   .blkb 2
                         .area idata(rom,lit)
  000E 0000              .word 0
                         .area data(ram, con, rel)
  0010                   .dbfile C:\Projects\RawBot\RawBot\main.c
- 0010                   .dbsym e usEchoRisingEdge _usEchoRisingEdge I
- 0010           _usEchoFallingEdge::
+ 0010                   .dbsym e isrClear _isrClear I
+ 0010           _usEchoRisingEdge::
  0010                   .blkb 2
                         .area idata(rom,lit)
  0010 0000              .word 0
                         .area data(ram, con, rel)
  0012                   .dbfile C:\Projects\RawBot\RawBot\main.c
- 0012                   .dbsym e usEchoFallingEdge _usEchoFallingEdge I
+ 0012                   .dbsym e usEchoRisingEdge _usEchoRisingEdge I
+ 0012           _usEchoFallingEdge::
+ 0012                   .blkb 2
+                        .area idata(rom,lit)
+ 0012 0000              .word 0
+                        .area data(ram, con, rel)
+ 0014                   .dbfile C:\Projects\RawBot\RawBot\main.c
+ 0014                   .dbsym e usEchoFallingEdge _usEchoFallingEdge I
+ 0014           _lcdBuffer::
+ 0014                   .blkb 1
+                        .area idata(rom,lit)
+ 0014 00                .byte 0
+                        .area data(ram, con, rel)
+ 0015                   .dbfile C:\Projects\RawBot\RawBot\main.c
+ 0015                   .blkb 15
+                        .area idata(rom,lit)
+ 0015 00000000000000000000      .word 0,0,0,0,0
+ 001F 0000000000        .byte 0,0,0,0,0
+                        .area data(ram, con, rel)
+ 0024                   .dbfile C:\Projects\RawBot\RawBot\main.c
+ 0024                   .dbsym e lcdBuffer _lcdBuffer A[16:16]c
+ 0024           _driveMode::
+ 0024                   .blkb 2
+                        .area idata(rom,lit)
+ 0024 0000              .word 0
+                        .area data(ram, con, rel)
+ 0026                   .dbfile C:\Projects\RawBot\RawBot\main.c
+ 0026                   .dbsym e driveMode _driveMode I
                         .area text(rom, con, rel)
  0000                   .dbfile C:\Projects\RawBot\RawBot\main.c
  0000                   .dbfunc e Timer8Main_ISR _Timer8Main_ISR fV
  0000           _Timer8Main_ISR::
  0000                   .dbline -1
  0000 08                push A
- 0001                   .dbline 56
+ 0001                   .dbline 61
  0001           ; /**********
  0001           ; *  Notes  *
  0001           ; **********/
@@ -112,10 +132,15 @@
  0001           ; unsigned int timer8MainCount = 0;
  0001           ; bool gpioTick = false;
  0001           ; unsigned long usRawTime = 0;
- 0001           ; unsigned int usDistance = 0;
+ 0001           ; unsigned long usDistance = 0;
  0001           ; int isrClear = 0;
  0001           ; int usEchoRisingEdge = 0;
  0001           ; int usEchoFallingEdge = 0;
+ 0001           ; char lcdBuffer[16] = { 0 };
+ 0001           ; 
+ 0001           ; // 0 = Scan area
+ 0001           ; int driveMode = 0;
+ 0001           ; 
  0001           ; 
  0001           ; /***********************
  0001           ; *  Interrupt handlers  *
@@ -123,11 +148,11 @@
  0001           ; 
  0001           ; #pragma interrupt_handler Timer8Main_ISR
  0001           ; void Timer8Main_ISR(void) {
- 0001                   .dbline 57
+ 0001                   .dbline 62
  0001           ;       timer8MainTick = true;
  0001 550101            mov [_timer8MainTick+1],1
  0004 550000            mov [_timer8MainTick],0
- 0007                   .dbline 58
+ 0007                   .dbline 63
  0007           ;       timer8MainCount++;
  0007 7603              inc [_timer8MainCount+1]
  0009 0E0200            adc [_timer8MainCount],0
@@ -171,12 +196,13 @@
  0038 08                push A
  0039 5100              mov A,[__rZ]
  003B 08                push A
- 003C                   .dbline 62
+ 003C                   .dbline 68
+ 003C           ;       
  003C           ; }
  003C           ; 
  003C           ; #pragma interrupt_handler Timer8UsTrig_ISR
  003C           ; void Timer8UsTrig_ISR(void) {
- 003C                   .dbline 63
+ 003C                   .dbline 69
  003C           ;       digitalWrite(0, 6, 0); // Stop the trigger signal
  003C 5000              mov A,0
  003E 08                push A
@@ -186,7 +212,7 @@
  0044 08                push A
  0045 7C0000            xcall _digitalWrite
  0048 38FD              add SP,-3
- 004A                   .dbline 64
+ 004A                   .dbline 70
  004A           ;       Timer8UsTrig_Stop();
  004A 10                push X
  004B 7C0000            xcall _Timer8UsTrig_Stop
@@ -235,18 +261,17 @@
  007F 10                push X
  0080 4F                mov X,SP
  0081 3802              add SP,2
- 0083                   .dbline 69
+ 0083                   .dbline 75
  0083           ; }
  0083           ; 
  0083           ; // usDistance > 400 cm --> no objects in sight
  0083           ; #pragma interrupt_handler Timer16UsEcho_ISR
  0083           ; void Timer16UsEcho_ISR(void) {
- 0083                   .dbline 70
+ 0083                   .dbline 76
  0083           ;       int timer16Overflow = 1;
  0083 560101            mov [X+1],1
  0086 560000            mov [X+0],0
- 0089                   .dbline 72
- 0089           ;       
+ 0089                   .dbline 77
  0089           ;       timer16Overflow++;
  0089 7701              inc [X+1]
  008B 0F0000            adc [X+0],0
@@ -293,237 +318,263 @@
  00BD 08                push A
  00BE 5100              mov A,[__rZ]
  00C0 08                push A
- 00C1                   .dbline 77
- 00C1           ;       // lcdPrint(timer16Overflow, LCD_TOP);
+ 00C1                   .dbline 81
  00C1           ; }
  00C1           ; 
  00C1           ; #pragma interrupt_handler GPIO_ISR
  00C1           ; void GPIO_ISR(void) {
- 00C1                   .dbline 78
+ 00C1                   .dbline 82
  00C1           ;       gpioTick = true;
  00C1 550501            mov [_gpioTick+1],1
  00C4 550400            mov [_gpioTick],0
- 00C7                   .dbline 81
+ 00C7                   .dbline 85
  00C7           ;       
  00C7           ;       // Echo signal rising edge
  00C7           ;       if (US_ECHO_Data_ADDR & US_ECHO_MASK) {
  00C7 5D04              mov A,REG[0x4]
  00C9 5300              mov [__r0],A
  00CB 470080            tst [__r0],-128
- 00CE A00D              jz L5
- 00D0                   .dbline 82
- 00D0           ;               Timer16UsEcho_Start(); // Used to measure time until echo signal is returned
- 00D0                   .dbline 82
+ 00CE A014              jz L5
+ 00D0                   .dbline 86
+ 00D0           ;               Timer16UsEcho_WritePeriod(46400);       
+ 00D0                   .dbline 86
  00D0 10                push X
- 00D1 7C0000            xcall _Timer16UsEcho_Start
- 00D4 20                pop X
- 00D5                   .dbline 83
- 00D5           ;               usEchoRisingEdge++;
- 00D5 760F              inc [_usEchoRisingEdge+1]
- 00D7 0E0E00            adc [_usEchoRisingEdge],0
- 00DA                   .dbline 87
- 00DA           ;               // lcdAssign(usEchoRisingEdge, LCD_TOP);
- 00DA           ;               
- 00DA           ;       // Echo signal falling edge
- 00DA           ;       } else {
- 00DA 803E              xjmp L6
- 00DC           L5:
- 00DC                   .dbline 87
+ 00D1 57B5              mov X,-75
+ 00D3 5040              mov A,64
+ 00D5 7C0000            xcall _Timer16UsEcho_WritePeriod
+ 00D8                   .dbline 87
+ 00D8           ;               Timer16UsEcho_Start(); // Used to measure time until echo signal is returned
+ 00D8 7C0000            xcall _Timer16UsEcho_Start
+ 00DB 20                pop X
  00DC                   .dbline 88
- 00DC           ;               usDistance = usCalculateDistance(Timer16UsEcho_wReadTimer());
- 00DC 10                push X
- 00DD 7C0000            xcall _Timer16UsEcho_wReadTimer
- 00E0 5A00              mov [__r0],X
- 00E2 20                pop X
- 00E3 5300              mov [__r3],A
- 00E5 5000              mov A,0
- 00E7 08                push A
- 00E8 08                push A
- 00E9 5100              mov A,[__r0]
- 00EB 08                push A
- 00EC 5100              mov A,[__r3]
+ 00DC           ;               usEchoRisingEdge++;
+ 00DC 7611              inc [_usEchoRisingEdge+1]
+ 00DE 0E1000            adc [_usEchoRisingEdge],0
+ 00E1                   .dbline 91
+ 00E1           ;               
+ 00E1           ;       // Echo signal falling edge
+ 00E1           ;       } else {
+ 00E1 804A              xjmp L6
+ 00E3           L5:
+ 00E3                   .dbline 91
+ 00E3                   .dbline 92
+ 00E3           ;               usDistance = usCalculateDistance(Timer16UsEcho_wReadTimer());
+ 00E3 10                push X
+ 00E4 7C0000            xcall _Timer16UsEcho_wReadTimer
+ 00E7 5A00              mov [__r0],X
+ 00E9 20                pop X
+ 00EA 5300              mov [__r3],A
+ 00EC 5000              mov A,0
  00EE 08                push A
- 00EF 7C0000            xcall _usCalculateDistance
- 00F2 5F0B00            mov [_usDistance+1],[__r1]
- 00F5 5F0A00            mov [_usDistance],[__r0]
- 00F8                   .dbline 89
- 00F8           ;               lcdAssign(usDistance, LCD_TOP);
- 00F8 5000              mov A,0
- 00FA 08                push A
- 00FB 08                push A
- 00FC 5F000B            mov [__r3],[_usDistance+1]
- 00FF 5F000A            mov [__r2],[_usDistance]
- 0102 08                push A
- 0103 08                push A
- 0104 5100              mov A,[__r2]
- 0106 08                push A
- 0107 5100              mov A,[__r3]
- 0109 08                push A
- 010A 7C0000            xcall _lcdAssign
- 010D 38F6              add SP,-10
- 010F                   .dbline 91
- 010F           ;               
- 010F           ;               usEchoFallingEdge++;
- 010F 7611              inc [_usEchoFallingEdge+1]
- 0111 0E1000            adc [_usEchoFallingEdge],0
- 0114                   .dbline 94
- 0114           ;               // lcdAssign(usEchoFallingEdge, LCD_BOTTOM);
- 0114           ;               
- 0114           ;               Timer16UsEcho_Stop();
- 0114 10                push X
- 0115 7C0000            xcall _Timer16UsEcho_Stop
- 0118 20                pop X
- 0119                   .dbline 95
- 0119           ;       }
- 0119           L6:
- 0119                   .dbline 97
- 0119           ;       
- 0119           ;       isrClear = PRT1DR; // Needed for ChangeFromRead interrupt type
- 0119 5D04              mov A,REG[0x4]
- 011B 530D              mov [_isrClear+1],A
- 011D 550C00            mov [_isrClear],0
- 0120                   .dbline -2
- 0120           L4:
- 0120 18                pop A
- 0121 5300              mov [__rZ],A
- 0123 18                pop A
- 0124 5300              mov [__rY],A
- 0126 18                pop A
- 0127 5300              mov [__rX],A
- 0129 18                pop A
- 012A 5300              mov [__r11],A
- 012C 18                pop A
- 012D 5300              mov [__r10],A
- 012F 18                pop A
- 0130 5300              mov [__r9],A
- 0132 18                pop A
- 0133 5300              mov [__r8],A
- 0135 18                pop A
- 0136 5300              mov [__r7],A
- 0138 18                pop A
- 0139 5300              mov [__r6],A
- 013B 18                pop A
- 013C 5300              mov [__r5],A
- 013E 18                pop A
- 013F 5300              mov [__r4],A
- 0141 18                pop A
- 0142 5300              mov [__r3],A
- 0144 18                pop A
- 0145 5300              mov [__r2],A
- 0147 18                pop A
- 0148 5300              mov [__r1],A
- 014A 18                pop A
- 014B 5300              mov [__r0],A
- 014D 18                pop A
- 014E                   .dbline 0 ; func end
- 014E 7E                reti
- 014F                   .dbend
- 014F                   .dbfunc e main _main fV
- 014F           _main::
- 014F                   .dbline -1
- 014F                   .dbline 104
- 014F           ; }
- 014F           ; 
- 014F           ; /******************
- 014F           ; *  Main function  *
- 014F           ; ******************/
- 014F           ; 
- 014F           ; void main(void) {
- 014F                   .dbline 105
- 014F           ;       M8C_EnableGInt;
- 014F 7101                      or  F, 01h
- 0151           
- 0151                   .dbline 106
- 0151           ;       M8C_EnableIntMask(INT_MSK0, INT_MSK0_GPIO);
- 0151 43E020            or REG[0xe0],32
- 0154                   .dbline 107
- 0154           ;       LCD_Init();
- 0154 10                push X
- 0155 7C0000            xcall _LCD_Init
- 0158                   .dbline 108
- 0158           ;       LCD_Start();
- 0158 7C0000            xcall _LCD_Start
- 015B                   .dbline 109
- 015B           ;       Timer8UsTrig_EnableInt();
- 015B 7C0000            xcall _Timer8UsTrig_EnableInt
- 015E                   .dbline 110
- 015E           ;       Timer8UsTrig_Start();
- 015E 7C0000            xcall _Timer8UsTrig_Start
- 0161                   .dbline 111
- 0161           ;       Timer8Main_EnableInt();
- 0161 7C0000            xcall _Timer8Main_EnableInt
- 0164                   .dbline 112
- 0164           ;       Timer8Main_Start();
- 0164 7C0000            xcall _Timer8Main_Start
- 0167                   .dbline 113
- 0167           ;       Timer16UsEcho_EnableInt();
- 0167 7C0000            xcall _Timer16UsEcho_EnableInt
- 016A 20                pop X
- 016B 8037              xjmp L9
- 016D           L8:
- 016D                   .dbline 115
- 016D           ; 
- 016D           ;       while (1) {
- 016D                   .dbline 116
- 016D           ;               if (gpioTick) { gpioTick = false; }
- 016D 3C0400            cmp [_gpioTick],0
- 0170 B006              jnz X1
- 0172 3C0500            cmp [_gpioTick+1],0
- 0175 A007              jz L11
- 0177           X1:
- 0177                   .dbline 116
- 0177                   .dbline 116
- 0177 550500            mov [_gpioTick+1],0
- 017A 550400            mov [_gpioTick],0
- 017D                   .dbline 116
- 017D           L11:
- 017D                   .dbline 118
- 017D           ;               
- 017D           ;               if (timer8MainTick) {
- 017D 3C0000            cmp [_timer8MainTick],0
- 0180 B006              jnz X2
- 0182 3C0100            cmp [_timer8MainTick+1],0
- 0185 A01D              jz L13
- 0187           X2:
- 0187                   .dbline 119
- 0187           ;                       timer8MainTick = false;
- 0187                   .dbline 119
- 0187 550100            mov [_timer8MainTick+1],0
- 018A 550000            mov [_timer8MainTick],0
- 018D                   .dbline 121
- 018D           ; 
- 018D           ;                       if (timer8MainCount >= 99) {
- 018D 5103              mov A,[_timer8MainCount+1]
- 018F 1163              sub A,99
- 0191 5102              mov A,[_timer8MainCount]
- 0193 1900              sbb A,0
- 0195 C00D              jc L15
- 0197           X3:
- 0197                   .dbline 122
- 0197           ;                               timer8MainCount = 0;
- 0197                   .dbline 122
- 0197 550300            mov [_timer8MainCount+1],0
- 019A 550200            mov [_timer8MainCount],0
- 019D                   .dbline 123
- 019D           ;                               usTrigSend();
- 019D 7C0000            xcall _usTrigSend
- 01A0                   .dbline 124
- 01A0           ;                               lcdPrint();
- 01A0 7C0000            xcall _lcdPrint
- 01A3                   .dbline 125
- 01A3           ;                       }
- 01A3           L15:
- 01A3                   .dbline 126
- 01A3           ;               }
- 01A3           L13:
- 01A3                   .dbline 127
- 01A3           ;       }
- 01A3           L9:
- 01A3                   .dbline 115
- 01A3 8FC9              xjmp L8
- 01A5           X0:
- 01A5                   .dbline -2
- 01A5           L7:
- 01A5                   .dbline 0 ; func end
- 01A5 8FFF              jmp .
- 01A7                   .dbend
+ 00EF 08                push A
+ 00F0 5100              mov A,[__r0]
+ 00F2 08                push A
+ 00F3 5100              mov A,[__r3]
+ 00F5 08                push A
+ 00F6 7C0000            xcall _usCalculateDistance
+ 00F9 5F0A00            mov [_usDistance],[__r0]
+ 00FC 5F0B00            mov [_usDistance+1],[__r1]
+ 00FF 5F0C00            mov [_usDistance+2],[__r2]
+ 0102 5F0D00            mov [_usDistance+3],[__r3]
+ 0105                   .dbline 93
+ 0105           ;               ltoa(lcdBuffer, usDistance, 10);
+ 0105 5000              mov A,0
+ 0107 08                push A
+ 0108 500A              mov A,10
+ 010A 08                push A
+ 010B 510A              mov A,[_usDistance]
+ 010D 08                push A
+ 010E 510B              mov A,[_usDistance+1]
+ 0110 08                push A
+ 0111 510C              mov A,[_usDistance+2]
+ 0113 08                push A
+ 0114 510D              mov A,[_usDistance+3]
+ 0116 08                push A
+ 0117 5014              mov A,>_lcdBuffer
+ 0119 08                push A
+ 011A 5014              mov A,<_lcdBuffer
+ 011C 08                push A
+ 011D 7C0000            xcall _ltoa
+ 0120 38F4              add SP,-12
+ 0122                   .dbline 94
+ 0122           ;               Timer16UsEcho_Stop();
+ 0122 10                push X
+ 0123 7C0000            xcall _Timer16UsEcho_Stop
+ 0126 20                pop X
+ 0127                   .dbline 95
+ 0127           ;               usEchoFallingEdge++;
+ 0127 7613              inc [_usEchoFallingEdge+1]
+ 0129 0E1200            adc [_usEchoFallingEdge],0
+ 012C                   .dbline 96
+ 012C           ;       }
+ 012C           L6:
+ 012C                   .dbline 98
+ 012C           ;       
+ 012C           ;       isrClear = PRT1DR; // Needed for ChangeFromRead interrupt type
+ 012C 5D04              mov A,REG[0x4]
+ 012E 530F              mov [_isrClear+1],A
+ 0130 550E00            mov [_isrClear],0
+ 0133                   .dbline -2
+ 0133           L4:
+ 0133 18                pop A
+ 0134 5300              mov [__rZ],A
+ 0136 18                pop A
+ 0137 5300              mov [__rY],A
+ 0139 18                pop A
+ 013A 5300              mov [__rX],A
+ 013C 18                pop A
+ 013D 5300              mov [__r11],A
+ 013F 18                pop A
+ 0140 5300              mov [__r10],A
+ 0142 18                pop A
+ 0143 5300              mov [__r9],A
+ 0145 18                pop A
+ 0146 5300              mov [__r8],A
+ 0148 18                pop A
+ 0149 5300              mov [__r7],A
+ 014B 18                pop A
+ 014C 5300              mov [__r6],A
+ 014E 18                pop A
+ 014F 5300              mov [__r5],A
+ 0151 18                pop A
+ 0152 5300              mov [__r4],A
+ 0154 18                pop A
+ 0155 5300              mov [__r3],A
+ 0157 18                pop A
+ 0158 5300              mov [__r2],A
+ 015A 18                pop A
+ 015B 5300              mov [__r1],A
+ 015D 18                pop A
+ 015E 5300              mov [__r0],A
+ 0160 18                pop A
+ 0161                   .dbline 0 ; func end
+ 0161 7E                reti
+ 0162                   .dbend
+ 0162                   .dbfunc e main _main fV
+ 0162           _main::
+ 0162                   .dbline -1
+ 0162                   .dbline 105
+ 0162           ; }
+ 0162           ; 
+ 0162           ; /******************
+ 0162           ; *  Main function  *
+ 0162           ; ******************/
+ 0162           ; 
+ 0162           ; void main(void) {
+ 0162                   .dbline 106
+ 0162           ;       M8C_EnableGInt;
+ 0162 7101                      or  F, 01h
+ 0164           
+ 0164                   .dbline 107
+ 0164           ;       M8C_EnableIntMask(INT_MSK0, INT_MSK0_GPIO);
+ 0164 43E020            or REG[0xe0],32
+ 0167                   .dbline 108
+ 0167           ;       LCD_Init();
+ 0167 10                push X
+ 0168 7C0000            xcall _LCD_Init
+ 016B                   .dbline 109
+ 016B           ;       LCD_Start();
+ 016B 7C0000            xcall _LCD_Start
+ 016E                   .dbline 110
+ 016E           ;       Timer8UsTrig_EnableInt();
+ 016E 7C0000            xcall _Timer8UsTrig_EnableInt
+ 0171                   .dbline 111
+ 0171           ;       Timer8UsTrig_Start();
+ 0171 7C0000            xcall _Timer8UsTrig_Start
+ 0174                   .dbline 112
+ 0174           ;       Timer8Main_EnableInt();
+ 0174 7C0000            xcall _Timer8Main_EnableInt
+ 0177                   .dbline 113
+ 0177           ;       Timer8Main_Start();
+ 0177 7C0000            xcall _Timer8Main_Start
+ 017A                   .dbline 114
+ 017A           ;       Timer16UsEcho_EnableInt();
+ 017A 7C0000            xcall _Timer16UsEcho_EnableInt
+ 017D 20                pop X
+ 017E 8046              xjmp L9
+ 0180           L8:
+ 0180                   .dbline 116
+ 0180           ; 
+ 0180           ;       while (1) {
+ 0180                   .dbline 117
+ 0180           ;               if (timer8MainTick) {
+ 0180 3C0000            cmp [_timer8MainTick],0
+ 0183 B006              jnz X1
+ 0185 3C0100            cmp [_timer8MainTick+1],0
+ 0188 A03C              jz L11
+ 018A           X1:
+ 018A                   .dbline 118
+ 018A           ;                       timer8MainTick = false;
+ 018A                   .dbline 118
+ 018A 550100            mov [_timer8MainTick+1],0
+ 018D 550000            mov [_timer8MainTick],0
+ 0190                   .dbline 120
+ 0190           ;                       
+ 0190           ;                       if (driveMode = 0) {
+ 0190 552500            mov [_driveMode+1],0
+ 0193 552400            mov [_driveMode],0
+ 0196 5000              mov A,0
+ 0198 A001              jz L13
+ 019A                   .dbline 122
+ 019A           ;                               
+ 019A           ;                       }
+ 019A                   .dbline 122
+ 019A           L13:
+ 019A                   .dbline 126
+ 019A           ; 
+ 019A           ; 
+ 019A           ;                       // 1 s
+ 019A           ;                       if (timer8MainCount >= 999) {
+ 019A 5103              mov A,[_timer8MainCount+1]
+ 019C 11E7              sub A,-25
+ 019E 5102              mov A,[_timer8MainCount]
+ 01A0 1903              sbb A,3
+ 01A2 C022              jc L15
+ 01A4           X2:
+ 01A4                   .dbline 128
+ 01A4           ;                               
+ 01A4           ;                               timer8MainCount = 0;
+ 01A4                   .dbline 128
+ 01A4 550300            mov [_timer8MainCount+1],0
+ 01A7 550200            mov [_timer8MainCount],0
+ 01AA                   .dbline 129
+ 01AA           ;                               LCD_Control(0x01);
+ 01AA 10                push X
+ 01AB 5001              mov A,1
+ 01AD 7C0000            xcall _LCD_Control
+ 01B0                   .dbline 131
+ 01B0           ;                               
+ 01B0           ;                               LCD_Position(0, 0);
+ 01B0 5000              mov A,0
+ 01B2 5700              mov X,0
+ 01B4 7C0000            xcall _LCD_Position
+ 01B7                   .dbline 132
+ 01B7           ;                               LCD_PrString(lcdBuffer);
+ 01B7 5014              mov A,>_lcdBuffer
+ 01B9 08                push A
+ 01BA 5014              mov A,<_lcdBuffer
+ 01BC 5C                mov X,A
+ 01BD 18                pop A
+ 01BE 7C0000            xcall _LCD_PrString
+ 01C1 20                pop X
+ 01C2                   .dbline 134
+ 01C2           ;                               
+ 01C2           ;                               usTrigSend();
+ 01C2 7C0000            xcall _usTrigSend
+ 01C5                   .dbline 135
+ 01C5           ;                       }
+ 01C5           L15:
+ 01C5                   .dbline 136
+ 01C5           ;               }
+ 01C5           L11:
+ 01C5                   .dbline 137
+ 01C5           ;       }
+ 01C5           L9:
+ 01C5                   .dbline 116
+ 01C5 8FBA              xjmp L8
+ 01C7           X0:
+ 01C7                   .dbline -2
+ 01C7           L7:
+ 01C7                   .dbline 0 ; func end
+ 01C7 8FFF              jmp .
+ 01C9                   .dbend

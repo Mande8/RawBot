@@ -43,10 +43,15 @@ bool timer8MainTick = false;
 unsigned int timer8MainCount = 0;
 bool gpioTick = false;
 unsigned long usRawTime = 0;
-unsigned int usDistance = 0;
+unsigned long usDistance = 0;
 int isrClear = 0;
 int usEchoRisingEdge = 0;
 int usEchoFallingEdge = 0;
+char lcdBuffer[16] = { 0 };
+
+// 0 = Scan area
+int driveMode = 0;
+
 
 /***********************
 *  Interrupt handlers  *
@@ -56,6 +61,7 @@ int usEchoFallingEdge = 0;
 void Timer8Main_ISR(void) {
 	timer8MainTick = true;
 	timer8MainCount++;
+	
 }
 
 #pragma interrupt_handler Timer8UsTrig_ISR
@@ -68,9 +74,7 @@ void Timer8UsTrig_ISR(void) {
 #pragma interrupt_handler Timer16UsEcho_ISR
 void Timer16UsEcho_ISR(void) {
 	int timer16Overflow = 1;
-	
 	timer16Overflow++;
-	// lcdPrint(timer16Overflow, LCD_TOP);
 }
 
 #pragma interrupt_handler GPIO_ISR
@@ -79,19 +83,16 @@ void GPIO_ISR(void) {
 	
 	// Echo signal rising edge
 	if (US_ECHO_Data_ADDR & US_ECHO_MASK) {
+		Timer16UsEcho_WritePeriod(46400);	
 		Timer16UsEcho_Start(); // Used to measure time until echo signal is returned
 		usEchoRisingEdge++;
-		// lcdAssign(usEchoRisingEdge, LCD_TOP);
 		
 	// Echo signal falling edge
 	} else {
 		usDistance = usCalculateDistance(Timer16UsEcho_wReadTimer());
-		lcdAssign(usDistance, LCD_TOP);
-		
-		usEchoFallingEdge++;
-		// lcdAssign(usEchoFallingEdge, LCD_BOTTOM);
-		
+		ltoa(lcdBuffer, usDistance, 10);
 		Timer16UsEcho_Stop();
+		usEchoFallingEdge++;
 	}
 	
 	isrClear = PRT1DR; // Needed for ChangeFromRead interrupt type
@@ -113,15 +114,24 @@ void main(void) {
 	Timer16UsEcho_EnableInt();
 
 	while (1) {
-		if (gpioTick) {	gpioTick = false; }
-		
 		if (timer8MainTick) {
 			timer8MainTick = false;
+			
+			if (driveMode = 0) {
+				
+			}
 
-			if (timer8MainCount >= 99) {
+
+			// 1 s
+			if (timer8MainCount >= 999) {
+				
 				timer8MainCount = 0;
+				LCD_Control(0x01);
+				
+				LCD_Position(0, 0);
+				LCD_PrString(lcdBuffer);
+				
 				usTrigSend();
-				lcdPrint();
 			}
 		}
 	}
