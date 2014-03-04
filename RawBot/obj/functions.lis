@@ -1,991 +1,1223 @@
                         .module functions.c
                         .area text(rom, con, rel)
  0000                   .dbfile ./functions.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile ./functions.c
+ 0000           _lcdBuffer::
+ 0000                   .blkb 1
+                        .area idata(rom,lit)
+ 0000 00                .byte 0
+                        .area data(ram, con, rel)
+ 0001                   .dbfile ./functions.c
+ 0001                   .blkb 15
+                        .area idata(rom,lit)
+ 0001 00000000000000000000      .word 0,0,0,0,0
+ 000B 0000000000        .byte 0,0,0,0,0
+                        .area data(ram, con, rel)
+ 0010                   .dbfile ./functions.c
+ 0010                   .blkb 16
+                        .area idata(rom,lit)
+ 0010 00000000000000000000      .word 0,0,0,0,0
+ 001A 000000000000      .byte 0,0,0,0,0,0
+                        .area data(ram, con, rel)
+ 0020                   .dbfile ./functions.c
+ 0020                   .dbfile C:\Projects\RawBot\RawBot\functions.c
+ 0020                   .dbsym e lcdBuffer _lcdBuffer A[32:2:16]c
+ 0020           _driveDirection::
+ 0020                   .blkb 2
+                        .area idata(rom,lit)
+ 0020 0000              .word 0
+                        .area data(ram, con, rel)
+ 0022                   .dbfile C:\Projects\RawBot\RawBot\functions.c
+ 0022                   .dbsym e driveDirection _driveDirection I
+ 0022           _driveCounter::
+ 0022                   .blkb 2
+                        .area idata(rom,lit)
+ 0022 0000              .word 0
+                        .area data(ram, con, rel)
+ 0024                   .dbfile C:\Projects\RawBot\RawBot\functions.c
+ 0024                   .dbsym e driveCounter _driveCounter I
+                        .area text(rom, con, rel)
  0000                   .dbfile C:\Projects\RawBot\RawBot\functions.c
- 0000                   .dbfunc e servoStart _servoStart fV
- 0000           ;         period -> X-5
- 0000           _servoStart::
+ 0000                   .dbfunc e driveCounterCheck _driveCounterCheck fI
+ 0000           _driveCounterCheck::
  0000                   .dbline -1
- 0000 10                push X
- 0001 4F                mov X,SP
- 0002                   .dbline 13
- 0002           ; /*************
- 0002           ; *  Includes  *
- 0002           ; *************/
- 0002           ; 
- 0002           ; #include "Functions.h"
- 0002           ; #include <m8c.h>
- 0002           ; #include "PSoCAPI.h"
- 0002           ; 
- 0002           ; /**********
- 0002           ; *  Servo  *
- 0002           ; **********/
- 0002           ; 
- 0002           ; void servoStart(unsigned int period) {
- 0002                   .dbline 14
- 0002           ;       ServoPWM_WritePeriod(period);
- 0002 10                push X
- 0003 52FB              mov A,[X-5]
- 0005 08                push A
- 0006 52FC              mov A,[X-4]
- 0008 20                pop X
- 0009 7C0000            xcall _ServoPWM_WritePeriod
- 000C                   .dbline 15
- 000C           ;       ServoPWM_Start();       
- 000C 7C0000            xcall _ServoPWM_Start
- 000F 20                pop X
- 0010                   .dbline -2
- 0010           L1:
- 0010 20                pop X
- 0011                   .dbline 0 ; func end
- 0011 7F                ret
- 0012                   .dbsym l period -5 i
- 0012                   .dbend
- 0012                   .dbfunc e servoStop _servoStop fV
- 0012           _servoStop::
- 0012                   .dbline -1
- 0012                   .dbline 18
- 0012           ; }
- 0012           ; 
- 0012           ; void servoStop(void) {
- 0012                   .dbline 19
- 0012           ;       ServoPWM_Stop(); // Just for uniformity
- 0012 10                push X
- 0013 7C0000            xcall _ServoPWM_Stop
- 0016 20                pop X
- 0017                   .dbline -2
- 0017           L2:
- 0017                   .dbline 0 ; func end
- 0017 7F                ret
- 0018                   .dbend
- 0018                   .dbfunc e servoMove _servoMove fV
- 0018           ;          range -> X-9
- 0018           ;         middle -> X-7
- 0018           ;          angle -> X-5
- 0018           _servoMove::
- 0018                   .dbline -1
- 0018 10                push X
- 0019 4F                mov X,SP
- 001A                   .dbline 23
- 001A           ; }
- 001A           ; 
- 001A           ; // Servo moving
- 001A           ; void servoMove(int angle, unsigned int middle, unsigned int range) {
- 001A                   .dbline 24
- 001A           ;       ServoPWM_WritePulseWidth(middle + (angle*((range*2)/180)));
- 001A 52F8              mov A,[X-8]
- 001C 5300              mov [__r1],A
- 001E 52F7              mov A,[X-9]
- 0020 5300              mov [__r0],A
- 0022 6500              asl [__r1]
- 0024 6B00              rlc [__r0]
- 0026 5000              mov A,0
- 0028 08                push A
- 0029 50B4              mov A,-76
- 002B 08                push A
- 002C 5100              mov A,[__r0]
- 002E 08                push A
- 002F 5100              mov A,[__r1]
- 0031 08                push A
- 0032 7C0000            xcall __divmodu_16X16_16
- 0035 18                pop A
- 0036 5300              mov [__r1],A
- 0038 18                pop A
+ 0000                   .dbline 17
+ 0000           ; /*************
+ 0000           ; *  Includes  *
+ 0000           ; *************/
+ 0000           ; 
+ 0000           ; #include "Functions.h"
+ 0000           ; #include <m8c.h>
+ 0000           ; #include <stdbool.h>
+ 0000           ; #include "PSoCAPI.h"
+ 0000           ; 
+ 0000           ; char lcdBuffer[2][16] = { 0 };
+ 0000           ; int driveDirection = 0;
+ 0000           ; int driveCounter = 0;
+ 0000           ; 
+ 0000           ; // Returns:
+ 0000           ; //  true      = currently moving
+ 0000           ; //  false     = not moving
+ 0000           ; bool driveCounterCheck(void) {
+ 0000                   .dbline 18
+ 0000           ;       if (driveCounter == 0) {
+ 0000 3C2200            cmp [_driveCounter],0
+ 0003 B015              jnz L2
+ 0005 3C2300            cmp [_driveCounter+1],0
+ 0008 B010              jnz L2
+ 000A           X0:
+ 000A                   .dbline 19
+ 000A           ;               drive(HALT);
+ 000A                   .dbline 19
+ 000A 5005              mov A,5
+ 000C 08                push A
+ 000D 90F9              xcall _drive
+ 000F 38FF              add SP,-1
+ 0011                   .dbline 20
+ 0011           ;               return false;
+ 0011 550000            mov [__r1],0
+ 0014 550000            mov [__r0],0
+ 0017 800C              xjmp L1
+ 0019           L2:
+ 0019                   .dbline 21
+ 0019           ;       } else {
+ 0019                   .dbline 22
+ 0019           ;               driveCounter--;
+ 0019 7A23              dec [_driveCounter+1]
+ 001B 1E2200            sbb [_driveCounter],0
+ 001E                   .dbline 23
+ 001E           ;               return true;
+ 001E 550001            mov [__r1],1
+ 0021 550000            mov [__r0],0
+ 0024                   .dbline -2
+ 0024           L1:
+ 0024                   .dbline 0 ; func end
+ 0024 7F                ret
+ 0025                   .dbend
+ 0025                   .dbfunc e driveAssign _driveAssign fI
+ 0025           ;        counter -> X-7
+ 0025           ;      direction -> X-5
+ 0025           _driveAssign::
+ 0025                   .dbline -1
+ 0025 10                push X
+ 0026 4F                mov X,SP
+ 0027                   .dbline 27
+ 0027           ;       }
+ 0027           ; }
+ 0027           ; 
+ 0027           ; bool driveAssign(int direction, int counter) {
+ 0027                   .dbline 28
+ 0027           ;       drive(HALT); // Clear current drive assigns (not sure about this)
+ 0027 5005              mov A,5
+ 0029 08                push A
+ 002A 90DC              xcall _drive
+ 002C                   .dbline 29
+ 002C           ;       driveDirection = direction;
+ 002C 52FC              mov A,[X-4]
+ 002E 5321              mov [_driveDirection+1],A
+ 0030 52FB              mov A,[X-5]
+ 0032 5320              mov [_driveDirection],A
+ 0034                   .dbline 30
+ 0034           ;       drive(direction);
+ 0034 52FC              mov A,[X-4]
+ 0036 08                push A
+ 0037 90CF              xcall _drive
  0039 38FE              add SP,-2
- 003B 08                push A
- 003C 5100              mov A,[__r1]
- 003E 08                push A
- 003F 52FB              mov A,[X-5]
- 0041 08                push A
- 0042 52FC              mov A,[X-4]
- 0044 08                push A
- 0045 7C0000            xcall __mul16
- 0048 38FC              add SP,-4
- 004A 5F0000            mov [__r1],[__rX]
- 004D 5F0000            mov [__r0],[__rY]
- 0050 52FA              mov A,[X-6]
- 0052 0200              add A,[__r1]
- 0054 5300              mov [__r1],A
- 0056 52F9              mov A,[X-7]
- 0058 0A00              adc A,[__r0]
- 005A 10                push X
- 005B 08                push A
- 005C 5100              mov A,[__r1]
- 005E 20                pop X
- 005F 7C0000            xcall _ServoPWM_WritePulseWidth
- 0062 20                pop X
- 0063                   .dbline -2
- 0063           L3:
- 0063 20                pop X
- 0064                   .dbline 0 ; func end
- 0064 7F                ret
- 0065                   .dbsym l range -9 i
- 0065                   .dbsym l middle -7 i
- 0065                   .dbsym l angle -5 I
- 0065                   .dbend
- 0065                   .dbfunc e usTrigSend _usTrigSend fV
- 0065           _usTrigSend::
- 0065                   .dbline -1
- 0065                   .dbline 31
- 0065           ; }
- 0065           ; 
- 0065           ; /***************
- 0065           ; *  Ultrasound  *
- 0065           ; ***************/
- 0065           ; 
- 0065           ; void usTrigSend(void) {
- 0065                   .dbline 32
- 0065           ;       digitalWrite(0, 6, 1); // Start the trigger signal
- 0065 5001              mov A,1
- 0067 08                push A
- 0068 5006              mov A,6
- 006A 08                push A
+ 003B                   .dbline 31
+ 003B           ;       driveCounter = counter;
+ 003B 52FA              mov A,[X-6]
+ 003D 5323              mov [_driveCounter+1],A
+ 003F 52F9              mov A,[X-7]
+ 0041 5322              mov [_driveCounter],A
+ 0043                   .dbline -2
+ 0043           L4:
+ 0043 20                pop X
+ 0044                   .dbline 0 ; func end
+ 0044 7F                ret
+ 0045                   .dbsym l counter -7 I
+ 0045                   .dbsym l direction -5 I
+ 0045                   .dbend
+ 0045                   .dbfunc e servoStart _servoStart fV
+ 0045           ;         period -> X-5
+ 0045           _servoStart::
+ 0045                   .dbline -1
+ 0045 10                push X
+ 0046 4F                mov X,SP
+ 0047                   .dbline 44
+ 0047           ; }
+ 0047           ; 
+ 0047           ; 
+ 0047           ; 
+ 0047           ; 
+ 0047           ; 
+ 0047           ; 
+ 0047           ; 
+ 0047           ; /**********
+ 0047           ; *  Servo  *
+ 0047           ; **********/
+ 0047           ; 
+ 0047           ; void servoStart(unsigned int period) {
+ 0047                   .dbline 45
+ 0047           ;       ServoPWM_WritePeriod(period);
+ 0047 10                push X
+ 0048 52FB              mov A,[X-5]
+ 004A 08                push A
+ 004B 52FC              mov A,[X-4]
+ 004D 20                pop X
+ 004E 7C0000            xcall _ServoPWM_WritePeriod
+ 0051                   .dbline 46
+ 0051           ;       ServoPWM_Start();       
+ 0051 7C0000            xcall _ServoPWM_Start
+ 0054 20                pop X
+ 0055                   .dbline -2
+ 0055           L5:
+ 0055 20                pop X
+ 0056                   .dbline 0 ; func end
+ 0056 7F                ret
+ 0057                   .dbsym l period -5 i
+ 0057                   .dbend
+ 0057                   .dbfunc e servoStop _servoStop fV
+ 0057           _servoStop::
+ 0057                   .dbline -1
+ 0057                   .dbline 49
+ 0057           ; }
+ 0057           ; 
+ 0057           ; void servoStop(void) {
+ 0057                   .dbline 50
+ 0057           ;       ServoPWM_Stop(); // Just for uniformity
+ 0057 10                push X
+ 0058 7C0000            xcall _ServoPWM_Stop
+ 005B 20                pop X
+ 005C                   .dbline -2
+ 005C           L6:
+ 005C                   .dbline 0 ; func end
+ 005C 7F                ret
+ 005D                   .dbend
+ 005D                   .dbfunc e servoMove _servoMove fV
+ 005D           ;          range -> X-9
+ 005D           ;         middle -> X-7
+ 005D           ;          angle -> X-5
+ 005D           _servoMove::
+ 005D                   .dbline -1
+ 005D 10                push X
+ 005E 4F                mov X,SP
+ 005F                   .dbline 54
+ 005F           ; }
+ 005F           ; 
+ 005F           ; // Servo moving
+ 005F           ; void servoMove(int angle, unsigned int middle, unsigned int range) {
+ 005F                   .dbline 55
+ 005F           ;       ServoPWM_WritePulseWidth(middle + (angle*((range*2)/180)));
+ 005F 52F8              mov A,[X-8]
+ 0061 5300              mov [__r1],A
+ 0063 52F7              mov A,[X-9]
+ 0065 5300              mov [__r0],A
+ 0067 6500              asl [__r1]
+ 0069 6B00              rlc [__r0]
  006B 5000              mov A,0
  006D 08                push A
- 006E 92E1              xcall _digitalWrite
- 0070 38FD              add SP,-3
- 0072                   .dbline 33
- 0072           ;       Timer8UsTrig_Start(); // Used to measure 10us trigger pulse
- 0072 10                push X
- 0073 7C0000            xcall _Timer8UsTrig_Start
- 0076 20                pop X
- 0077                   .dbline -2
- 0077           L4:
- 0077                   .dbline 0 ; func end
- 0077 7F                ret
- 0078                   .dbend
- 0078                   .dbfunc e usCalculateDistance _usCalculateDistance fl
- 0078           ;      usRawTime -> X-7
- 0078           _usCalculateDistance::
- 0078                   .dbline -1
- 0078 10                push X
- 0079 4F                mov X,SP
- 007A                   .dbline 36
- 007A           ; }
- 007A           ; 
- 007A           ; unsigned long usCalculateDistance(unsigned long usRawTime) {
- 007A                   .dbline 37
- 007A           ;       return (((46400 - usRawTime) / 2) / 58);
- 007A 5040              mov A,64
- 007C 13FC              sub A,[X-4]
- 007E 5300              mov [__r3],A
- 0080 50B5              mov A,-75
- 0082 1BFB              sbb A,[X-5]
- 0084 5300              mov [__r2],A
- 0086 5000              mov A,0
- 0088 1BFA              sbb A,[X-6]
- 008A 5300              mov [__r1],A
- 008C 5000              mov A,0
- 008E 1BF9              sbb A,[X-7]
- 0090 5300              mov [__r0],A
- 0092 70FB              and F,-5
- 0094 6E00              rrc [__r0]
- 0096 6E00              rrc [__r1]
- 0098 6E00              rrc [__r2]
- 009A 6E00              rrc [__r3]
- 009C 5000              mov A,0
- 009E 08                push A
- 009F 08                push A
+ 006E 50B4              mov A,-76
+ 0070 08                push A
+ 0071 5100              mov A,[__r0]
+ 0073 08                push A
+ 0074 5100              mov A,[__r1]
+ 0076 08                push A
+ 0077 7C0000            xcall __divmodu_16X16_16
+ 007A 18                pop A
+ 007B 5300              mov [__r1],A
+ 007D 18                pop A
+ 007E 38FE              add SP,-2
+ 0080 08                push A
+ 0081 5100              mov A,[__r1]
+ 0083 08                push A
+ 0084 52FB              mov A,[X-5]
+ 0086 08                push A
+ 0087 52FC              mov A,[X-4]
+ 0089 08                push A
+ 008A 7C0000            xcall __mul16
+ 008D 38FC              add SP,-4
+ 008F 5F0000            mov [__r1],[__rX]
+ 0092 5F0000            mov [__r0],[__rY]
+ 0095 52FA              mov A,[X-6]
+ 0097 0200              add A,[__r1]
+ 0099 5300              mov [__r1],A
+ 009B 52F9              mov A,[X-7]
+ 009D 0A00              adc A,[__r0]
+ 009F 10                push X
  00A0 08                push A
- 00A1 503A              mov A,58
- 00A3 08                push A
- 00A4 5100              mov A,[__r0]
- 00A6 08                push A
- 00A7 5100              mov A,[__r1]
- 00A9 08                push A
- 00AA 5100              mov A,[__r2]
+ 00A1 5100              mov A,[__r1]
+ 00A3 20                pop X
+ 00A4 7C0000            xcall _ServoPWM_WritePulseWidth
+ 00A7 20                pop X
+ 00A8                   .dbline -2
+ 00A8           L7:
+ 00A8 20                pop X
+ 00A9                   .dbline 0 ; func end
+ 00A9 7F                ret
+ 00AA                   .dbsym l range -9 i
+ 00AA                   .dbsym l middle -7 i
+ 00AA                   .dbsym l angle -5 I
+ 00AA                   .dbend
+ 00AA                   .dbfunc e usTrigSend _usTrigSend fV
+ 00AA           _usTrigSend::
+ 00AA                   .dbline -1
+ 00AA                   .dbline 62
+ 00AA           ; }
+ 00AA           ; 
+ 00AA           ; /***************
+ 00AA           ; *  Ultrasound  *
+ 00AA           ; ***************/
+ 00AA           ; 
+ 00AA           ; void usTrigSend(void) {
+ 00AA                   .dbline 63
+ 00AA           ;       digitalWrite(0, 6, 1); // Start the trigger signal
+ 00AA 5001              mov A,1
  00AC 08                push A
- 00AD 5100              mov A,[__r3]
+ 00AD 5006              mov A,6
  00AF 08                push A
- 00B0 7C0000            xcall __divmodu_32X32_32
- 00B3 18                pop A
- 00B4 5300              mov [__r3],A
- 00B6 18                pop A
- 00B7 5300              mov [__r2],A
- 00B9 18                pop A
- 00BA 5300              mov [__r1],A
- 00BC 18                pop A
- 00BD 5300              mov [__r0],A
- 00BF 38FC              add SP,-4
- 00C1                   .dbline -2
- 00C1           L5:
- 00C1 20                pop X
- 00C2                   .dbline 0 ; func end
- 00C2 7F                ret
- 00C3                   .dbsym l usRawTime -7 l
- 00C3                   .dbend
- 00C3                   .dbfunc e drive _drive fV
- 00C3           ;            dir -> X-4
- 00C3           _drive::
- 00C3                   .dbline -1
- 00C3 10                push X
- 00C4 4F                mov X,SP
- 00C5 3802              add SP,2
- 00C7                   .dbline 47
- 00C7           ; }
- 00C7           ; 
- 00C7           ; /************
- 00C7           ; *  Driving  *
- 00C7           ; ************/
- 00C7           ; 
- 00C7           ; // Connections : H-bridge is connected to
- 00C7           ; // Used to drive the H-Bridge; think of a numpad for controls
- 00C7           ; // IN1 = Port0 Pin0 , IN2 = Port0 Pin1 etc
- 00C7           ; void drive(unsigned char dir) {
- 00C7                   .dbline 48
- 00C7           ;       switch (dir) {
- 00C7 52FC              mov A,[X-4]
- 00C9 5401              mov [X+1],A
- 00CB 560000            mov [X+0],0
- 00CE 3D0000            cmp [X+0],0
- 00D1 B006              jnz X0
- 00D3 3D0102            cmp [X+1],2
- 00D6 A02B              jz L10
- 00D8           X0:
- 00D8 3D0000            cmp [X+0],0
- 00DB B006              jnz X1
- 00DD 3D0104            cmp [X+1],4
- 00E0 A029              jz L11
- 00E2           X1:
- 00E2 3D0000            cmp [X+0],0
- 00E5 B006              jnz X2
- 00E7 3D0105            cmp [X+1],5
- 00EA A027              jz L12
- 00EC           X2:
- 00EC 3D0000            cmp [X+0],0
- 00EF B006              jnz X3
- 00F1 3D0106            cmp [X+1],6
- 00F4 A022              jz L13
- 00F6           X3:
- 00F6 3D0000            cmp [X+0],0
- 00F9 B006              jnz X4
- 00FB 3D0108            cmp [X+1],8
- 00FE A020              jz L14
- 0100           X4:
- 0100 8026              xjmp L7
- 0102           L10:
- 0102                   .dbline 50
- 0102           ;               case 2: // Back (0101)
- 0102           ;                       PRT0DR &= ~0x0A;
- 0102 4100F5            and REG[0],-11
- 0105                   .dbline 51
- 0105           ;                       PRT0DR |= 0x05;
- 0105 430005            or REG[0],5
- 0108                   .dbline 52
- 0108           ;                       break;
- 0108 8021              xjmp L8
- 010A           L11:
- 010A                   .dbline 54
- 010A           ;               case 4: // Left (0110)
- 010A           ;                       PRT0DR &= ~0x09;
- 010A 4100F6            and REG[0],-10
- 010D                   .dbline 55
- 010D           ;                       PRT0DR |= 0x06;
- 010D 430006            or REG[0],6
- 0110                   .dbline 56
- 0110           ;                       break;
- 0110 8019              xjmp L8
- 0112           L12:
- 0112                   .dbline 58
- 0112           ;               case 5: // Stop
- 0112           ;                       PRT0DR &= ~0x0F; // All pins low;
- 0112 4100F0            and REG[0],-16
- 0115                   .dbline 59
- 0115           ;                       break;
- 0115 8014              xjmp L8
- 0117           L13:
- 0117                   .dbline 61
- 0117           ;               case 6: // Right (1001)
- 0117           ;                       PRT0DR &= ~0x06;
- 0117 4100F9            and REG[0],-7
- 011A                   .dbline 62
- 011A           ;                       PRT0DR |= 0x09;
- 011A 430009            or REG[0],9
- 011D                   .dbline 63
- 011D           ;                       break;
- 011D 800C              xjmp L8
- 011F           L14:
- 011F                   .dbline 65
- 011F           ;               case 8: // Forward (1010)
- 011F           ;                       PRT0DR &= ~0x05;
- 011F 4100FA            and REG[0],-6
- 0122                   .dbline 66
- 0122           ;                       PRT0DR |= 0x0A;
- 0122 43000A            or REG[0],10
- 0125                   .dbline 67
- 0125           ;                       break;
- 0125 8004              xjmp L8
- 0127           L7:
- 0127                   .dbline 69
- 0127           ;               default:
- 0127           ;                       PRT0DR &= ~0x0F; // All pins low;
- 0127 4100F0            and REG[0],-16
- 012A                   .dbline 70
- 012A           ;                       break;
- 012A           L8:
- 012A                   .dbline -2
- 012A           L6:
- 012A 38FE              add SP,-2
- 012C 20                pop X
- 012D                   .dbline 0 ; func end
- 012D 7F                ret
- 012E                   .dbsym l dir -4 c
- 012E                   .dbend
- 012E                   .dbfunc e backlight _backlight fV
- 012E           ;         toggle -> X-4
- 012E           _backlight::
- 012E                   .dbline -1
- 012E 10                push X
- 012F 4F                mov X,SP
- 0130                   .dbline 80
- 0130           ;       }       
- 0130           ; }
- 0130           ; 
- 0130           ; 
- 0130           ; 
- 0130           ; /*****************
- 0130           ; *  General PSoC  *
- 0130           ; *****************/
- 0130           ; 
- 0130           ; void backlight(unsigned char toggle) {
- 0130                   .dbline 81
- 0130           ;       pinMode(2,7,1); // set the pin to strong
- 0130 5001              mov A,1
- 0132 08                push A
- 0133 5007              mov A,7
- 0135 08                push A
- 0136 5002              mov A,2
- 0138 08                push A
- 0139 902C              xcall _pinMode
- 013B 38FD              add SP,-3
- 013D                   .dbline 82
- 013D           ;       if (toggle == 0) { BL_Data_ADDR=(BL_DataShadow&=~BL_MASK); }
- 013D 3DFC00            cmp [X-4],0
- 0140 B00A              jnz L16
- 0142                   .dbline 82
- 0142                   .dbline 82
- 0142 26007F            and [_Port_2_Data_SHADE],127
- 0145 5100              mov A,[_Port_2_Data_SHADE]
- 0147 6008              mov REG[0x8],A
- 0149                   .dbline 82
- 0149 801B              xjmp L17
- 014B           L16:
- 014B                   .dbline 83
- 014B           ;       else if (toggle == 1) { BL_Data_ADDR=(BL_DataShadow|=BL_MASK); }
- 014B 3DFC01            cmp [X-4],1
- 014E B00A              jnz L18
- 0150                   .dbline 83
- 0150                   .dbline 83
- 0150 2E0080            or [_Port_2_Data_SHADE],-128
- 0153 5100              mov A,[_Port_2_Data_SHADE]
- 0155 6008              mov REG[0x8],A
- 0157                   .dbline 83
- 0157 800D              xjmp L19
- 0159           L18:
- 0159                   .dbline 84
- 0159           ;       else if (toggle == 2) { BL_Data_ADDR=(BL_DataShadow^=BL_MASK); }
- 0159 3DFC02            cmp [X-4],2
- 015C B008              jnz L20
- 015E                   .dbline 84
- 015E                   .dbline 84
- 015E 360080            xor [_Port_2_Data_SHADE],-128
- 0161 5100              mov A,[_Port_2_Data_SHADE]
- 0163 6008              mov REG[0x8],A
- 0165                   .dbline 84
- 0165           L20:
- 0165           L19:
- 0165           L17:
- 0165                   .dbline -2
- 0165           L15:
- 0165 20                pop X
- 0166                   .dbline 0 ; func end
- 0166 7F                ret
- 0167                   .dbsym l toggle -4 c
- 0167                   .dbend
- 0167                   .dbfunc e pinMode _pinMode fV
- 0167           ;        bitMask -> X+2
- 0167           ;              i -> X+0
- 0167           ;          state -> X-6
- 0167           ;            pin -> X-5
- 0167           ;           port -> X-4
- 0167           _pinMode::
- 0167                   .dbline -1
- 0167 10                push X
- 0168 4F                mov X,SP
- 0169 3805              add SP,5
- 016B                   .dbline 88
- 016B           ; }
- 016B           ; 
- 016B           ; // Sets the pin mode
- 016B           ; void pinMode(unsigned char port, unsigned char pin, unsigned char state) {
- 016B                   .dbline 90
- 016B           ;       int i;
- 016B           ;       BYTE bitMask = 1;
- 016B 560201            mov [X+2],1
- 016E                   .dbline 91
- 016E           ;       for(i = 0; i < pin; i++) { bitMask *= 2; }
- 016E 560100            mov [X+1],0
- 0171 560000            mov [X+0],0
- 0174 8008              xjmp L26
- 0176           L23:
- 0176                   .dbline 91
- 0176                   .dbline 91
- 0176 6602              asl [X+2]
- 0178                   .dbline 91
- 0178           L24:
- 0178                   .dbline 91
- 0178 7701              inc [X+1]
- 017A 0F0000            adc [X+0],0
- 017D           L26:
- 017D                   .dbline 91
- 017D 52FB              mov A,[X-5]
- 017F 5300              mov [__r1],A
- 0181 5201              mov A,[X+1]
- 0183 1200              sub A,[__r1]
- 0185 5000              mov A,0
- 0187 3180              xor A,-128
- 0189 5300              mov [__rX],A
- 018B 5200              mov A,[X+0]
- 018D 3180              xor A,-128
- 018F 1A00              sbb A,[__rX]
- 0191 CFE4              jc L23
- 0193           X5:
- 0193                   .dbline 93
- 0193           ; 
- 0193           ;       switch (state) {
- 0193 52FA              mov A,[X-6]
- 0195 5404              mov [X+4],A
- 0197 560300            mov [X+3],0
- 019A 3D0300            cmp [X+3],0
- 019D B006              jnz X6
- 019F 3D0400            cmp [X+4],0
- 01A2 A017              jz L30
- 01A4           X6:
- 01A4 3D0300            cmp [X+3],0
- 01A7 B006              jnz X7
- 01A9 3D0401            cmp [X+4],1
- 01AC A091              jz L37
- 01AE           X7:
- 01AE 3D0300            cmp [X+3],0
- 01B1 B006              jnz X8
- 01B3 3D0403            cmp [X+4],3
- 01B6 A10E              jz L44
- 01B8           X8:
- 01B8 8194              xjmp L28
- 01BA           L30:
- 01BA                   .dbline 95
- 01BA           ;               case 0: // Resistive Pulldown
- 01BA           ;                       if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 &= ~bitMask; PRT0DM0 &= ~bitMask; }
- 01BA 3DFC00            cmp [X-4],0
- 01BD B028              jnz L31
- 01BF                   .dbline 95
- 01BF                   .dbline 95
- 01BF 5202              mov A,[X+2]
- 01C1 73                cpl A
- 01C2 5300              mov [__r0],A
- 01C4 5D03              mov A,REG[0x3]
- 01C6 2200              and A,[__r0]
- 01C8 6003              mov REG[0x3],A
- 01CA                   .dbline 95
- 01CA 5202              mov A,[X+2]
- 01CC 73                cpl A
- 01CD 5300              mov [__r0],A
- 01CF 7110              or F,0x10  ; iopage = 1
- 01D1 5D01              mov A,REG[0x1]
- 01D3 2200              and A,[__r0]
- 01D5 6001              mov REG[0x1],A
- 01D7                   .dbline 95
- 01D7 5202              mov A,[X+2]
- 01D9 73                cpl A
- 01DA 5300              mov [__r0],A
- 01DC 5D00              mov A,REG[0]
- 01DE 2200              and A,[__r0]
- 01E0 6000              mov REG[0],A
- 01E2                   .dbline 95
- 01E2 70CF              and F,0xCF      ; iopage = 0
- 01E4 8168              xjmp L28
- 01E6           L31:
- 01E6                   .dbline 96
- 01E6           ;                       else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 &= ~bitMask; PRT1DM0 &= ~bitMask; }
- 01E6 3DFC01            cmp [X-4],1
- 01E9 B028              jnz L33
- 01EB                   .dbline 96
- 01EB                   .dbline 96
- 01EB 5202              mov A,[X+2]
- 01ED 73                cpl A
- 01EE 5300              mov [__r0],A
- 01F0 5D07              mov A,REG[0x7]
- 01F2 2200              and A,[__r0]
- 01F4 6007              mov REG[0x7],A
- 01F6                   .dbline 96
- 01F6 5202              mov A,[X+2]
- 01F8 73                cpl A
- 01F9 5300              mov [__r0],A
- 01FB 7110              or F,0x10  ; iopage = 1
- 01FD 5D05              mov A,REG[0x5]
- 01FF 2200              and A,[__r0]
- 0201 6005              mov REG[0x5],A
- 0203                   .dbline 96
- 0203 5202              mov A,[X+2]
- 0205 73                cpl A
- 0206 5300              mov [__r0],A
- 0208 5D04              mov A,REG[0x4]
- 020A 2200              and A,[__r0]
- 020C 6004              mov REG[0x4],A
- 020E                   .dbline 96
- 020E 70CF              and F,0xCF      ; iopage = 0
- 0210 813C              xjmp L28
- 0212           L33:
- 0212                   .dbline 97
- 0212           ;                       else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 &= ~bitMask; PRT2DM0 &= ~bitMask; }
- 0212 3DFC02            cmp [X-4],2
- 0215 B137              jnz L28
- 0217                   .dbline 97
- 0217                   .dbline 97
- 0217 5202              mov A,[X+2]
- 0219 73                cpl A
- 021A 5300              mov [__r0],A
- 021C 5D0B              mov A,REG[0xb]
- 021E 2200              and A,[__r0]
- 0220 600B              mov REG[0xb],A
- 0222                   .dbline 97
- 0222 5202              mov A,[X+2]
- 0224 73                cpl A
- 0225 5300              mov [__r0],A
- 0227 7110              or F,0x10  ; iopage = 1
- 0229 5D09              mov A,REG[0x9]
- 022B 2200              and A,[__r0]
- 022D 6009              mov REG[0x9],A
- 022F                   .dbline 97
- 022F 5202              mov A,[X+2]
- 0231 73                cpl A
- 0232 5300              mov [__r0],A
- 0234 5D08              mov A,REG[0x8]
- 0236 2200              and A,[__r0]
- 0238 6008              mov REG[0x8],A
- 023A                   .dbline 97
- 023A                   .dbline 98
- 023A           ;                       break;
- 023A 70CF              and F,0xCF      ; iopage = 0
- 023C 8110              xjmp L28
- 023E           L37:
- 023E                   .dbline 100
- 023E           ;               case 1: // Strong
- 023E           ;                       if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 &= ~bitMask; PRT0DM0 |= bitMask; }
- 023E 3DFC00            cmp [X-4],0
- 0241 B029              jnz L38
- 0243                   .dbline 100
- 0243                   .dbline 100
- 0243 5202              mov A,[X+2]
- 0245 73                cpl A
- 0246 5300              mov [__r0],A
- 0248 5D03              mov A,REG[0x3]
- 024A 2200              and A,[__r0]
- 024C 6003              mov REG[0x3],A
- 024E                   .dbline 100
- 024E 5202              mov A,[X+2]
- 0250 73                cpl A
- 0251 5300              mov [__r0],A
- 0253 7110              or F,0x10  ; iopage = 1
- 0255 5D01              mov A,REG[0x1]
- 0257 2200              and A,[__r0]
- 0259 6001              mov REG[0x1],A
- 025B                   .dbline 100
- 025B 5D00              mov A,REG[0]
- 025D 5300              mov [__r0],A
- 025F 5202              mov A,[X+2]
- 0261 2C00              or [__r0],A
- 0263 5100              mov A,[__r0]
- 0265 6000              mov REG[0],A
- 0267                   .dbline 100
- 0267 70CF              and F,0xCF      ; iopage = 0
- 0269 80E3              xjmp L28
- 026B           L38:
- 026B                   .dbline 101
- 026B           ;                       else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 &= ~bitMask; PRT1DM0 |= bitMask; }
- 026B 3DFC01            cmp [X-4],1
- 026E B029              jnz L40
- 0270                   .dbline 101
- 0270                   .dbline 101
- 0270 5202              mov A,[X+2]
- 0272 73                cpl A
- 0273 5300              mov [__r0],A
- 0275 5D07              mov A,REG[0x7]
- 0277 2200              and A,[__r0]
- 0279 6007              mov REG[0x7],A
- 027B                   .dbline 101
- 027B 5202              mov A,[X+2]
- 027D 73                cpl A
- 027E 5300              mov [__r0],A
- 0280 7110              or F,0x10  ; iopage = 1
- 0282 5D05              mov A,REG[0x5]
- 0284 2200              and A,[__r0]
- 0286 6005              mov REG[0x5],A
- 0288                   .dbline 101
- 0288 5D04              mov A,REG[0x4]
- 028A 5300              mov [__r0],A
- 028C 5202              mov A,[X+2]
- 028E 2C00              or [__r0],A
- 0290 5100              mov A,[__r0]
- 0292 6004              mov REG[0x4],A
- 0294                   .dbline 101
- 0294 70CF              and F,0xCF      ; iopage = 0
- 0296 80B6              xjmp L28
- 0298           L40:
- 0298                   .dbline 102
- 0298           ;                       else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 &= ~bitMask; PRT2DM0 |= bitMask; }
- 0298 3DFC02            cmp [X-4],2
- 029B B0B1              jnz L28
- 029D                   .dbline 102
- 029D                   .dbline 102
- 029D 5202              mov A,[X+2]
- 029F 73                cpl A
- 02A0 5300              mov [__r0],A
- 02A2 5D0B              mov A,REG[0xb]
- 02A4 2200              and A,[__r0]
- 02A6 600B              mov REG[0xb],A
- 02A8                   .dbline 102
- 02A8 5202              mov A,[X+2]
- 02AA 73                cpl A
- 02AB 5300              mov [__r0],A
- 02AD 7110              or F,0x10  ; iopage = 1
- 02AF 5D09              mov A,REG[0x9]
- 02B1 2200              and A,[__r0]
- 02B3 6009              mov REG[0x9],A
- 02B5                   .dbline 102
- 02B5 5D08              mov A,REG[0x8]
- 02B7 5300              mov [__r0],A
- 02B9 5202              mov A,[X+2]
- 02BB 2C00              or [__r0],A
- 02BD 5100              mov A,[__r0]
- 02BF 6008              mov REG[0x8],A
- 02C1                   .dbline 102
- 02C1                   .dbline 103
- 02C1           ;                       break;
- 02C1 70CF              and F,0xCF      ; iopage = 0
- 02C3 8089              xjmp L28
- 02C5           L44:
- 02C5                   .dbline 105
- 02C5           ;               case 3: // Pull up
- 02C5           ;                       if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 |= bitMask; PRT0DM0 |= bitMask; }
- 02C5 3DFC00            cmp [X-4],0
- 02C8 B02A              jnz L45
- 02CA                   .dbline 105
- 02CA                   .dbline 105
- 02CA 5202              mov A,[X+2]
- 02CC 73                cpl A
- 02CD 5300              mov [__r0],A
- 02CF 5D03              mov A,REG[0x3]
- 02D1 2200              and A,[__r0]
- 02D3 6003              mov REG[0x3],A
- 02D5                   .dbline 105
+ 00B0 5000              mov A,0
+ 00B2 08                push A
+ 00B3 934A              xcall _digitalWrite
+ 00B5 38FD              add SP,-3
+ 00B7                   .dbline 64
+ 00B7           ;       Timer8UsTrig_Start(); // Used to measure 10us trigger pulse
+ 00B7 10                push X
+ 00B8 7C0000            xcall _Timer8UsTrig_Start
+ 00BB 20                pop X
+ 00BC                   .dbline -2
+ 00BC           L8:
+ 00BC                   .dbline 0 ; func end
+ 00BC 7F                ret
+ 00BD                   .dbend
+ 00BD                   .dbfunc e usCalculateDistance _usCalculateDistance fl
+ 00BD           ;      usRawTime -> X-7
+ 00BD           _usCalculateDistance::
+ 00BD                   .dbline -1
+ 00BD 10                push X
+ 00BE 4F                mov X,SP
+ 00BF                   .dbline 67
+ 00BF           ; }
+ 00BF           ; 
+ 00BF           ; unsigned long usCalculateDistance(unsigned long usRawTime) {
+ 00BF                   .dbline 68
+ 00BF           ;       return (((46400 - usRawTime) / 2) / 58);
+ 00BF 5040              mov A,64
+ 00C1 13FC              sub A,[X-4]
+ 00C3 5300              mov [__r3],A
+ 00C5 50B5              mov A,-75
+ 00C7 1BFB              sbb A,[X-5]
+ 00C9 5300              mov [__r2],A
+ 00CB 5000              mov A,0
+ 00CD 1BFA              sbb A,[X-6]
+ 00CF 5300              mov [__r1],A
+ 00D1 5000              mov A,0
+ 00D3 1BF9              sbb A,[X-7]
+ 00D5 5300              mov [__r0],A
+ 00D7 70FB              and F,-5
+ 00D9 6E00              rrc [__r0]
+ 00DB 6E00              rrc [__r1]
+ 00DD 6E00              rrc [__r2]
+ 00DF 6E00              rrc [__r3]
+ 00E1 5000              mov A,0
+ 00E3 08                push A
+ 00E4 08                push A
+ 00E5 08                push A
+ 00E6 503A              mov A,58
+ 00E8 08                push A
+ 00E9 5100              mov A,[__r0]
+ 00EB 08                push A
+ 00EC 5100              mov A,[__r1]
+ 00EE 08                push A
+ 00EF 5100              mov A,[__r2]
+ 00F1 08                push A
+ 00F2 5100              mov A,[__r3]
+ 00F4 08                push A
+ 00F5 7C0000            xcall __divmodu_32X32_32
+ 00F8 18                pop A
+ 00F9 5300              mov [__r3],A
+ 00FB 18                pop A
+ 00FC 5300              mov [__r2],A
+ 00FE 18                pop A
+ 00FF 5300              mov [__r1],A
+ 0101 18                pop A
+ 0102 5300              mov [__r0],A
+ 0104 38FC              add SP,-4
+ 0106                   .dbline -2
+ 0106           L9:
+ 0106 20                pop X
+ 0107                   .dbline 0 ; func end
+ 0107 7F                ret
+ 0108                   .dbsym l usRawTime -7 l
+ 0108                   .dbend
+ 0108                   .dbfunc e drive _drive fV
+ 0108           ;            dir -> X-4
+ 0108           _drive::
+ 0108                   .dbline -1
+ 0108 10                push X
+ 0109 4F                mov X,SP
+ 010A 3802              add SP,2
+ 010C                   .dbline 78
+ 010C           ; }
+ 010C           ; 
+ 010C           ; /************
+ 010C           ; *  Driving  *
+ 010C           ; ************/
+ 010C           ; 
+ 010C           ; // Connections : H-bridge is connected to
+ 010C           ; // Used to drive the H-Bridge; think of a numpad for controls
+ 010C           ; // IN1 = Port0 Pin0 , IN2 = Port0 Pin1 etc
+ 010C           ; void drive(unsigned char dir) {
+ 010C                   .dbline 79
+ 010C           ;       switch (dir) {
+ 010C 52FC              mov A,[X-4]
+ 010E 5401              mov [X+1],A
+ 0110 560000            mov [X+0],0
+ 0113 3D0000            cmp [X+0],0
+ 0116 B006              jnz X1
+ 0118 3D0102            cmp [X+1],2
+ 011B A02B              jz L14
+ 011D           X1:
+ 011D 3D0000            cmp [X+0],0
+ 0120 B006              jnz X2
+ 0122 3D0104            cmp [X+1],4
+ 0125 A029              jz L15
+ 0127           X2:
+ 0127 3D0000            cmp [X+0],0
+ 012A B006              jnz X3
+ 012C 3D0105            cmp [X+1],5
+ 012F A027              jz L16
+ 0131           X3:
+ 0131 3D0000            cmp [X+0],0
+ 0134 B006              jnz X4
+ 0136 3D0106            cmp [X+1],6
+ 0139 A022              jz L17
+ 013B           X4:
+ 013B 3D0000            cmp [X+0],0
+ 013E B006              jnz X5
+ 0140 3D0108            cmp [X+1],8
+ 0143 A020              jz L18
+ 0145           X5:
+ 0145 8026              xjmp L11
+ 0147           L14:
+ 0147                   .dbline 81
+ 0147           ;               case 2: // Back (0101)
+ 0147           ;                       PRT0DR &= ~0x0A;
+ 0147 4100F5            and REG[0],-11
+ 014A                   .dbline 82
+ 014A           ;                       PRT0DR |= 0x05;
+ 014A 430005            or REG[0],5
+ 014D                   .dbline 83
+ 014D           ;                       break;
+ 014D 8021              xjmp L12
+ 014F           L15:
+ 014F                   .dbline 85
+ 014F           ;               case 4: // Left (0110)
+ 014F           ;                       PRT0DR &= ~0x09;
+ 014F 4100F6            and REG[0],-10
+ 0152                   .dbline 86
+ 0152           ;                       PRT0DR |= 0x06;
+ 0152 430006            or REG[0],6
+ 0155                   .dbline 87
+ 0155           ;                       break;
+ 0155 8019              xjmp L12
+ 0157           L16:
+ 0157                   .dbline 89
+ 0157           ;               case 5: // Stop
+ 0157           ;                       PRT0DR &= ~0x0F; // All pins low;
+ 0157 4100F0            and REG[0],-16
+ 015A                   .dbline 90
+ 015A           ;                       break;
+ 015A 8014              xjmp L12
+ 015C           L17:
+ 015C                   .dbline 92
+ 015C           ;               case 6: // Right (1001)
+ 015C           ;                       PRT0DR &= ~0x06;
+ 015C 4100F9            and REG[0],-7
+ 015F                   .dbline 93
+ 015F           ;                       PRT0DR |= 0x09;
+ 015F 430009            or REG[0],9
+ 0162                   .dbline 94
+ 0162           ;                       break;
+ 0162 800C              xjmp L12
+ 0164           L18:
+ 0164                   .dbline 96
+ 0164           ;               case 8: // Forward (1010)
+ 0164           ;                       PRT0DR &= ~0x05;
+ 0164 4100FA            and REG[0],-6
+ 0167                   .dbline 97
+ 0167           ;                       PRT0DR |= 0x0A;
+ 0167 43000A            or REG[0],10
+ 016A                   .dbline 98
+ 016A           ;                       break;
+ 016A 8004              xjmp L12
+ 016C           L11:
+ 016C                   .dbline 100
+ 016C           ;               default:
+ 016C           ;                       PRT0DR &= ~0x0F; // All pins low;
+ 016C 4100F0            and REG[0],-16
+ 016F                   .dbline 101
+ 016F           ;                       break;
+ 016F           L12:
+ 016F                   .dbline -2
+ 016F           L10:
+ 016F 38FE              add SP,-2
+ 0171 20                pop X
+ 0172                   .dbline 0 ; func end
+ 0172 7F                ret
+ 0173                   .dbsym l dir -4 c
+ 0173                   .dbend
+ 0173                   .dbfunc e lcdAssign _lcdAssign fV
+ 0173           ;    lcdPosition -> X-9
+ 0173           ;     lcdNumbers -> X-7
+ 0173           _lcdAssign::
+ 0173                   .dbline -1
+ 0173 10                push X
+ 0174 4F                mov X,SP
+ 0175                   .dbline 109
+ 0175           ;       }       
+ 0175           ; }
+ 0175           ; 
+ 0175           ; /*****************
+ 0175           ; *  General PSoC  *
+ 0175           ; *****************/
+ 0175           ; 
+ 0175           ; void lcdAssign(long lcdNumbers, unsigned int lcdPosition) {
+ 0175                   .dbline 110
+ 0175           ;   ltoa(lcdBuffer[lcdPosition], lcdNumbers, 10);
+ 0175 5000              mov A,0
+ 0177 08                push A
+ 0178 500A              mov A,10
+ 017A 08                push A
+ 017B 52F9              mov A,[X-7]
+ 017D 08                push A
+ 017E 52FA              mov A,[X-6]
+ 0180 08                push A
+ 0181 52FB              mov A,[X-5]
+ 0183 08                push A
+ 0184 52FC              mov A,[X-4]
+ 0186 08                push A
+ 0187 52F8              mov A,[X-8]
+ 0189 5300              mov [__r1],A
+ 018B 52F7              mov A,[X-9]
+ 018D 5300              mov [__r0],A
+ 018F 6500              asl [__r1]
+ 0191 6B00              rlc [__r0]
+ 0193 6500              asl [__r1]
+ 0195 6B00              rlc [__r0]
+ 0197 6500              asl [__r1]
+ 0199 6B00              rlc [__r0]
+ 019B 6500              asl [__r1]
+ 019D 6B00              rlc [__r0]
+ 019F 060000            add [__r1],<_lcdBuffer
+ 01A2 0E0000            adc [__r0],>_lcdBuffer
+ 01A5 5100              mov A,[__r0]
+ 01A7 08                push A
+ 01A8 5100              mov A,[__r1]
+ 01AA 08                push A
+ 01AB 7C0000            xcall _ltoa
+ 01AE 38F8              add SP,-8
+ 01B0                   .dbline -2
+ 01B0           L19:
+ 01B0 20                pop X
+ 01B1                   .dbline 0 ; func end
+ 01B1 7F                ret
+ 01B2                   .dbsym l lcdPosition -9 i
+ 01B2                   .dbsym l lcdNumbers -7 L
+ 01B2                   .dbend
+ 01B2                   .dbfunc e lcdPrint _lcdPrint fV
+ 01B2           _lcdPrint::
+ 01B2                   .dbline -1
+ 01B2                   .dbline 113
+ 01B2           ; }
+ 01B2           ; 
+ 01B2           ; void lcdPrint(void) {
+ 01B2                   .dbline 114
+ 01B2           ;   LCD_Control(0x01);
+ 01B2 10                push X
+ 01B3 5001              mov A,1
+ 01B5 7C0000            xcall _LCD_Control
+ 01B8                   .dbline 116
+ 01B8           ;   
+ 01B8           ;   LCD_Position(0, 0);
+ 01B8 5000              mov A,0
+ 01BA 5700              mov X,0
+ 01BC 7C0000            xcall _LCD_Position
+ 01BF                   .dbline 117
+ 01BF           ;   LCD_PrString(lcdBuffer[0]);
+ 01BF 5000              mov A,>_lcdBuffer
+ 01C1 08                push A
+ 01C2 5000              mov A,<_lcdBuffer
+ 01C4 5C                mov X,A
+ 01C5 18                pop A
+ 01C6 7C0000            xcall _LCD_PrString
+ 01C9                   .dbline 118
+ 01C9           ;   LCD_Position(1, 0);
+ 01C9 5700              mov X,0
+ 01CB 5001              mov A,1
+ 01CD 7C0000            xcall _LCD_Position
+ 01D0                   .dbline 119
+ 01D0           ;   LCD_PrString(lcdBuffer[1]);
+ 01D0 5010              mov A,>_lcdBuffer+16
+ 01D2 08                push A
+ 01D3 5010              mov A,<_lcdBuffer+16
+ 01D5 5C                mov X,A
+ 01D6 18                pop A
+ 01D7 7C0000            xcall _LCD_PrString
+ 01DA 20                pop X
+ 01DB                   .dbline -2
+ 01DB           L20:
+ 01DB                   .dbline 0 ; func end
+ 01DB 7F                ret
+ 01DC                   .dbend
+ 01DC                   .dbfunc e backlight _backlight fV
+ 01DC           ;         toggle -> X-4
+ 01DC           _backlight::
+ 01DC                   .dbline -1
+ 01DC 10                push X
+ 01DD 4F                mov X,SP
+ 01DE                   .dbline 123
+ 01DE           ; }
+ 01DE           ; 
+ 01DE           ; 
+ 01DE           ; void backlight(unsigned char toggle) {
+ 01DE                   .dbline 124
+ 01DE           ;       pinMode(2,7,1); // set the pin to strong
+ 01DE 5001              mov A,1
+ 01E0 08                push A
+ 01E1 5007              mov A,7
+ 01E3 08                push A
+ 01E4 5002              mov A,2
+ 01E6 08                push A
+ 01E7 902C              xcall _pinMode
+ 01E9 38FD              add SP,-3
+ 01EB                   .dbline 125
+ 01EB           ;       if (toggle == 0) { BL_Data_ADDR=(BL_DataShadow&=~BL_MASK); }
+ 01EB 3DFC00            cmp [X-4],0
+ 01EE B00A              jnz L23
+ 01F0                   .dbline 125
+ 01F0                   .dbline 125
+ 01F0 26007F            and [_Port_2_Data_SHADE],127
+ 01F3 5100              mov A,[_Port_2_Data_SHADE]
+ 01F5 6008              mov REG[0x8],A
+ 01F7                   .dbline 125
+ 01F7 801B              xjmp L24
+ 01F9           L23:
+ 01F9                   .dbline 126
+ 01F9           ;       else if (toggle == 1) { BL_Data_ADDR=(BL_DataShadow|=BL_MASK); }
+ 01F9 3DFC01            cmp [X-4],1
+ 01FC B00A              jnz L25
+ 01FE                   .dbline 126
+ 01FE                   .dbline 126
+ 01FE 2E0080            or [_Port_2_Data_SHADE],-128
+ 0201 5100              mov A,[_Port_2_Data_SHADE]
+ 0203 6008              mov REG[0x8],A
+ 0205                   .dbline 126
+ 0205 800D              xjmp L26
+ 0207           L25:
+ 0207                   .dbline 127
+ 0207           ;       else if (toggle == 2) { BL_Data_ADDR=(BL_DataShadow^=BL_MASK); }
+ 0207 3DFC02            cmp [X-4],2
+ 020A B008              jnz L27
+ 020C                   .dbline 127
+ 020C                   .dbline 127
+ 020C 360080            xor [_Port_2_Data_SHADE],-128
+ 020F 5100              mov A,[_Port_2_Data_SHADE]
+ 0211 6008              mov REG[0x8],A
+ 0213                   .dbline 127
+ 0213           L27:
+ 0213           L26:
+ 0213           L24:
+ 0213                   .dbline -2
+ 0213           L22:
+ 0213 20                pop X
+ 0214                   .dbline 0 ; func end
+ 0214 7F                ret
+ 0215                   .dbsym l toggle -4 c
+ 0215                   .dbend
+ 0215                   .dbfunc e pinMode _pinMode fV
+ 0215           ;        bitMask -> X+2
+ 0215           ;              i -> X+0
+ 0215           ;          state -> X-6
+ 0215           ;            pin -> X-5
+ 0215           ;           port -> X-4
+ 0215           _pinMode::
+ 0215                   .dbline -1
+ 0215 10                push X
+ 0216 4F                mov X,SP
+ 0217 3805              add SP,5
+ 0219                   .dbline 131
+ 0219           ; }
+ 0219           ; 
+ 0219           ; // Sets the pin mode
+ 0219           ; void pinMode(unsigned char port, unsigned char pin, unsigned char state) {
+ 0219                   .dbline 133
+ 0219           ;       int i;
+ 0219           ;       BYTE bitMask = 1;
+ 0219 560201            mov [X+2],1
+ 021C                   .dbline 134
+ 021C           ;       for(i = 0; i < pin; i++) { bitMask *= 2; }
+ 021C 560100            mov [X+1],0
+ 021F 560000            mov [X+0],0
+ 0222 8008              xjmp L33
+ 0224           L30:
+ 0224                   .dbline 134
+ 0224                   .dbline 134
+ 0224 6602              asl [X+2]
+ 0226                   .dbline 134
+ 0226           L31:
+ 0226                   .dbline 134
+ 0226 7701              inc [X+1]
+ 0228 0F0000            adc [X+0],0
+ 022B           L33:
+ 022B                   .dbline 134
+ 022B 52FB              mov A,[X-5]
+ 022D 5300              mov [__r1],A
+ 022F 5201              mov A,[X+1]
+ 0231 1200              sub A,[__r1]
+ 0233 5000              mov A,0
+ 0235 3180              xor A,-128
+ 0237 5300              mov [__rX],A
+ 0239 5200              mov A,[X+0]
+ 023B 3180              xor A,-128
+ 023D 1A00              sbb A,[__rX]
+ 023F CFE4              jc L30
+ 0241           X6:
+ 0241                   .dbline 136
+ 0241           ; 
+ 0241           ;       switch (state) {
+ 0241 52FA              mov A,[X-6]
+ 0243 5404              mov [X+4],A
+ 0245 560300            mov [X+3],0
+ 0248 3D0300            cmp [X+3],0
+ 024B B006              jnz X7
+ 024D 3D0400            cmp [X+4],0
+ 0250 A017              jz L37
+ 0252           X7:
+ 0252 3D0300            cmp [X+3],0
+ 0255 B006              jnz X8
+ 0257 3D0401            cmp [X+4],1
+ 025A A091              jz L44
+ 025C           X8:
+ 025C 3D0300            cmp [X+3],0
+ 025F B006              jnz X9
+ 0261 3D0403            cmp [X+4],3
+ 0264 A10E              jz L51
+ 0266           X9:
+ 0266 8194              xjmp L35
+ 0268           L37:
+ 0268                   .dbline 138
+ 0268           ;               case 0: // Resistive Pulldown
+ 0268           ;                       if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 &= ~bitMask; PRT0DM0 &= ~bitMask; }
+ 0268 3DFC00            cmp [X-4],0
+ 026B B028              jnz L38
+ 026D                   .dbline 138
+ 026D                   .dbline 138
+ 026D 5202              mov A,[X+2]
+ 026F 73                cpl A
+ 0270 5300              mov [__r0],A
+ 0272 5D03              mov A,REG[0x3]
+ 0274 2200              and A,[__r0]
+ 0276 6003              mov REG[0x3],A
+ 0278                   .dbline 138
+ 0278 5202              mov A,[X+2]
+ 027A 73                cpl A
+ 027B 5300              mov [__r0],A
+ 027D 7110              or F,0x10  ; iopage = 1
+ 027F 5D01              mov A,REG[0x1]
+ 0281 2200              and A,[__r0]
+ 0283 6001              mov REG[0x1],A
+ 0285                   .dbline 138
+ 0285 5202              mov A,[X+2]
+ 0287 73                cpl A
+ 0288 5300              mov [__r0],A
+ 028A 5D00              mov A,REG[0]
+ 028C 2200              and A,[__r0]
+ 028E 6000              mov REG[0],A
+ 0290                   .dbline 138
+ 0290 70CF              and F,0xCF      ; iopage = 0
+ 0292 8168              xjmp L35
+ 0294           L38:
+ 0294                   .dbline 139
+ 0294           ;                       else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 &= ~bitMask; PRT1DM0 &= ~bitMask; }
+ 0294 3DFC01            cmp [X-4],1
+ 0297 B028              jnz L40
+ 0299                   .dbline 139
+ 0299                   .dbline 139
+ 0299 5202              mov A,[X+2]
+ 029B 73                cpl A
+ 029C 5300              mov [__r0],A
+ 029E 5D07              mov A,REG[0x7]
+ 02A0 2200              and A,[__r0]
+ 02A2 6007              mov REG[0x7],A
+ 02A4                   .dbline 139
+ 02A4 5202              mov A,[X+2]
+ 02A6 73                cpl A
+ 02A7 5300              mov [__r0],A
+ 02A9 7110              or F,0x10  ; iopage = 1
+ 02AB 5D05              mov A,REG[0x5]
+ 02AD 2200              and A,[__r0]
+ 02AF 6005              mov REG[0x5],A
+ 02B1                   .dbline 139
+ 02B1 5202              mov A,[X+2]
+ 02B3 73                cpl A
+ 02B4 5300              mov [__r0],A
+ 02B6 5D04              mov A,REG[0x4]
+ 02B8 2200              and A,[__r0]
+ 02BA 6004              mov REG[0x4],A
+ 02BC                   .dbline 139
+ 02BC 70CF              and F,0xCF      ; iopage = 0
+ 02BE 813C              xjmp L35
+ 02C0           L40:
+ 02C0                   .dbline 140
+ 02C0           ;                       else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 &= ~bitMask; PRT2DM0 &= ~bitMask; }
+ 02C0 3DFC02            cmp [X-4],2
+ 02C3 B137              jnz L35
+ 02C5                   .dbline 140
+ 02C5                   .dbline 140
+ 02C5 5202              mov A,[X+2]
+ 02C7 73                cpl A
+ 02C8 5300              mov [__r0],A
+ 02CA 5D0B              mov A,REG[0xb]
+ 02CC 2200              and A,[__r0]
+ 02CE 600B              mov REG[0xb],A
+ 02D0                   .dbline 140
+ 02D0 5202              mov A,[X+2]
+ 02D2 73                cpl A
+ 02D3 5300              mov [__r0],A
  02D5 7110              or F,0x10  ; iopage = 1
- 02D7 5D01              mov A,REG[0x1]
- 02D9 5300              mov [__r0],A
- 02DB 5202              mov A,[X+2]
- 02DD 2C00              or [__r0],A
- 02DF 5100              mov A,[__r0]
- 02E1 6001              mov REG[0x1],A
- 02E3                   .dbline 105
- 02E3 5D00              mov A,REG[0]
- 02E5 5300              mov [__r0],A
- 02E7 5202              mov A,[X+2]
- 02E9 2C00              or [__r0],A
- 02EB 5100              mov A,[__r0]
- 02ED 6000              mov REG[0],A
- 02EF                   .dbline 105
- 02EF 70CF              and F,0xCF      ; iopage = 0
- 02F1 805B              xjmp L28
- 02F3           L45:
- 02F3                   .dbline 106
- 02F3           ;                       else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 |= bitMask; PRT1DM0 |= bitMask; }
- 02F3 3DFC01            cmp [X-4],1
- 02F6 B02A              jnz L47
- 02F8                   .dbline 106
- 02F8                   .dbline 106
- 02F8 5202              mov A,[X+2]
- 02FA 73                cpl A
- 02FB 5300              mov [__r0],A
- 02FD 5D07              mov A,REG[0x7]
- 02FF 2200              and A,[__r0]
- 0301 6007              mov REG[0x7],A
- 0303                   .dbline 106
- 0303 7110              or F,0x10  ; iopage = 1
- 0305 5D05              mov A,REG[0x5]
- 0307 5300              mov [__r0],A
- 0309 5202              mov A,[X+2]
- 030B 2C00              or [__r0],A
- 030D 5100              mov A,[__r0]
- 030F 6005              mov REG[0x5],A
- 0311                   .dbline 106
- 0311 5D04              mov A,REG[0x4]
- 0313 5300              mov [__r0],A
- 0315 5202              mov A,[X+2]
- 0317 2C00              or [__r0],A
- 0319 5100              mov A,[__r0]
- 031B 6004              mov REG[0x4],A
- 031D                   .dbline 106
- 031D 70CF              and F,0xCF      ; iopage = 0
- 031F 802D              xjmp L28
- 0321           L47:
- 0321                   .dbline 107
- 0321           ;                       else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 |= bitMask; PRT2DM0 |= bitMask; }
- 0321 3DFC02            cmp [X-4],2
- 0324 B028              jnz L28
- 0326                   .dbline 107
- 0326                   .dbline 107
- 0326 5202              mov A,[X+2]
- 0328 73                cpl A
- 0329 5300              mov [__r0],A
- 032B 5D0B              mov A,REG[0xb]
- 032D 2200              and A,[__r0]
- 032F 600B              mov REG[0xb],A
- 0331                   .dbline 107
- 0331 7110              or F,0x10  ; iopage = 1
- 0333 5D09              mov A,REG[0x9]
- 0335 5300              mov [__r0],A
- 0337 5202              mov A,[X+2]
- 0339 2C00              or [__r0],A
- 033B 5100              mov A,[__r0]
- 033D 6009              mov REG[0x9],A
- 033F                   .dbline 107
- 033F 5D08              mov A,REG[0x8]
- 0341 5300              mov [__r0],A
- 0343 5202              mov A,[X+2]
- 0345 2C00              or [__r0],A
- 0347 5100              mov A,[__r0]
- 0349 6008              mov REG[0x8],A
- 034B                   .dbline 107
- 034B                   .dbline 108
- 034B           ;                       break;
- 034B                   .dbline 110
- 034B           ;               default:
- 034B           ;                       break;
- 034B 70CF              and F,0xCF      ; iopage = 0
- 034D           L28:
- 034D                   .dbline -2
- 034D           L22:
- 034D 38FB              add SP,-5
- 034F 20                pop X
- 0350                   .dbline 0 ; func end
- 0350 7F                ret
- 0351                   .dbsym l bitMask 2 c
- 0351                   .dbsym l i 0 I
- 0351                   .dbsym l state -6 c
- 0351                   .dbsym l pin -5 c
- 0351                   .dbsym l port -4 c
- 0351                   .dbend
- 0351                   .dbfunc e digitalWrite _digitalWrite fV
- 0351           ;        bitMask -> X+2
- 0351           ;              i -> X+0
- 0351           ;          state -> X-6
- 0351           ;            pin -> X-5
- 0351           ;           port -> X-4
- 0351           _digitalWrite::
- 0351                   .dbline -1
- 0351 10                push X
- 0352 4F                mov X,SP
- 0353 3805              add SP,5
- 0355                   .dbline 117
- 0355           ;       } 
- 0355           ; }
- 0355           ; 
- 0355           ; 
- 0355           ; // Function for setting pins
- 0355           ; // 0 = low, 1 = high, 2 = toggle
- 0355           ; void digitalWrite(unsigned char port, unsigned char pin, unsigned char state) {
- 0355                   .dbline 119
- 0355           ;       int i ;
- 0355           ;       BYTE bitMask = 1; 
- 0355 560201            mov [X+2],1
- 0358                   .dbline 120
- 0358           ;       for(i = 0; i < pin; i++) { bitMask *= 2; }
- 0358 560100            mov [X+1],0
- 035B 560000            mov [X+0],0
- 035E 8008              xjmp L55
- 0360           L52:
- 0360                   .dbline 120
- 0360                   .dbline 120
- 0360 6602              asl [X+2]
- 0362                   .dbline 120
- 0362           L53:
- 0362                   .dbline 120
- 0362 7701              inc [X+1]
- 0364 0F0000            adc [X+0],0
- 0367           L55:
- 0367                   .dbline 120
- 0367 52FB              mov A,[X-5]
- 0369 5300              mov [__r1],A
- 036B 5201              mov A,[X+1]
- 036D 1200              sub A,[__r1]
- 036F 5000              mov A,0
- 0371 3180              xor A,-128
- 0373 5300              mov [__rX],A
- 0375 5200              mov A,[X+0]
- 0377 3180              xor A,-128
- 0379 1A00              sbb A,[__rX]
- 037B CFE4              jc L52
- 037D           X9:
- 037D                   .dbline 122
- 037D           ; 
- 037D           ;       switch (state) {
- 037D 52FA              mov A,[X-6]
- 037F 5404              mov [X+4],A
- 0381 560300            mov [X+3],0
- 0384 3D0300            cmp [X+3],0
- 0387 B006              jnz X10
- 0389 3D0400            cmp [X+4],0
- 038C A017              jz L59
- 038E           X10:
- 038E 3D0300            cmp [X+3],0
- 0391 B006              jnz X11
- 0393 3D0401            cmp [X+4],1
- 0396 A043              jz L66
- 0398           X11:
- 0398 3D0300            cmp [X+3],0
- 039B B006              jnz X12
- 039D 3D0402            cmp [X+4],2
- 03A0 A072              jz L73
- 03A2           X12:
- 03A2 80A7              xjmp L57
- 03A4           L59:
- 03A4                   .dbline 124
- 03A4           ;               case 0:
- 03A4           ;                       if(port == 0) PRT0DR &= ~bitMask;
- 03A4 3DFC00            cmp [X-4],0
- 03A7 B00E              jnz L60
- 03A9                   .dbline 124
- 03A9 5202              mov A,[X+2]
- 03AB 73                cpl A
- 03AC 5300              mov [__r0],A
- 03AE 5D00              mov A,REG[0]
- 03B0 2200              and A,[__r0]
- 03B2 6000              mov REG[0],A
- 03B4 8095              xjmp L57
- 03B6           L60:
- 03B6                   .dbline 125
- 03B6           ;                       else if(port == 1) PRT1DR &= ~bitMask;
- 03B6 3DFC01            cmp [X-4],1
- 03B9 B00E              jnz L62
- 03BB                   .dbline 125
- 03BB 5202              mov A,[X+2]
- 03BD 73                cpl A
- 03BE 5300              mov [__r0],A
- 03C0 5D04              mov A,REG[0x4]
- 03C2 2200              and A,[__r0]
- 03C4 6004              mov REG[0x4],A
- 03C6 8083              xjmp L57
- 03C8           L62:
- 03C8                   .dbline 126
- 03C8           ;                       else if(port == 2) PRT2DR &= ~bitMask;
- 03C8 3DFC02            cmp [X-4],2
- 03CB B07E              jnz L57
- 03CD                   .dbline 126
- 03CD 5202              mov A,[X+2]
- 03CF 73                cpl A
- 03D0 5300              mov [__r0],A
- 03D2 5D08              mov A,REG[0x8]
- 03D4 2200              and A,[__r0]
- 03D6 6008              mov REG[0x8],A
- 03D8                   .dbline 127
- 03D8           ;                       break;
- 03D8 8071              xjmp L57
- 03DA           L66:
- 03DA                   .dbline 129
- 03DA           ;               case 1:
- 03DA           ;                       if(port == 0) PRT0DR |= bitMask;
- 03DA 3DFC00            cmp [X-4],0
- 03DD B00F              jnz L67
- 03DF                   .dbline 129
- 03DF 5D00              mov A,REG[0]
- 03E1 5300              mov [__r0],A
- 03E3 5202              mov A,[X+2]
- 03E5 2C00              or [__r0],A
- 03E7 5100              mov A,[__r0]
- 03E9 6000              mov REG[0],A
- 03EB 805E              xjmp L57
- 03ED           L67:
- 03ED                   .dbline 130
- 03ED           ;                       else if(port == 1) PRT1DR |= bitMask;
- 03ED 3DFC01            cmp [X-4],1
- 03F0 B00F              jnz L69
- 03F2                   .dbline 130
- 03F2 5D04              mov A,REG[0x4]
- 03F4 5300              mov [__r0],A
- 03F6 5202              mov A,[X+2]
- 03F8 2C00              or [__r0],A
- 03FA 5100              mov A,[__r0]
- 03FC 6004              mov REG[0x4],A
- 03FE 804B              xjmp L57
- 0400           L69:
- 0400                   .dbline 131
- 0400           ;                       else if(port == 2) PRT2DR |= bitMask;
- 0400 3DFC02            cmp [X-4],2
- 0403 B046              jnz L57
- 0405                   .dbline 131
- 0405 5D08              mov A,REG[0x8]
- 0407 5300              mov [__r0],A
- 0409 5202              mov A,[X+2]
- 040B 2C00              or [__r0],A
- 040D 5100              mov A,[__r0]
- 040F 6008              mov REG[0x8],A
- 0411                   .dbline 132
- 0411           ;                       break; 
- 0411 8038              xjmp L57
- 0413           L73:
- 0413                   .dbline 134
- 0413           ;               case 2:
- 0413           ;                       if(port == 0) PRT0DR ^= bitMask;
- 0413 3DFC00            cmp [X-4],0
- 0416 B00F              jnz L74
- 0418                   .dbline 134
- 0418 5D00              mov A,REG[0]
- 041A 5300              mov [__r0],A
- 041C 5202              mov A,[X+2]
- 041E 3400              xor [__r0],A
- 0420 5100              mov A,[__r0]
- 0422 6000              mov REG[0],A
- 0424 8025              xjmp L57
- 0426           L74:
- 0426                   .dbline 135
- 0426           ;                       else if(port == 1) PRT1DR ^= bitMask;
- 0426 3DFC01            cmp [X-4],1
- 0429 B00F              jnz L76
- 042B                   .dbline 135
- 042B 5D04              mov A,REG[0x4]
- 042D 5300              mov [__r0],A
- 042F 5202              mov A,[X+2]
- 0431 3400              xor [__r0],A
- 0433 5100              mov A,[__r0]
- 0435 6004              mov REG[0x4],A
- 0437 8012              xjmp L57
- 0439           L76:
- 0439                   .dbline 136
- 0439           ;                       else if(port == 2) PRT2DR ^= bitMask;
- 0439 3DFC02            cmp [X-4],2
- 043C B00D              jnz L57
- 043E                   .dbline 136
- 043E 5D08              mov A,REG[0x8]
- 0440 5300              mov [__r0],A
- 0442 5202              mov A,[X+2]
- 0444 3400              xor [__r0],A
- 0446 5100              mov A,[__r0]
- 0448 6008              mov REG[0x8],A
- 044A                   .dbline 137
- 044A           ;                       break;
- 044A                   .dbline 139
- 044A           ;               default:
- 044A           ;                       break;
- 044A           L57:
- 044A                   .dbline -2
- 044A           L51:
- 044A 38FB              add SP,-5
- 044C 20                pop X
- 044D                   .dbline 0 ; func end
- 044D 7F                ret
- 044E                   .dbsym l bitMask 2 c
- 044E                   .dbsym l i 0 I
- 044E                   .dbsym l state -6 c
- 044E                   .dbsym l pin -5 c
- 044E                   .dbsym l port -4 c
- 044E                   .dbend
+ 02D7 5D09              mov A,REG[0x9]
+ 02D9 2200              and A,[__r0]
+ 02DB 6009              mov REG[0x9],A
+ 02DD                   .dbline 140
+ 02DD 5202              mov A,[X+2]
+ 02DF 73                cpl A
+ 02E0 5300              mov [__r0],A
+ 02E2 5D08              mov A,REG[0x8]
+ 02E4 2200              and A,[__r0]
+ 02E6 6008              mov REG[0x8],A
+ 02E8                   .dbline 140
+ 02E8                   .dbline 141
+ 02E8           ;                       break;
+ 02E8 70CF              and F,0xCF      ; iopage = 0
+ 02EA 8110              xjmp L35
+ 02EC           L44:
+ 02EC                   .dbline 143
+ 02EC           ;               case 1: // Strong
+ 02EC           ;                       if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 &= ~bitMask; PRT0DM0 |= bitMask; }
+ 02EC 3DFC00            cmp [X-4],0
+ 02EF B029              jnz L45
+ 02F1                   .dbline 143
+ 02F1                   .dbline 143
+ 02F1 5202              mov A,[X+2]
+ 02F3 73                cpl A
+ 02F4 5300              mov [__r0],A
+ 02F6 5D03              mov A,REG[0x3]
+ 02F8 2200              and A,[__r0]
+ 02FA 6003              mov REG[0x3],A
+ 02FC                   .dbline 143
+ 02FC 5202              mov A,[X+2]
+ 02FE 73                cpl A
+ 02FF 5300              mov [__r0],A
+ 0301 7110              or F,0x10  ; iopage = 1
+ 0303 5D01              mov A,REG[0x1]
+ 0305 2200              and A,[__r0]
+ 0307 6001              mov REG[0x1],A
+ 0309                   .dbline 143
+ 0309 5D00              mov A,REG[0]
+ 030B 5300              mov [__r0],A
+ 030D 5202              mov A,[X+2]
+ 030F 2C00              or [__r0],A
+ 0311 5100              mov A,[__r0]
+ 0313 6000              mov REG[0],A
+ 0315                   .dbline 143
+ 0315 70CF              and F,0xCF      ; iopage = 0
+ 0317 80E3              xjmp L35
+ 0319           L45:
+ 0319                   .dbline 144
+ 0319           ;                       else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 &= ~bitMask; PRT1DM0 |= bitMask; }
+ 0319 3DFC01            cmp [X-4],1
+ 031C B029              jnz L47
+ 031E                   .dbline 144
+ 031E                   .dbline 144
+ 031E 5202              mov A,[X+2]
+ 0320 73                cpl A
+ 0321 5300              mov [__r0],A
+ 0323 5D07              mov A,REG[0x7]
+ 0325 2200              and A,[__r0]
+ 0327 6007              mov REG[0x7],A
+ 0329                   .dbline 144
+ 0329 5202              mov A,[X+2]
+ 032B 73                cpl A
+ 032C 5300              mov [__r0],A
+ 032E 7110              or F,0x10  ; iopage = 1
+ 0330 5D05              mov A,REG[0x5]
+ 0332 2200              and A,[__r0]
+ 0334 6005              mov REG[0x5],A
+ 0336                   .dbline 144
+ 0336 5D04              mov A,REG[0x4]
+ 0338 5300              mov [__r0],A
+ 033A 5202              mov A,[X+2]
+ 033C 2C00              or [__r0],A
+ 033E 5100              mov A,[__r0]
+ 0340 6004              mov REG[0x4],A
+ 0342                   .dbline 144
+ 0342 70CF              and F,0xCF      ; iopage = 0
+ 0344 80B6              xjmp L35
+ 0346           L47:
+ 0346                   .dbline 145
+ 0346           ;                       else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 &= ~bitMask; PRT2DM0 |= bitMask; }
+ 0346 3DFC02            cmp [X-4],2
+ 0349 B0B1              jnz L35
+ 034B                   .dbline 145
+ 034B                   .dbline 145
+ 034B 5202              mov A,[X+2]
+ 034D 73                cpl A
+ 034E 5300              mov [__r0],A
+ 0350 5D0B              mov A,REG[0xb]
+ 0352 2200              and A,[__r0]
+ 0354 600B              mov REG[0xb],A
+ 0356                   .dbline 145
+ 0356 5202              mov A,[X+2]
+ 0358 73                cpl A
+ 0359 5300              mov [__r0],A
+ 035B 7110              or F,0x10  ; iopage = 1
+ 035D 5D09              mov A,REG[0x9]
+ 035F 2200              and A,[__r0]
+ 0361 6009              mov REG[0x9],A
+ 0363                   .dbline 145
+ 0363 5D08              mov A,REG[0x8]
+ 0365 5300              mov [__r0],A
+ 0367 5202              mov A,[X+2]
+ 0369 2C00              or [__r0],A
+ 036B 5100              mov A,[__r0]
+ 036D 6008              mov REG[0x8],A
+ 036F                   .dbline 145
+ 036F                   .dbline 146
+ 036F           ;                       break;
+ 036F 70CF              and F,0xCF      ; iopage = 0
+ 0371 8089              xjmp L35
+ 0373           L51:
+ 0373                   .dbline 148
+ 0373           ;               case 3: // Pull up
+ 0373           ;                       if(port == 0) { PRT0DM2 &= ~bitMask; PRT0DM1 |= bitMask; PRT0DM0 |= bitMask; }
+ 0373 3DFC00            cmp [X-4],0
+ 0376 B02A              jnz L52
+ 0378                   .dbline 148
+ 0378                   .dbline 148
+ 0378 5202              mov A,[X+2]
+ 037A 73                cpl A
+ 037B 5300              mov [__r0],A
+ 037D 5D03              mov A,REG[0x3]
+ 037F 2200              and A,[__r0]
+ 0381 6003              mov REG[0x3],A
+ 0383                   .dbline 148
+ 0383 7110              or F,0x10  ; iopage = 1
+ 0385 5D01              mov A,REG[0x1]
+ 0387 5300              mov [__r0],A
+ 0389 5202              mov A,[X+2]
+ 038B 2C00              or [__r0],A
+ 038D 5100              mov A,[__r0]
+ 038F 6001              mov REG[0x1],A
+ 0391                   .dbline 148
+ 0391 5D00              mov A,REG[0]
+ 0393 5300              mov [__r0],A
+ 0395 5202              mov A,[X+2]
+ 0397 2C00              or [__r0],A
+ 0399 5100              mov A,[__r0]
+ 039B 6000              mov REG[0],A
+ 039D                   .dbline 148
+ 039D 70CF              and F,0xCF      ; iopage = 0
+ 039F 805B              xjmp L35
+ 03A1           L52:
+ 03A1                   .dbline 149
+ 03A1           ;                       else if(port == 1) { PRT1DM2 &= ~bitMask; PRT1DM1 |= bitMask; PRT1DM0 |= bitMask; }
+ 03A1 3DFC01            cmp [X-4],1
+ 03A4 B02A              jnz L54
+ 03A6                   .dbline 149
+ 03A6                   .dbline 149
+ 03A6 5202              mov A,[X+2]
+ 03A8 73                cpl A
+ 03A9 5300              mov [__r0],A
+ 03AB 5D07              mov A,REG[0x7]
+ 03AD 2200              and A,[__r0]
+ 03AF 6007              mov REG[0x7],A
+ 03B1                   .dbline 149
+ 03B1 7110              or F,0x10  ; iopage = 1
+ 03B3 5D05              mov A,REG[0x5]
+ 03B5 5300              mov [__r0],A
+ 03B7 5202              mov A,[X+2]
+ 03B9 2C00              or [__r0],A
+ 03BB 5100              mov A,[__r0]
+ 03BD 6005              mov REG[0x5],A
+ 03BF                   .dbline 149
+ 03BF 5D04              mov A,REG[0x4]
+ 03C1 5300              mov [__r0],A
+ 03C3 5202              mov A,[X+2]
+ 03C5 2C00              or [__r0],A
+ 03C7 5100              mov A,[__r0]
+ 03C9 6004              mov REG[0x4],A
+ 03CB                   .dbline 149
+ 03CB 70CF              and F,0xCF      ; iopage = 0
+ 03CD 802D              xjmp L35
+ 03CF           L54:
+ 03CF                   .dbline 150
+ 03CF           ;                       else if(port == 2) { PRT2DM2 &= ~bitMask; PRT2DM1 |= bitMask; PRT2DM0 |= bitMask; }
+ 03CF 3DFC02            cmp [X-4],2
+ 03D2 B028              jnz L35
+ 03D4                   .dbline 150
+ 03D4                   .dbline 150
+ 03D4 5202              mov A,[X+2]
+ 03D6 73                cpl A
+ 03D7 5300              mov [__r0],A
+ 03D9 5D0B              mov A,REG[0xb]
+ 03DB 2200              and A,[__r0]
+ 03DD 600B              mov REG[0xb],A
+ 03DF                   .dbline 150
+ 03DF 7110              or F,0x10  ; iopage = 1
+ 03E1 5D09              mov A,REG[0x9]
+ 03E3 5300              mov [__r0],A
+ 03E5 5202              mov A,[X+2]
+ 03E7 2C00              or [__r0],A
+ 03E9 5100              mov A,[__r0]
+ 03EB 6009              mov REG[0x9],A
+ 03ED                   .dbline 150
+ 03ED 5D08              mov A,REG[0x8]
+ 03EF 5300              mov [__r0],A
+ 03F1 5202              mov A,[X+2]
+ 03F3 2C00              or [__r0],A
+ 03F5 5100              mov A,[__r0]
+ 03F7 6008              mov REG[0x8],A
+ 03F9                   .dbline 150
+ 03F9                   .dbline 151
+ 03F9           ;                       break;
+ 03F9                   .dbline 153
+ 03F9           ;               default:
+ 03F9           ;                       break;
+ 03F9 70CF              and F,0xCF      ; iopage = 0
+ 03FB           L35:
+ 03FB                   .dbline -2
+ 03FB           L29:
+ 03FB 38FB              add SP,-5
+ 03FD 20                pop X
+ 03FE                   .dbline 0 ; func end
+ 03FE 7F                ret
+ 03FF                   .dbsym l bitMask 2 c
+ 03FF                   .dbsym l i 0 I
+ 03FF                   .dbsym l state -6 c
+ 03FF                   .dbsym l pin -5 c
+ 03FF                   .dbsym l port -4 c
+ 03FF                   .dbend
+ 03FF                   .dbfunc e digitalWrite _digitalWrite fV
+ 03FF           ;        bitMask -> X+2
+ 03FF           ;              i -> X+0
+ 03FF           ;          state -> X-6
+ 03FF           ;            pin -> X-5
+ 03FF           ;           port -> X-4
+ 03FF           _digitalWrite::
+ 03FF                   .dbline -1
+ 03FF 10                push X
+ 0400 4F                mov X,SP
+ 0401 3805              add SP,5
+ 0403                   .dbline 159
+ 0403           ;       } 
+ 0403           ; }
+ 0403           ; 
+ 0403           ; // Function for setting pins
+ 0403           ; // 0 = low, 1 = high, 2 = toggle
+ 0403           ; void digitalWrite(unsigned char port, unsigned char pin, unsigned char state) {
+ 0403                   .dbline 161
+ 0403           ;       int i ;
+ 0403           ;       BYTE bitMask = 1; 
+ 0403 560201            mov [X+2],1
+ 0406                   .dbline 162
+ 0406           ;       for(i = 0; i < pin; i++) { bitMask *= 2; }
+ 0406 560100            mov [X+1],0
+ 0409 560000            mov [X+0],0
+ 040C 8008              xjmp L62
+ 040E           L59:
+ 040E                   .dbline 162
+ 040E                   .dbline 162
+ 040E 6602              asl [X+2]
+ 0410                   .dbline 162
+ 0410           L60:
+ 0410                   .dbline 162
+ 0410 7701              inc [X+1]
+ 0412 0F0000            adc [X+0],0
+ 0415           L62:
+ 0415                   .dbline 162
+ 0415 52FB              mov A,[X-5]
+ 0417 5300              mov [__r1],A
+ 0419 5201              mov A,[X+1]
+ 041B 1200              sub A,[__r1]
+ 041D 5000              mov A,0
+ 041F 3180              xor A,-128
+ 0421 5300              mov [__rX],A
+ 0423 5200              mov A,[X+0]
+ 0425 3180              xor A,-128
+ 0427 1A00              sbb A,[__rX]
+ 0429 CFE4              jc L59
+ 042B           X10:
+ 042B                   .dbline 164
+ 042B           ; 
+ 042B           ;       switch (state) {
+ 042B 52FA              mov A,[X-6]
+ 042D 5404              mov [X+4],A
+ 042F 560300            mov [X+3],0
+ 0432 3D0300            cmp [X+3],0
+ 0435 B006              jnz X11
+ 0437 3D0400            cmp [X+4],0
+ 043A A017              jz L66
+ 043C           X11:
+ 043C 3D0300            cmp [X+3],0
+ 043F B006              jnz X12
+ 0441 3D0401            cmp [X+4],1
+ 0444 A043              jz L73
+ 0446           X12:
+ 0446 3D0300            cmp [X+3],0
+ 0449 B006              jnz X13
+ 044B 3D0402            cmp [X+4],2
+ 044E A072              jz L80
+ 0450           X13:
+ 0450 80A7              xjmp L64
+ 0452           L66:
+ 0452                   .dbline 166
+ 0452           ;               case 0:
+ 0452           ;                       if(port == 0) PRT0DR &= ~bitMask;
+ 0452 3DFC00            cmp [X-4],0
+ 0455 B00E              jnz L67
+ 0457                   .dbline 166
+ 0457 5202              mov A,[X+2]
+ 0459 73                cpl A
+ 045A 5300              mov [__r0],A
+ 045C 5D00              mov A,REG[0]
+ 045E 2200              and A,[__r0]
+ 0460 6000              mov REG[0],A
+ 0462 8095              xjmp L64
+ 0464           L67:
+ 0464                   .dbline 167
+ 0464           ;                       else if(port == 1) PRT1DR &= ~bitMask;
+ 0464 3DFC01            cmp [X-4],1
+ 0467 B00E              jnz L69
+ 0469                   .dbline 167
+ 0469 5202              mov A,[X+2]
+ 046B 73                cpl A
+ 046C 5300              mov [__r0],A
+ 046E 5D04              mov A,REG[0x4]
+ 0470 2200              and A,[__r0]
+ 0472 6004              mov REG[0x4],A
+ 0474 8083              xjmp L64
+ 0476           L69:
+ 0476                   .dbline 168
+ 0476           ;                       else if(port == 2) PRT2DR &= ~bitMask;
+ 0476 3DFC02            cmp [X-4],2
+ 0479 B07E              jnz L64
+ 047B                   .dbline 168
+ 047B 5202              mov A,[X+2]
+ 047D 73                cpl A
+ 047E 5300              mov [__r0],A
+ 0480 5D08              mov A,REG[0x8]
+ 0482 2200              and A,[__r0]
+ 0484 6008              mov REG[0x8],A
+ 0486                   .dbline 169
+ 0486           ;                       break;
+ 0486 8071              xjmp L64
+ 0488           L73:
+ 0488                   .dbline 171
+ 0488           ;               case 1:
+ 0488           ;                       if(port == 0) PRT0DR |= bitMask;
+ 0488 3DFC00            cmp [X-4],0
+ 048B B00F              jnz L74
+ 048D                   .dbline 171
+ 048D 5D00              mov A,REG[0]
+ 048F 5300              mov [__r0],A
+ 0491 5202              mov A,[X+2]
+ 0493 2C00              or [__r0],A
+ 0495 5100              mov A,[__r0]
+ 0497 6000              mov REG[0],A
+ 0499 805E              xjmp L64
+ 049B           L74:
+ 049B                   .dbline 172
+ 049B           ;                       else if(port == 1) PRT1DR |= bitMask;
+ 049B 3DFC01            cmp [X-4],1
+ 049E B00F              jnz L76
+ 04A0                   .dbline 172
+ 04A0 5D04              mov A,REG[0x4]
+ 04A2 5300              mov [__r0],A
+ 04A4 5202              mov A,[X+2]
+ 04A6 2C00              or [__r0],A
+ 04A8 5100              mov A,[__r0]
+ 04AA 6004              mov REG[0x4],A
+ 04AC 804B              xjmp L64
+ 04AE           L76:
+ 04AE                   .dbline 173
+ 04AE           ;                       else if(port == 2) PRT2DR |= bitMask;
+ 04AE 3DFC02            cmp [X-4],2
+ 04B1 B046              jnz L64
+ 04B3                   .dbline 173
+ 04B3 5D08              mov A,REG[0x8]
+ 04B5 5300              mov [__r0],A
+ 04B7 5202              mov A,[X+2]
+ 04B9 2C00              or [__r0],A
+ 04BB 5100              mov A,[__r0]
+ 04BD 6008              mov REG[0x8],A
+ 04BF                   .dbline 174
+ 04BF           ;                       break; 
+ 04BF 8038              xjmp L64
+ 04C1           L80:
+ 04C1                   .dbline 176
+ 04C1           ;               case 2:
+ 04C1           ;                       if(port == 0) PRT0DR ^= bitMask;
+ 04C1 3DFC00            cmp [X-4],0
+ 04C4 B00F              jnz L81
+ 04C6                   .dbline 176
+ 04C6 5D00              mov A,REG[0]
+ 04C8 5300              mov [__r0],A
+ 04CA 5202              mov A,[X+2]
+ 04CC 3400              xor [__r0],A
+ 04CE 5100              mov A,[__r0]
+ 04D0 6000              mov REG[0],A
+ 04D2 8025              xjmp L64
+ 04D4           L81:
+ 04D4                   .dbline 177
+ 04D4           ;                       else if(port == 1) PRT1DR ^= bitMask;
+ 04D4 3DFC01            cmp [X-4],1
+ 04D7 B00F              jnz L83
+ 04D9                   .dbline 177
+ 04D9 5D04              mov A,REG[0x4]
+ 04DB 5300              mov [__r0],A
+ 04DD 5202              mov A,[X+2]
+ 04DF 3400              xor [__r0],A
+ 04E1 5100              mov A,[__r0]
+ 04E3 6004              mov REG[0x4],A
+ 04E5 8012              xjmp L64
+ 04E7           L83:
+ 04E7                   .dbline 178
+ 04E7           ;                       else if(port == 2) PRT2DR ^= bitMask;
+ 04E7 3DFC02            cmp [X-4],2
+ 04EA B00D              jnz L64
+ 04EC                   .dbline 178
+ 04EC 5D08              mov A,REG[0x8]
+ 04EE 5300              mov [__r0],A
+ 04F0 5202              mov A,[X+2]
+ 04F2 3400              xor [__r0],A
+ 04F4 5100              mov A,[__r0]
+ 04F6 6008              mov REG[0x8],A
+ 04F8                   .dbline 179
+ 04F8           ;                       break;
+ 04F8                   .dbline 181
+ 04F8           ;               default:
+ 04F8           ;                       break;
+ 04F8           L64:
+ 04F8                   .dbline -2
+ 04F8           L58:
+ 04F8 38FB              add SP,-5
+ 04FA 20                pop X
+ 04FB                   .dbline 0 ; func end
+ 04FB 7F                ret
+ 04FC                   .dbsym l bitMask 2 c
+ 04FC                   .dbsym l i 0 I
+ 04FC                   .dbsym l state -6 c
+ 04FC                   .dbsym l pin -5 c
+ 04FC                   .dbsym l port -4 c
+ 04FC                   .dbend

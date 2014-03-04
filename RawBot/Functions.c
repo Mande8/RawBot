@@ -4,7 +4,32 @@
 
 #include "Functions.h"
 #include <m8c.h>
+#include <stdbool.h>
 #include "PSoCAPI.h"
+
+char lcdBuffer[4][8] = { 0 };
+int driveDirection = 0;
+int driveCounter = 0;
+
+// Returns:
+//  true 	= currently moving
+//  false 	= not moving
+bool driveCounterCheck(void) {
+	if (driveCounter == 0) {
+		drive(HALT);
+		return false;
+	} else {
+		driveCounter--;
+		return true;
+	}
+}
+
+bool driveAssign(int direction, int counter) {
+	drive(HALT); // Clear current drive assigns (not sure about this)
+	driveDirection = direction;
+	drive(direction);
+	driveCounter = counter;
+}
 
 /**********
 *  Servo  *
@@ -71,11 +96,27 @@ void drive(unsigned char dir) {
 	}	
 }
 
-
-
 /*****************
 *  General PSoC  *
 *****************/
+
+// Check positions from Functions.h
+void lcdAssign(long lcdNumbers, unsigned int lcdPosition) {
+	ltoa(lcdBuffer[lcdPosition], lcdNumbers, 10);
+}
+
+void lcdPrint(void) {
+	LCD_Control(0x01);
+
+	LCD_Position(0, 0);
+	LCD_PrString(lcdBuffer[0]);
+	LCD_Position(0, 8);
+	LCD_PrString(lcdBuffer[1]);
+	LCD_Position(1, 0);
+	LCD_PrString(lcdBuffer[2]);
+	LCD_Position(1, 8);
+	LCD_PrString(lcdBuffer[3]);
+}
 
 void backlight(unsigned char toggle) {
 	pinMode(2,7,1); // set the pin to strong
@@ -110,7 +151,6 @@ void pinMode(unsigned char port, unsigned char pin, unsigned char state) {
 			break;
 	} 
 }
-
 
 // Function for setting pins
 // 0 = low, 1 = high, 2 = toggle

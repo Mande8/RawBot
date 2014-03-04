@@ -47,11 +47,9 @@ unsigned long usDistance = 0;
 int isrClear = 0;
 int usEchoRisingEdge = 0;
 int usEchoFallingEdge = 0;
-char lcdBuffer[16] = { 0 };
-
-// 0 = Scan area
-int driveMode = 0;
-
+unsigned int servoMiddle = 300;
+unsigned int servoRange = 200;
+int servoAngle = 0;
 
 /***********************
 *  Interrupt handlers  *
@@ -89,8 +87,10 @@ void GPIO_ISR(void) {
 		
 	// Echo signal falling edge
 	} else {
-		usDistance = usCalculateDistance(Timer16UsEcho_wReadTimer());
-		ltoa(lcdBuffer, usDistance, 10);
+		usRawTime = Timer16UsEcho_wReadTimer();
+		lcdAssign(usRawTime, LCD_TOP);
+		usDistance = usCalculateDistance(usRawTime);
+		lcdAssign(usDistance, LCD_BOTTOM);
 		Timer16UsEcho_Stop();
 		usEchoFallingEdge++;
 	}
@@ -112,25 +112,25 @@ void main(void) {
 	Timer8Main_EnableInt();
 	Timer8Main_Start();
 	Timer16UsEcho_EnableInt();
+	servoStart(3999);
 
 	while (1) {
 		if (timer8MainTick) {
 			timer8MainTick = false;
 			
-			if (driveMode = 0) {
+			if (timer8MainTick % 3) {
+				drive(HALT); // Slowing down the motors
+			} else {
 				
 			}
-
-
-			// 1 s
+			
+			if (timer8MainCount % 9) {
+				lcdPrint();
+			}
+			
+			// Every 1,0s
 			if (timer8MainCount >= 999) {
-				
 				timer8MainCount = 0;
-				LCD_Control(0x01);
-				
-				LCD_Position(0, 0);
-				LCD_PrString(lcdBuffer);
-				
 				usTrigSend();
 			}
 		}
